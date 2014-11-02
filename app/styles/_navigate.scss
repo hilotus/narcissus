@@ -1,0 +1,188 @@
+$nav-width: 600px;
+
+.navigation {
+  width: 100%;
+
+  .navigation-well {
+    width: $nav-width;
+    margin: 0 auto;
+    overflow: hidden;
+
+    .navigatable-channel {
+      .navigatable {
+        width: $nav-width;
+        float: left;
+
+        .navigatable-title {
+          width: $nav-width;
+          text-align: center;
+          height: 44px;
+          line-height: 44px;
+        }
+
+        .navigatable-toolbar {
+          position: relative;
+
+          .left-button {
+            left: 0;
+            top: -44px;
+          }
+
+          .right-button {
+            right: 0;
+            top: -44px;
+          }
+        }
+
+        .sections {
+          width: $nav-width;
+
+          .section {
+            .section-title {
+              height: 33px;
+              line-height: 33px;
+              font-size: 12px;
+              background-color: #E6E6E6;
+              padding-left: 5px;
+              font-weight: bold;
+            }
+
+            .rows {
+              .row {
+                height: 40px;
+                line-height: 40px;
+                border-bottom: 1px solid #D9D9D9;
+                padding: 0 5px 0 5px;
+                font-size: 12px;
+
+                position: relative;
+
+                /* input row */
+                &.input-row input {
+                  width: 100% !important;
+                  outline: none;
+                  margin-top: 5px;
+                }
+
+                /* switch row */
+                &.switch-row {
+                  span.switch-label, span.switch-handle {
+                    cursor: pointer;
+                  }
+                  label.switch {
+                    position: absolute;
+                    top: 10px;
+                    right: 5px;
+                  }
+                }
+
+                /* select row */
+                &.select-row {
+                  cursor: pointer;
+
+                  /* 针对于selectRow右边的有按钮意义的图标 */
+                  i.fa-times {
+                    display: none;
+                  }
+                  &:hover {
+                    i.fa-times {
+                      display: inline-block;
+                    }
+                  }
+
+                  .select-icon {
+                    position: absolute;
+                    height: inherit;
+                    right: 10px;
+                    top: 0px;
+                    font-size: 14px;
+
+                    /* 针对于selectRow右边的有按钮意义的图标 */
+                    &:hover {
+                      i.fa-times {
+                        opacity: .6;
+                      }
+                    }
+                  }
+                }
+
+                /* button row */
+                &.button-row {
+                  text-align: center;
+                  cursor: pointer;
+                  color: #167efb;
+
+                  &:active {
+                    color: #094e96;
+                  }
+
+                  &.disabled {
+                    cursor: default !important;
+                    color: #dadada !important;
+                  }
+                }
+
+                /* description-row */
+                &.description-row, &.update-row {
+                  div {
+                    position: absolute;
+                    height: inherit;
+                    cursor: inherit;
+                    top: 0px;
+                  }
+
+                  .left {
+                    left: 5px;
+                  }
+
+                  .right {
+                    right: 5px;
+                    color: #167efb;
+                  }
+                }
+                &.update-row {
+                  cursor: pointer;
+                }
+              }
+            }
+
+          }
+        }
+
+      }
+    }
+  }
+}
+
+@mixin navigation-well-width($rate) {
+  .navigation {
+    .navigation-well {
+      width: $nav-width * $rate;
+      .navigatable-channel {
+        .navigatable {
+          width: $nav-width * $rate;
+          .navigatable-title {
+            width: $nav-width * $rate;
+          }
+          .sections {
+            width: $nav-width * $rate;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 330px) {
+  @include navigation-well-width(0.5)
+}
+@media (min-width: 560px){
+  @include navigation-well-width(0.65)
+}
+@media (min-width: 780px) {
+  @include navigation-well-width(0.8)
+}
+@media (min-width: 920px) {
+  @include navigation-well-width(1)
+}
+
