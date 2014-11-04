@@ -2,7 +2,7 @@ import Ember from 'ember';
 import Model from '../supports/model';
 import Presence from '../mixins/presence';
 
-export var initialize = function(container, application) {
+export var initialize = function(container/*, application*/) {
   // Enumerable, add reverseSortBy
   Ember.Enumerable.reopen({
     reverseSortBy: function() {
@@ -52,7 +52,7 @@ export var initialize = function(container, application) {
     }
   });
 
-  // Model
+  // Model: set store as Model instance's property.
   var store = container.lookup('store:main');
   Model.reopen({store: store});
 

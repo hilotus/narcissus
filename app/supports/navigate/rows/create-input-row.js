@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Row from '../row';
+import Alert from 'narcissus/utils/alert';
 
 export default Row.extend({
   type: 'create-input',
@@ -33,7 +34,7 @@ export default Row.extend({
     term.save().then(function(newRecord){
       __this.onCreateSuccess(__this, newRecord);
     }, function(errorJson){
-      alert(errorJson.error);
+      Alert.warn(errorJson.error);
     });
   }
 });

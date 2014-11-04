@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import Alert from 'narcissus/utils/alert';
 import SelectRow from '../../supports/navigate/rows/select-row';
 import NavigatableView from '../navigate/navigatable';
 
@@ -31,7 +32,7 @@ export default NavigatableView.extend({
         controller.tags().then(function(rels){
           controller.push(SettingsTermsNavigatable.extend({ type: "tag", content: rels }));
         }).catch(function(errorJson){
-          alert(errorJson.error);
+          Alert.warn(errorJson.error);
         });
       }
     }),
@@ -43,7 +44,7 @@ export default NavigatableView.extend({
         controller.categories().then(function(rels){
           controller.push(SettingsTermsNavigatable.extend({ type: "category", content: rels }));
         }).catch(function(errorJson){
-          alert(errorJson.error);
+          Alert.warn(errorJson.error);
         });
       }
     })

@@ -2,8 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
   applicationId: '4f3ATEailRoi1A49sh4vlNppWKk8G8xf6ThymKkG',
-  restApiId: 'm2CUMzzcTkqZLTR2v7BVbXLIg9vAzqAxWYVUvyjm',
-  javascriptId: '367pi3LgkWvdperJxh0cvGmfjVYSjaS2vs6KbYsU',
+  restApiKey: 'm2CUMzzcTkqZLTR2v7BVbXLIg9vAzqAxWYVUvyjm',
+  masterKey: 'CSLMenf3XKL4a9fjUmwB7ExiXiTXLkQz5KTC3Ey5',
 
   host: "https://api.parse.com",
   namespace: '1',
@@ -43,17 +43,22 @@ export default Ember.Mixin.create({
     hash.dataType = 'json';
     // hash.xhrFields = { 'withCredentials': true };
 
-    if (hash.data) {
+    if (hash.data && hash.type !== 'GET') {
       hash.contentType = 'application/json; charset=utf-8';
-      if (hash.type !== 'GET') {
-        hash.data = JSON.stringify(hash.data);
-      }
+      hash.data = JSON.stringify(hash.data);
     }
 
     hash.beforeSend = function(xhr) {
       xhr.setRequestHeader('X-Parse-Application-Id', adapter.get("applicationId"));
-      xhr.setRequestHeader('X-Parse-REST-API-Key', adapter.get("restApiId"));
-      if (hash.url.match(/users|roles/) || hash.url.match(/PUT|DELETE/)) {
+      xhr.setRequestHeader('X-Parse-REST-API-Key', adapter.get("restApiKey"));
+
+      /*
+      * 1. Validating Session Tokens / Retrieving Current User
+      * 2. Updating Users
+      * 3. Deleting Users
+      */
+      if ((hash.url.match(/users\/me/) && hash.type === 'GET') ||
+        hash.type.match(/PUT|DELETE/) && hash.url.match(/users/)) {
         xhr.setRequestHeader('X-Parse-Session-Token', adapter.get('sessionToken'));
       }
     };

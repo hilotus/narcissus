@@ -4,6 +4,10 @@ var cache = {};
 
 export default Ember.Object.extend({
   find: function(clazz, id) {
+    if (typeof(id) === 'string') {
+      return this.findById(clazz, id);
+    }
+
     clazz = this._getModelClazz(clazz);
 
     var adapter = this.container.lookup('adapter:application'),
@@ -12,32 +16,22 @@ export default Ember.Object.extend({
       query = adapter._buildQuery(id),
       store = this;
 
-    if (typeKey === 'User') {
-      typeKey = '_' + typeKey;
-    }
-
-    if (typeof(id) === 'string') {
-      if (cache[typeKey] && cache[typeKey][id]) {
-        return Ember.RSVP.resolve([cache[typeKey][id]]);
-      }
-    } else {
-      // if need pagenite or order, query by parse server
-      if (!query.limit && !query.order && cache[typeKey]) {
-        for(var idKey in cache[typeKey]) {
-          var isExist = false;
-          for(var key in query.where) {
-            if (Ember.isEqual(query.where[key], cache[typeKey][idKey].get(key))) {
-              isExist = true;
-              break;
-            }
-          }
-
-          if (isExist) {
-            records.pushObject(cache[typeKey][idKey]);
+    // TODO: Query from cache without paginate and order now, change in future.
+    if (!query.limit && !query.order && cache[typeKey]) {
+      for(var idKey in cache[typeKey]) {
+        var isExist = false;
+        for(var key in query.where) {
+          if (Ember.isEqual(query.where[key], cache[typeKey][idKey].get(key))) {
+            isExist = true;
+            break;
           }
         }
-        return Ember.RSVP.resolve(records);
+
+        if (isExist) {
+          records.pushObject(cache[typeKey][idKey]);
+        }
       }
+      return Ember.RSVP.resolve(records);
     }
 
     return adapter.find(clazz, id).then(function(responseJson){
@@ -46,7 +40,26 @@ export default Ember.Object.extend({
       });
       return Ember.RSVP.resolve(records);
     }, function(response){
-      return Ember.RSVP.reject(response.responseJSON);
+      return Ember.RSVP.reject(response.responseJSON || {'error': 'find no records.'});
+    });
+  },
+
+  findById: function(clazz, id) {
+    clazz = this._getModelClazz(clazz);
+
+    var adapter = this.container.lookup('adapter:application'),
+      typeKey = clazz.typeKey,
+      store = this;
+
+    if (cache[typeKey] && cache[typeKey][id]) {
+      return Ember.RSVP.resolve(cache[typeKey][id]);
+    }
+
+    return adapter.find(clazz, id).then(function(responseJson){
+      var record = store._push(clazz, responseJson);
+      return Ember.RSVP.resolve(record);
+    }, function(response){
+      return Ember.RSVP.reject(response.responseJSON || {'error': 'find no records.'});
     });
   },
 
@@ -60,7 +73,7 @@ export default Ember.Object.extend({
       data.updatedAt = responseJson.createdAt;
       return Ember.RSVP.resolve(Ember.merge(data, responseJson));
     }, function(response){
-      return Ember.RSVP.reject(response.responseJSON);
+      return Ember.RSVP.reject(response.responseJSON || {'error': 'can not create record.'});
     });
   },
 
@@ -72,7 +85,7 @@ export default Ember.Object.extend({
     return adapter.updateRecord(clazz, id, data).then(function(responseJson){
       return Ember.RSVP.resolve(responseJson);
     }, function(response){
-      return Ember.RSVP.reject(response.responseJSON);
+      return Ember.RSVP.reject(response.responseJSON || {'error': 'can not update record.'});
     });
   },
 
@@ -84,7 +97,7 @@ export default Ember.Object.extend({
     return adapter.distroyRecord(clazz, id).then(function(){
       return Ember.RSVP.resolve();
     }, function(response){
-      return Ember.RSVP.reject(response.responseJSON);
+      return Ember.RSVP.reject(response.responseJSON || {'error': 'can not distroy record.'});
     });
   },
 

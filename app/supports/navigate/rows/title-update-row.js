@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Row from '../row';
+import Alert from 'narcissus/utils/alert';
 
 export default Row.extend({
   type: 'title-update',
@@ -23,15 +24,16 @@ export default Row.extend({
     if (Ember.isEmpty(this.get('bufferedTitle'))) {
       this.set('bufferedTitle', this.get('title'));
     } else if (this.get('title') !== this.get('bufferedTitle')) {
-      var record = this.get('record');
+      var record = this.get('record'),
+        __this = this;;
 
       record.setVal(this.get('bindedName'), this.get('bufferedTitle'));
-      record.save().catch(function(errorJson){
-        alert(errorJson.error);
+      record.save().then(function(){
+        // set title new value
+        __this.set('title', __this.get('bufferedTitle'));
+      }).catch(function(errorJson){
+        Alert.warn(errorJson.error);
       });
-
-      // set title new value
-      this.set('title', this.get('bufferedTitle'));
     }
 
     this.set('isEditing', false);
@@ -52,7 +54,7 @@ export default Row.extend({
     record.destroyRecord().then(function(){
       __this.onDeletedSuccess(__this);
     }).catch(function(errorJson){
-      alert(errorJson.error);
+      Alert.warn(errorJson.error);
     });
   }
 });

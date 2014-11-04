@@ -1,5 +1,21 @@
 import Ember from 'ember';
 
+/*
+* how to use model
+*
+* var m = Model.create();
+* m.setVal('name', 'wluo');  ==> this will save name in modalData;
+* m.save();  ==> then, the name will save in model as a property.
+*
+* var m = store.find('modelType', id);
+* m.setVal('name', 'wluo11'); ==> this will save name in changeData and modalData.name is wluo11,
+*                                 but m.get('name') is wluo.
+* m.save();  ==> then changeData is empty, and m.get('name') is wluo11
+*
+*
+* It's important!!!
+* All of above, only after saving success, we will update model instance properties.
+*/
 export default Ember.Object.extend({
   init: function() {
     this._super();
@@ -18,7 +34,11 @@ export default Ember.Object.extend({
     return this.get('status') === 'distroyed';
   }.property('status'),
 
-  // push data from find.
+  /*
+  * only call it after store.find, make sure the Model instance's status is persistent.
+  *
+  * you can see in store.js
+  */
   pushData: function(data) {
     Ember.merge(this.get('modelData'), data);
     for(var key in this.get('modelData')) {
@@ -34,12 +54,11 @@ export default Ember.Object.extend({
       throw new Error('You can not set value for distroyed record.');
     }
 
-    Ember.set(this, keyName, value);
-    if (this.get('isNew')) {
-      this.set('modelData.%@'.fmt(keyName), value);
+    // when the status is persistent, only after saving success, update the changes to modalData.
+    if (this.get('isPersistent')) {
+      this.set('changeData.%@'.fmt(keyName), value);
     } else {
       this.set('modelData.%@'.fmt(keyName), value);
-      this.set('changeData.%@'.fmt(keyName), value);
     }
 
     return this;
@@ -58,7 +77,7 @@ export default Ember.Object.extend({
   },
 
   getVal: function(keyName) {
-    return Ember.get(this, keyName);
+    return this.get(keyName) || this.get('modeldata.%@'.fmt(keyName));
   },
 
   // merge diffrences between server and modeldata after create or update.
@@ -69,9 +88,13 @@ export default Ember.Object.extend({
         __this.setVal(keyName, json[keyName]);
       }
     }
-    __this.clearChanges();
-    __this.set('status', 'persistent');
-    return __this;
+
+    // after updating modaldata, update it into model instance.
+    this.setProperties(this.get('modalData'));
+
+    this.clearChanges();
+    this.set('status', 'persistent');
+    return this;
   },
 
   changes: function() {
@@ -101,6 +124,9 @@ export default Ember.Object.extend({
       });
     } else {
       return store.updateRecord(clazz, this.get('id'), this.get('changeData')).then(function(responseJson){
+        // update changeData
+        Ember.merge(__this.get('changeData'), responseJson);
+
         __this.merge(responseJson);
         store._reload(clazz, __this, __this.get('id'));
         return Ember.RSVP.resolve(__this);

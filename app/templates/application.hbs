@@ -9,7 +9,7 @@
       <nav class="nav">
         <ul class="nav-list">
           <li class="nav-item">{{#link-to 'index' class="pure-button"}}{{t 'blog.home'}}{{/link-to}}</li>
-          <li class="nav-item">{{#link-to 'index' class="pure-button"}}{{t 'blog.posts'}}{{/link-to}}</li>
+          <li class="nav-item">{{#link-to 'posts.index' class="pure-button"}}{{t 'blog.posts'}}{{/link-to}}</li>
           {{#if currentUser}}
             <li class="nav-item">{{#link-to 'settings' class="pure-button"}}{{t 'blog.admin'}}{{/link-to}}</li>
           {{/if}}

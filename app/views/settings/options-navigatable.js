@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import Alert from 'narcissus/utils/alert';
 import NavigatableView from '../navigate/navigatable';
 
 import DescriptionRow from '../../supports/navigate/rows/description-row';
@@ -38,21 +39,18 @@ export default NavigatableView.extend({
       bufferedDescription: Ember.computed.oneWay('currentUser.name'),
 
       doneEditing: function() {
+        var __this = this;
         // update logic
         if (Ember.isEmpty(this.get('bufferedDescription'))) {
           this.set('bufferedDescription', this.get('description'));
         } else if (this.get('description') !== this.get('bufferedDescription')) {
           var user = this.get('currentUser');
           user.setVal('name', this.get('bufferedDescription'));
-          user.save().catch(function(errorJson){
-            alert(errorJson.error);
+          user.save().then(function(){
+            __this.set('description', __this.get('bufferedDescription'));
+          }).catch(function(errorJson){
+            Alert.warn(errorJson.error);
           });
-
-          // User.updateUser(container, user.get('id'), {'name': this.get('bufferedDescription')}
-          // ).catch(function(errorJson){
-          //   alert(errorJson.error);
-          // });
-          this.set('description', this.get('bufferedDescription'));
         }
 
         this.set('isEditing', false);
