@@ -4,7 +4,7 @@ import Model from '../supports/model';
 var Post = Model.extend({
   category: Ember.computed('modelData.category', function(key, value){
     if (arguments.length < 2) {
-      return this.get('store').find('term', this.get('modelData.category'));
+      return this.get('store').find('term',  this.get('modelData.category'));
     } else {
       this.set('modelData.category', value);
       return value;
@@ -13,7 +13,22 @@ var Post = Model.extend({
 
   tags: Ember.computed('modelData.tags', function(key, value){
     if (arguments.length < 2) {
-      return this.get('store').find('term', {'where': {'objectId': {'$in': this.get('modelData.tags')}}});
+      // return this.get('store').find('term', {
+      //   'where': {
+      //     '$relatedTo': {
+      //       'object': {
+      //         '__type': 'Pointer',
+      //         'className': 'Post',
+      //         'objectId': this.get('modelData.objectId')
+      //       },
+      //       'key': 'tags'
+      //     }
+      //   }
+      // });
+      var __this = this;
+      return __this.get('modelData.tags').map(function(tag){
+        return __this.get('store').find('term', tag);
+      });
     } else {
       if (!Ember.isArray(value)) {
         throw new Error("tags column's value must be array.");

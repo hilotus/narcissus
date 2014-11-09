@@ -1,0 +1,28 @@
+{{#if model}}
+  <div class="content-subhead">
+    <div class="pure-u-1">{{headerTitle}}</div>
+  </div>
+  <div class="pure-form pure-form-stacked">
+    <fieldset>
+      {{input type="text" class="pure-input-1" placeholderTranslation="posts.create.input.title" value=model.title}}
+      {{select-picker content=bufferedTags selection=model.tags promptTranslation="blog.tag" isMultiple=true}}
+      {{select-picker content=bufferedCategories selection=model.category promptTranslation="blog.category"}}
+    </fieldset>
+    <fieldset>
+      {{pagedown-edit body=model.body}}
+      {{!--textarea elementId="postEditorBody" value=model.body class="pure-input-1 post-edit-body" placeholderTranslation="blog.posts.body"--}}
+    </fieldset>
+    <fieldset>
+      <div class="pure-g">
+        <div class="pure-u-1">
+          <button {{action 'createPost'}} class="pure-button pure-button-primary" {{bind-attr disabled="creatingIn"}}>{{createOrEditTitle}}</button>
+          {{#if showSpinner}}
+            &nbsp; <i class='fa fa-spinner fa-spin'></i>
+          {{else}}
+            <button {{action 'cancel'}} class="pure-button">{{t 'button.cancel'}}</button>
+          {{/if}}
+        </div>
+      <div>
+    </fieldset>
+  </div>
+{{/if}}

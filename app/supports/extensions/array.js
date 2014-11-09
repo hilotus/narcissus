@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 export default function(/* container, app */) {
   // obj -> DS.Model
   Array.prototype.has = function(obj) {
@@ -12,18 +14,19 @@ export default function(/* container, app */) {
   };
 
   Array.prototype.joinObj = function(sep, key) {
-    var result = [];
-    this.forEach(function(item){
-      result.push(item.get(key));
-    });
-    return result.join(sep);
+    return this.map(function(item){
+      return item.get(key);
+    }).join(sep);
   };
 
+  /*
+  * array element type
+  * first: ["1", "2", "3"]
+  * second: [modelInstance, modelInstance, modelInstance]
+  */
   Array.prototype.getIds = function() {
-    var result = [];
-    this.forEach(function(record){
-      result.push(record.get("id"));
+    return this.map(function(record){
+      return (record instanceof Ember.Object ? record.get('id') : record);
     });
-    return result;
   };
 }

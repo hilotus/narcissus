@@ -25,7 +25,7 @@ export default Row.extend({
       this.set('bufferedTitle', this.get('title'));
     } else if (this.get('title') !== this.get('bufferedTitle')) {
       var record = this.get('record'),
-        __this = this;;
+        __this = this;
 
       record.setVal(this.get('bindedName'), this.get('bufferedTitle'));
       record.save().then(function(){

@@ -1,15 +1,17 @@
 import Ember from 'ember';
 
-export default Ember.View.extend({
+export default Ember.Component.extend({
   classNames: ['search'],
-  templateName: 'posts-search',
+  layoutName: 'posts-search',
 
+  // there is no controller in component, so we will bind target with current controller.
+  target: null,
   keywords: "",
 
   keyDown: function(evt) {
     var keywords = this.get('keywords');
-    if (evt.keyCode === 13 && keywords !== this.get('controller.keywords')) {
-      this.set('controller.keywords', keywords);
+    if (evt.keyCode === 13 && keywords !== this.get('target.keywords')) {
+      this.set('target.keywords', keywords);
     }
   },
 
@@ -18,7 +20,7 @@ export default Ember.View.extend({
     if (evt.keyCode === 8 || evt.keyCode === 46) {  // 退格键，Delete键
       var keywords = this.get('keywords');
       if (!keywords) {
-        this.set('controller.keywords', keywords);
+        this.set('target.keywords', keywords);
       }
     }
   }

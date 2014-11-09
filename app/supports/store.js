@@ -31,7 +31,10 @@ export default Ember.Object.extend({
           records.pushObject(cache[typeKey][idKey]);
         }
       }
-      return Ember.RSVP.resolve(records);
+
+      if (records.length > 0) {
+        return Ember.RSVP.resolve(records);
+      }
     }
 
     return adapter.find(clazz, id).then(function(responseJson){

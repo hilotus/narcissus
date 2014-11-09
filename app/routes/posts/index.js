@@ -2,8 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model: function(){
-    if (this.get('controller.model.length') === 0) {
-      this.controller.paginate(false);
+    var controller = this.controllerFor('posts/index');
+    if (controller.get('model.length') === 0) {
+      controller.paginate(false);
     }
     return undefined;
   },

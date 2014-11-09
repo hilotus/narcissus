@@ -54,11 +54,22 @@ export default Ember.Object.extend({
       throw new Error('You can not set value for distroyed record.');
     }
 
+    /*
+    * 1. value is a Model instance, get value's id
+    * 2. value is a Array, get it's element(ids) array.
+    */
+    var v = value;
+    if (value instanceof Ember.Object) {
+      v = value.get('id');
+    } else if (Ember.isArray(value)) {
+      v = value.getIds();
+    }
+
     // when the status is persistent, only after saving success, update the changes to modalData.
     if (this.get('isPersistent')) {
-      this.set('changeData.%@'.fmt(keyName), value);
+      this.set('changeData.%@'.fmt(keyName), v);
     } else {
-      this.set('modelData.%@'.fmt(keyName), value);
+      this.set('modelData.%@'.fmt(keyName), v);
     }
 
     return this;
@@ -77,20 +88,19 @@ export default Ember.Object.extend({
   },
 
   getVal: function(keyName) {
-    return this.get(keyName) || this.get('modeldata.%@'.fmt(keyName));
+    return this.get(keyName) || this.get('modelData.%@'.fmt(keyName));
   },
 
-  // merge diffrences between server and modeldata after create or update.
+  // merge diffrences between server and modelData after create or update.
   merge: function(json) {
-    var __this = this;
     for (var keyName in json) {
-      if (!Ember.isEqual(__this.get(keyName), json[keyName])) {
-        __this.setVal(keyName, json[keyName]);
+      if (!Ember.isEqual(this.get(keyName), json[keyName])) {
+        this.setVal(keyName, json[keyName]);
       }
     }
 
     // after updating modaldata, update it into model instance.
-    this.setProperties(this.get('modalData'));
+    this.setProperties(this.get('modelData'));
 
     this.clearChanges();
     this.set('status', 'persistent');
@@ -117,6 +127,7 @@ export default Ember.Object.extend({
     if (this.get('isNew')) {
       return store.createRecord(clazz, this.get('modelData')).then(function(responseJson){
         __this.merge(responseJson);
+
         store._push(clazz, __this);
         return Ember.RSVP.resolve(__this);
       }, function(errorJson){
@@ -126,8 +137,8 @@ export default Ember.Object.extend({
       return store.updateRecord(clazz, this.get('id'), this.get('changeData')).then(function(responseJson){
         // update changeData
         Ember.merge(__this.get('changeData'), responseJson);
-
         __this.merge(responseJson);
+
         store._reload(clazz, __this, __this.get('id'));
         return Ember.RSVP.resolve(__this);
       }, function(errorJson){

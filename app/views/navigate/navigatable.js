@@ -20,30 +20,30 @@ export default Ember.View.extend({
   templateName: 'navigate/navigatable',
 
   generate: function(){
-    var _this = this,
+    var __this = this,
       user = this.get("currentUser"),
       store = this.get("store");
 
-    _this.set("sectionsView", []);
+    __this.set("sectionsView", []);
     this.get("sections").forEach(function(section){
-      section = _this.get(section).create({owner: _this});
+      section = __this.get(section).create({owner: __this});
       section.set("rowsView", []);
 
       // 一般的row
       section.get("rows").forEach(function(row) {
-        row = section.get(row).create({owner: _this, section: section, currentUser: user, store: store});
+        row = section.get(row).create({owner: __this, section: section, currentUser: user, store: store});
         section.get("rowsView").pushObject(row);
       });
 
       // row的集合
       if (section.get("rowCollection")) {
         section.get("rowCollection").forEach(function(row) {
-          row = row.create({owner: _this, section: section, currentUser: user, store: store});
+          row = row.create({owner: __this, section: section, currentUser: user, store: store});
           section.get("rowsView").pushObject(row);
         });
       }
 
-      _this.get("sectionsView").pushObject(section);
+      __this.get("sectionsView").pushObject(section);
     });
   }.on("willInsertElement")
 });

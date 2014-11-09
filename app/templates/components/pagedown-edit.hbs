@@ -1,0 +1,15 @@
+<div class="pure-menu pure-menu-open pure-menu-horizontal">
+  <ul>
+    <li {{bind-attr class="isEdit:pure-menu-selected"}}>
+      <a href="javascript:;" {{action 'toggle' 'edit'}}>Edit</a>
+    </li>
+    <li {{bind-attr class="isPreview:pure-menu-selected"}}>
+      <a href="javascript:;" {{action 'toggle' 'preview'}}>Preview</a>
+    </li>
+  </ul>
+</div>
+<div {{bind-attr class=":wmd-panel isEdit:display:hidden"}}>
+  <div id="wmd-button-bar-narcissus"></div>
+  {{textarea class="wmd-input" id="wmd-input-narcissus" value=body}}
+</div>
+<div id="wmd-preview-narcissus" {{bind-attr class=":wmd-panel :wmd-preview isPreview:display:hidden"}}></div>

@@ -103,7 +103,7 @@ export default Ember.Object.extend(ParseAjax, {
     var query = {};
 
     // pagenite feature
-    if (id.limit && id.skip) {
+    if (!Ember.isNone(id.limit) && !Ember.isNone(id.skip)) {
       query.limit = id.limit;
       query.skip = id.skip;
       delete id.limit;
@@ -111,20 +111,22 @@ export default Ember.Object.extend(ParseAjax, {
     }
 
     // return records count
-    if (id.count) {
+    if (!Ember.isNone(id.count)) {
       query.count = id.count;
       delete id.count;
     }
 
     // query order by
-    if (id.order) {
+    if (!Ember.isNone(id.order)) {
       query.order = id.order;
       delete id.order;
     }
 
     // query conditions
     // https://www.parse.com/docs/rest#queries-constraints
-    query.where = id.where;
+    if (!Ember.isNone(id.where)) {
+      query.where = id.where;
+    }
 
     return query;
   }
