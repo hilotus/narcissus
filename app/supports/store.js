@@ -23,10 +23,10 @@ export default Ember.Object.extend({
     // TODO: Query from cache without paginate and order now, change in future.
     if (!id.limit && !id.order && cache[typeKey]) {
       for(var idKey in cache[typeKey]) {
-        var isExist = false;
+        var isExist = true;
         for(var key in id.where) {
-          if (Ember.isEqual(id.where[key], cache[typeKey][idKey].get(key))) {
-            isExist = true;
+          if (!Ember.isEqual(id.where[key], cache[typeKey][idKey].get(key))) {
+            isExist = false;
             break;
           }
         }
@@ -44,7 +44,7 @@ export default Ember.Object.extend({
     return adapter.find(clazz, id).then(function(responseJson){
       responseJson.results.forEach(function(r){
         var record = store._push(clazz, r);
-        records.pushObject(store.normalize(record, r));
+        records.pushObject(record);
       });
       return Ember.RSVP.resolve(records);
     }, function(response){
@@ -65,8 +65,6 @@ export default Ember.Object.extend({
 
     return adapter.find(clazz, id).then(function(responseJson){
       var record = store._push(clazz, responseJson);
-      store.normalize(record, responseJson);
-
       return Ember.RSVP.resolve(record);
     }, function(response){
       return Ember.RSVP.reject(response.responseJSON || {'error': 'find no records.'});
@@ -193,6 +191,13 @@ export default Ember.Object.extend({
 
     cache[clazz.typeKey] = cache[clazz.typeKey] || {};
     cache[clazz.typeKey][data.id] = record;
+
+    // normalize record.
+    if (data instanceof Ember.Object) {
+      this.normalize(record, data.get('modelData'));
+    } else {
+      this.normalize(record, data);
+    }
 
     return record;
   },

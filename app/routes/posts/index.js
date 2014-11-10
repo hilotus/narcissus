@@ -4,7 +4,7 @@ export default Ember.Route.extend({
   model: function(){
     var controller = this.controllerFor('posts/index');
     if (controller.get('model.length') === 0) {
-      controller.paginate(false);
+      controller.paginate(true);
     }
     return undefined;
   },

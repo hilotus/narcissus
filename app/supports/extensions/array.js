@@ -29,4 +29,22 @@ export default function(/* container, app */) {
       return (record instanceof Ember.Object ? (record.get('id') || record.get('modelData')) : record);
     });
   };
+
+  /*
+  * add reverseSortBy for Enumerable
+  */
+  Array.prototype.reverseSortBy = function() {
+    var sortKeys = arguments;
+    return this.toArray().sort(function(a, b){
+      for(var i = 0; i < sortKeys.length; i++) {
+        var key = sortKeys[i],
+        propA = Ember.get(a, key),
+        propB = Ember.get(b, key);
+        // return 1 or -1 else continue to the next sortKey
+        var compareValue = Ember.compare(propB, propA);
+        if (compareValue) { return compareValue; }
+      }
+      return 0;
+    });
+  };
 }

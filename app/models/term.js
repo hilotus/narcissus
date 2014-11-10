@@ -7,7 +7,8 @@ var Term = Model.extend({
 Term.reopenClass({
   typeKey: 'term',
   schema: {
-    'belongTo': {'owner': 'user'},
+    // 'belongTo': {'owner': 'user'},
+    'belongTo': {},
     'hasMany': {}
   }
 });

@@ -9,9 +9,9 @@
   </div>
 </div>
 <div class="content-contents">
-{{#if isSearch}}
-  {{view 'posts/post-list' content=filteredPosts}}
+{{#if isLoading}}
+  <div class="post-loading"></div>
 {{else}}
-  {{view 'posts/post-list' content=model}}
+  {{view 'posts/post-list' content=filteredPosts}}
 {{/if}}
 </div>

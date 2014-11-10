@@ -20,23 +20,24 @@ export default Ember.ArrayController.extend({
     var posts = this.get('model');
 
     if (keywords) {
-      return posts.filter(function(post){
+      var filters = posts.filter(function(post){
         var title = post.get('title'),
           cName = post.get('category.name'),
-          crName = post.get('creator.name');
+          aName = post.get('author.name');
 
         if (title && title.toLocaleLowerCase().indexOf(keywords) > -1) {
           return true;
         } else if (cName && cName.toLocaleLowerCase().indexOf(keywords) > -1) {
           return true;
-        } else if (crName && crName.toLocaleLowerCase().indexOf(keywords) > -1) {
+        } else if (aName && aName.toLocaleLowerCase().indexOf(keywords) > -1) {
           return true;
         } else {
           return false;
         }
-      }).reverseSortBy("created");
+      });
+      return filters.reverseSortBy("createdAt");
     } else {
-      return posts.reverseSortBy("created");
+      return posts.reverseSortBy("createdAt");
     }
   }.property('keywords', 'model.length'),
 
@@ -49,11 +50,11 @@ export default Ember.ArrayController.extend({
       perPage = this.get('perPage'),
       __this = this;
 
-    // 加载中
-    if (!isFirstLoaded) {
-      Alert.loading(Ember.I18n.t("posts.loading"));
-    } else {
+    // Loading
+    if (isFirstLoaded) {
       this.set('isLoading', true);
+    } else {
+      Alert.loading(Ember.I18n.t("posts.loading"));
     }
 
     return this.store.find('post', {limit: perPage, skip: (page - 1) * perPage}).then(function(posts){

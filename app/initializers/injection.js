@@ -3,24 +3,6 @@ import Model from '../supports/model';
 import Presence from '../mixins/presence';
 
 export var initialize = function(container/*, application*/) {
-  // Enumerable, add reverseSortBy
-  Ember.Enumerable.reopen({
-    reverseSortBy: function() {
-      var sortKeys = arguments;
-      return this.toArray().sort(function(a, b){
-        for(var i = 0; i < sortKeys.length; i++) {
-          var key = sortKeys[i],
-          propA = Ember.get(a, key),
-          propB = Ember.get(b, key);
-          // return 1 or -1 else continue to the next sortKey
-          var compareValue = Ember.compare(propB, propA);
-          if (compareValue) { return compareValue; }
-        }
-        return 0;
-      });
-    }
-  });
-
   // Object
   Ember.Object.reopen(Presence, Ember.I18n.TranslateableProperties, {});
 
