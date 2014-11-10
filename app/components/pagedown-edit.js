@@ -21,7 +21,10 @@ export default Ember.Component.extend({
   },
 
   didInsertElement: function() {
-    var converter = new Markdown.Converter();
+    // converter = new Markdown.Converter();
+    // safeConverter = Markdown.getSanitizingConverter();
+
+    var converter = Markdown.getSanitizingConverter();
 
     converter.hooks.chain("preBlockGamut", function (text, rbg) {
       return text.replace(/^ {0,3}""" *\n((?:.*?\n)+?) {0,3}""" *$/gm, function (whole, inner) {
