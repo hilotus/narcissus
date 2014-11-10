@@ -47,6 +47,8 @@ User.reopenClass({
     return adapter.ajax('users/me', 'GET').then(
       function(response) {
         var record = store._push(model, response);
+        store.normalize(record, response);
+
         return Ember.RSVP.resolve(record);
       },
       function(response) {

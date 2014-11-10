@@ -119,29 +119,52 @@ export default Ember.Object.extend({
   * }
   */
   normalize: function(record, data) {
-    var schema = record.constructor.schema,
-      store = this;
+    var schema = record.constructor.schema;
 
     for (var key in data) {
       if (!Ember.isNone(schema.belongTo[key])) {
-        store.find(schema.belongTo[key], data[key]).then(function(r){
-          record.set(key, r);
-        });
+        this.normalizeBelongTo(record, schema.belongTo[key], key, data[key]);
       } else if (!Ember.isNone(schema.hasMany[key])) {
-        // TODO: normalize hasMany related column
-        var records = [];
-        data[key].forEach(function(id){
-          store.find(schema.hasMany[key], id).then(function(r){
-            records.pushObject(r);
-          });
-        });
-        record.set(key, records);
+        this.normalizeHasMany(record, schema.hasMany[key], key, data[key]);
       } else {
         record.set(key, data[key]);
       }
     }
     return record;
   },
+
+  /*
+  * record: model instance
+  * typeKey: model id
+  * key: model column name
+  * value: model column value
+  */
+  normalizeBelongTo: function(record, typeKey, key, value) {
+    this.find(typeKey, value).then(function(r){
+      record.set(key, r);
+    });
+  },
+
+  /*
+  * record: model instance
+  * typeKey: model id
+  * key: model column name
+  * value: model column value
+  */
+  normalizeHasMany: function(record, typeKey, key, values) {
+    // TODO: normalize hasMany related column
+    var store = this;
+
+    record.set(key, []);
+    values.forEach(function(value){
+      store.find(typeKey, value).then(function(r){
+        record.get(key).pushObject(r);
+      });
+    });
+  },
+  /*
+  * end normalize
+  */
 
   /*
   * Get Model Class by class name.

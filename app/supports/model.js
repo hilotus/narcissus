@@ -47,6 +47,7 @@ var Model = Ember.Object.extend(Timestamps, {
     this.set('status', 'persistent');
   },
 
+
   setVal: function(keyName, value) {
     if (this.get('isDistroyed')) {
       throw new Error('You can not set value for distroyed record.');
