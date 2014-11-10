@@ -13,15 +13,19 @@ export default Ember.Object.extend({
     var adapter = this.container.lookup('adapter:application'),
       typeKey = clazz.typeKey,
       records = [],
-      query = adapter._buildQuery(id),
       store = this;
 
+    /*
+    * id is query json,
+    * struct:
+    * query = {limit: 0, skip: 0, order: 0, count: 0, where: {}}
+    */
     // TODO: Query from cache without paginate and order now, change in future.
-    if (!query.limit && !query.order && cache[typeKey]) {
+    if (!id.limit && !id.order && cache[typeKey]) {
       for(var idKey in cache[typeKey]) {
         var isExist = false;
-        for(var key in query.where) {
-          if (Ember.isEqual(query.where[key], cache[typeKey][idKey].get(key))) {
+        for(var key in id.where) {
+          if (Ember.isEqual(id.where[key], cache[typeKey][idKey].get(key))) {
             isExist = true;
             break;
           }
@@ -39,7 +43,8 @@ export default Ember.Object.extend({
 
     return adapter.find(clazz, id).then(function(responseJson){
       responseJson.results.forEach(function(r){
-        records.pushObject(store._push(clazz, r));
+        var record = store._push(clazz, r);
+        records.pushObject(store.normalize(record, r));
       });
       return Ember.RSVP.resolve(records);
     }, function(response){
@@ -60,6 +65,8 @@ export default Ember.Object.extend({
 
     return adapter.find(clazz, id).then(function(responseJson){
       var record = store._push(clazz, responseJson);
+      store.normalize(record, responseJson);
+
       return Ember.RSVP.resolve(record);
     }, function(response){
       return Ember.RSVP.reject(response.responseJSON || {'error': 'find no records.'});
@@ -104,6 +111,37 @@ export default Ember.Object.extend({
     });
   },
 
+  /*
+  * set model properties
+  * schema: {
+  *   'belongTo': {'author': 'user', 'category': 'term'},
+  *   'hasMany': {'tags': 'term'}
+  * }
+  */
+  normalize: function(record, data) {
+    var schema = record.constructor.schema,
+      store = this;
+
+    for (var key in data) {
+      if (!Ember.isNone(schema.belongTo[key])) {
+        store.find(schema.belongTo[key], data[key]).then(function(r){
+          record.set(key, r);
+        });
+      } else if (!Ember.isNone(schema.hasMany[key])) {
+        // TODO: normalize hasMany related column
+        var records = [];
+        data[key].forEach(function(id){
+          store.find(schema.hasMany[key], id).then(function(r){
+            records.pushObject(r);
+          });
+        });
+        record.set(key, records);
+      } else {
+        record.set(key, data[key]);
+      }
+    }
+    return record;
+  },
 
   /*
   * Get Model Class by class name.
@@ -117,7 +155,7 @@ export default Ember.Object.extend({
   },
 
   /*
-  * Push a record to cache
+  * get Model instance
   */
   _push: function(clazz, data) {
     var record;
@@ -127,7 +165,7 @@ export default Ember.Object.extend({
     } else {
       data.id = data.id || data.objectId;
       record = clazz.create();
-      record.pushData(data);
+      record.merge(data);
     }
 
     cache[clazz.typeKey] = cache[clazz.typeKey] || {};

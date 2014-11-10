@@ -2,9 +2,6 @@ import Ember from 'ember';
 import Model from '../supports/model';
 
 var User = Model.extend({
-  email: '',
-  external_login: '',
-
   /*
     Gravatar头像管理
     官方文档：http://en.gravatar.com/site/implement/

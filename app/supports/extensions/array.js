@@ -5,7 +5,7 @@ export default function(/* container, app */) {
   Array.prototype.has = function(obj) {
     var isExists = false;
     this.forEach(function(item){
-      if (item.get('id') === obj.get('id')) {
+      if ((item.get('id') || item.get('modelData.id')) === obj.get('id')) {
         isExists = true;
         return;
       }
@@ -26,7 +26,7 @@ export default function(/* container, app */) {
   */
   Array.prototype.getIds = function() {
     return this.map(function(record){
-      return (record instanceof Ember.Object ? record.get('id') : record);
+      return (record instanceof Ember.Object ? (record.get('id') || record.get('modelData')) : record);
     });
   };
 }

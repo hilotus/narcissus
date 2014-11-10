@@ -37,8 +37,8 @@ export default Ember.ObjectController.extend({
       var __post = store._getModelClazz('post').create();
       __post.setVal('title', model.get('title'));
       __post.setVal('body', model.get('body'));
-      __post.setVal('category', model.get('category'));
-      __post.setVal('tags', model.get('tags'));
+      __post.setVal('category', model.get('category.id'));
+      __post.setVal('tags', model.get('tags').getIds());
       __post.setVal('author', this.get("currentUser.id"));
 
       __post.save().then(function(newRecord){
