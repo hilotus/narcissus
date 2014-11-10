@@ -12,7 +12,7 @@ export default Ember.Object.extend(ParseAjax, {
       return this.findById(clazz, id);
     }
 
-    var typeKey, query = this._buildQuery(id);
+    var typeKey;
 
     if (typeof(clazz) === 'string') {
       typeKey = clazz.capitalize();
@@ -24,7 +24,9 @@ export default Ember.Object.extend(ParseAjax, {
       typeKey = '_' + typeKey;
     }
 
-    return this.ajax(typeKey, "GET", {'data': query});
+    // id is a query json
+    // https://www.parse.com/docs/rest#queries
+    return this.ajax(typeKey, "GET", {'data': id});
   },
 
   /*
@@ -94,40 +96,5 @@ export default Ember.Object.extend(ParseAjax, {
     }
 
     return this.ajax(typeKey + '/' + id, 'DELETE');
-  },
-
-  /*
-  * Build Query Conditions.
-  */
-  _buildQuery: function(id) {
-    var query = {};
-
-    // pagenite feature
-    if (!Ember.isNone(id.limit) && !Ember.isNone(id.skip)) {
-      query.limit = id.limit;
-      query.skip = id.skip;
-      delete id.limit;
-      delete id.skip;
-    }
-
-    // return records count
-    if (!Ember.isNone(id.count)) {
-      query.count = id.count;
-      delete id.count;
-    }
-
-    // query order by
-    if (!Ember.isNone(id.order)) {
-      query.order = id.order;
-      delete id.order;
-    }
-
-    // query conditions
-    // https://www.parse.com/docs/rest#queries-constraints
-    if (!Ember.isNone(id.where)) {
-      query.where = id.where;
-    }
-
-    return query;
   }
 });

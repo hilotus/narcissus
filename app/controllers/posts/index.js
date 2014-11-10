@@ -8,6 +8,7 @@ export default Ember.ArrayController.extend({
   // how many record in one page
   perPage: 10,
   isLoadedAll: false,
+  isLoading: false,
 
   keywords: "",
   isSearch: function() {
@@ -39,7 +40,7 @@ export default Ember.ArrayController.extend({
     }
   }.property('keywords', 'model.length'),
 
-  paginate: function(isWithoutAlert) {
+  paginate: function(isFirstLoaded) {
     if (this.get("isSearch") || this.get('isLoadedAll')) {
       return undefined;
     }
@@ -49,11 +50,13 @@ export default Ember.ArrayController.extend({
       __this = this;
 
     // 加载中
-    if (!isWithoutAlert) {
+    if (!isFirstLoaded) {
       Alert.loading(Ember.I18n.t("posts.loading"));
+    } else {
+      this.set('isLoading', true);
     }
 
-    this.store.find('post', {limit: perPage, skip: (page - 1) * perPage}).then(function(posts){
+    return this.store.find('post', {limit: perPage, skip: (page - 1) * perPage}).then(function(posts){
       var length = posts.get('length');
       if (length > 0) {
         __this.set('page', page + 1);
@@ -64,9 +67,12 @@ export default Ember.ArrayController.extend({
         __this.set('isLoadedAll', true);
       }
     }, function(errorJson){
-      Alert.warn(errorJson.error);
+      Alert.warn(errorJson.error || errorJson.message);
     }).then(function(){
+      __this.set('isLoading', false);
       Alert.removeLoading();
+
+      return Ember.RSVP.resolve();
     });
   },
 

@@ -2,9 +2,6 @@ import Ember from 'ember';
 import Model from '../supports/model';
 
 var User = Model.extend({
-  email: '',
-  external_login: '',
-
   /*
     Gravatar头像管理
     官方文档：http://en.gravatar.com/site/implement/
@@ -50,6 +47,8 @@ User.reopenClass({
     return adapter.ajax('users/me', 'GET').then(
       function(response) {
         var record = store._push(model, response);
+        store.normalize(record, response);
+
         return Ember.RSVP.resolve(record);
       },
       function(response) {

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import Timestamps from '../mixins/timestamps';
 
 /*
 * how to use model
@@ -16,7 +17,7 @@ import Ember from 'ember';
 * It's important!!!
 * All of above, only after saving success, we will update model instance properties.
 */
-export default Ember.Object.extend({
+var Model = Ember.Object.extend(Timestamps, {
   init: function() {
     this._super();
     this.set('modelData', {});
@@ -35,19 +36,17 @@ export default Ember.Object.extend({
   }.property('status'),
 
   /*
-  * only call it after store.find, make sure the Model instance's status is persistent.
+  * merge diffrences between server and modelData after create or update.
+  * call after find and save
   *
   * you can see in store.js
   */
-  pushData: function(data) {
-    Ember.merge(this.get('modelData'), data);
-    for(var key in this.get('modelData')) {
-      this.set(key, this.get('modelData')[key]);
-    }
-
+  merge: function(json) {
+    Ember.merge(this.get('modelData'), json);
     this.clearChanges();
     this.set('status', 'persistent');
   },
+
 
   setVal: function(keyName, value) {
     if (this.get('isDistroyed')) {
@@ -89,22 +88,6 @@ export default Ember.Object.extend({
 
   getVal: function(keyName) {
     return this.get(keyName) || this.get('modelData.%@'.fmt(keyName));
-  },
-
-  // merge diffrences between server and modelData after create or update.
-  merge: function(json) {
-    for (var keyName in json) {
-      if (!Ember.isEqual(this.get(keyName), json[keyName])) {
-        this.setVal(keyName, json[keyName]);
-      }
-    }
-
-    // after updating modaldata, update it into model instance.
-    this.setProperties(this.get('modelData'));
-
-    this.clearChanges();
-    this.set('status', 'persistent');
-    return this;
   },
 
   changes: function() {
@@ -159,55 +142,15 @@ export default Ember.Object.extend({
     }, function(errorJson){
       return Ember.RSVP.reject(errorJson || {'error': 'destroyRecord error'});
     });
-  },
-
-  /*
-  * timestamps
-  */
-  createdAt: Ember.computed('modelData.createdAt', function(key, value){
-    if (arguments.length < 2) {
-      return this.get('modelData.createdAt');
-    } else {
-      if (typeof(value) === 'string') {
-        value = new Date(value);
-      }
-      this.set('modelData.createdAt', value);
-      return value;
-    }
-  }),
-
-  updatedAt: Ember.computed('modelData.updatedAt', function(key, value){
-    if (arguments.length < 2) {
-      return this.get('modelData.updatedAt');
-    } else {
-      if (typeof(value) === 'string') {
-        value = new Date(value);
-      }
-      this.set('modelData.updatedAt', value);
-      return value;
-    }
-  }),
-
-  format: "LLL",
-  createdAtFormat: function() {
-    var user = this.get('container').lookup("user:current"),
-      locale = 'zh-cn';
-
-    if (!Ember.empty(user) && !Ember.empty(user.get('locale'))) {
-      locale = user.get('locale');
-    }
-
-    return moment(this.get("createdAt")).localeData(locale).format(this.get("format"));
-  }.property('format', 'createdAt'),
-
-  updatedAtFormat: function() {
-    var user = this.get('container').lookup("user:current"),
-      locale = 'zh-cn';
-
-    if (!Ember.empty(user) && !Ember.empty(user.get('locale'))) {
-      locale = user.get('locale');
-    }
-
-    return moment(this.get("updatedAt")).localeData(locale).format(this.get("format"));
-  }.property('format', 'updatedAt')
+  }
 });
+
+Model.reopenClass({
+  typeKey: '',
+  schema: {
+    'belongTo': {},
+    'hasMany': {}
+  }
+});
+
+export default Model;
