@@ -33,7 +33,7 @@ app.import('bower_components/font-awesome/fonts/fontawesome.otf');
 app.import('bower_components/font-awesome/css/font-awesome.min.css');
 
 // moment
-app.import('bower_components/moment/moment.js');
+app.import('bower_components/moment/min/moment-with-locales.min.js');
 
 // pace
 app.import('bower_components/pace/pace.min.js');

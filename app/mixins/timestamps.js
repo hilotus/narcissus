@@ -27,24 +27,10 @@ export default Ember.Mixin.create({
 
   format: "LLL",
   createdAtFormat: function() {
-    var user = this.get('container').lookup("user:current"),
-      lang = 'zh-cn';
-
-    if (!Ember.empty(user) && !Ember.empty(user.get('locale'))) {
-      lang = user.get('locale');
-    }
-
-    return moment(this.get("createdAt")).locale(lang).format(this.get("format"));
+    return moment(this.get("createdAt")).format(this.get("format"));
   }.property('format', 'createdAt'),
 
   updatedAtFormat: function() {
-    var user = this.get('container').lookup("user:current"),
-      lang = 'zh-cn';
-
-    if (!Ember.empty(user) && !Ember.empty(user.get('locale'))) {
-      lang = user.get('locale');
-    }
-
-    return moment(this.get("updatedAt")).locale(lang).format(this.get("format"));
+    return moment(this.get("updatedAt")).format(this.get("format"));
   }.property('format', 'updatedAt')
 });

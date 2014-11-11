@@ -97,16 +97,20 @@ export default Ember.Object.extend({
     });
   },
 
-  distroyRecord: function(clazz, id) {
+  destroyRecord: function(clazz, id) {
     clazz = this._getModelClazz(clazz);
 
     var adapter = this.container.lookup('adapter:application');
 
-    return adapter.distroyRecord(clazz, id).then(function(){
+    return adapter.destroyRecord(clazz, id).then(function(){
       return Ember.RSVP.resolve();
     }, function(response){
-      return Ember.RSVP.reject(response.responseJSON || {'error': 'can not distroy record.'});
+      return Ember.RSVP.reject(response.responseJSON || {'error': 'can not destroy record.'});
     });
+  },
+
+  batchRecord: function() {
+
   },
 
   /*
@@ -205,8 +209,9 @@ export default Ember.Object.extend({
   /*
   * Update a record in cache
   */
-  _reload: function(clazz, record, id) {
-    cache[clazz.typeKey][id] = record;
+  _reload: function(clazz, record, modalData) {
+    cache[clazz.typeKey][modalData.id] = record;
+    this.normalize(record, modalData);
   },
 
   /*

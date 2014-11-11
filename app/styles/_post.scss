@@ -101,7 +101,7 @@
       }
 
       .post-tag {
-        padding: 4px 7px 3px 19px;
+        padding: 3px 7px 4px 19px;
         font: 700 .7em "lucida grande", helvetica, arial, sans-serif;
         color: #3d5295;
         text-shadow: 0 1px 0 rgba(255,255,255,.5);
@@ -148,11 +148,11 @@
       padding: 16px;
       border-bottom: 1px solid #eee;
 
-      & > .comment-item ~ .comment-item {
+      & > .comment-list-item ~ .comment-list-item {
         margin-top: 20px;
       }
 
-      .comment-item {
+      .comment-list-item {
         margin-top: 0px;
 
         .comment-username {
@@ -209,7 +209,7 @@
 }
 
 /* Inner Html css */
-.comment-item .comment-body, .post .post-body {
+.comment-list-item .comment-body, .post .post-body {
   p,code:before,table {
     margin: 0;
     padding: 0;
