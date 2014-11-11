@@ -48,6 +48,9 @@ app.import('bower_components/pagedown/Markdown.Sanitizer.js');
 app.import('bower_components/pagedown/Markdown.Editor.js');
 app.import('bower_components/pagedown/wmd-buttons.png');
 
+// epiceditor
+app.import('bower_components/EpicEditor/epiceditor/js/epiceditor.min.js');
+
 // nicescroll
 app.import('bower_components/jquery-nicescroll/jquery.nicescroll.min.js');
 

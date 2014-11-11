@@ -168,6 +168,7 @@ export default Ember.Object.extend({
   * end normalize
   */
 
+
   /*
   * Get Model Class by class name.
   */

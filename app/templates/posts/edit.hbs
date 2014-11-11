@@ -9,12 +9,12 @@
       {{select-picker content=bufferedCategories selection=category promptTranslation="blog.category"}}
     </fieldset>
     <fieldset>
-      {{epic-editor localStorageName=id}}
+      {{epic-editor localStorageName=id body=body}}
     </fieldset>
     <fieldset>
       <div class="pure-g">
         <div class="pure-u-1">
-          <button {{action 'createPost'}} class="pure-button pure-button-primary" {{bind-attr disabled="creating"}}>{{createTitle}}</button>
+          <button {{action 'editPost'}} class="pure-button pure-button-primary" {{bind-attr disabled="editting"}}>{{editTitle}}</button>
           {{#if showSpinner}}
             &nbsp; <i class='fa fa-spinner fa-spin'></i>
           {{else}}

@@ -13,19 +13,19 @@ export default Ember.View.extend({
   creator_url: "",
   creator_ip: "",
 
-  creatingIn: false,
+  creating: false,
   createDisabled: function() {
     var currentUser = this.container.lookup('user:current');
 
     if (!currentUser && !Validation.isEmail(this.get('creator_email'))) {
       return true;
     }
-    return this.get('creatingIn') || this.blank('body');
-  }.property('body', 'creator_email', 'creatingIn'),
+    return this.get('creating') || this.blank('body');
+  }.property('body', 'creator_email', 'creating'),
 
   showSpinner: function() {
-    return this.get('creatingIn');
-  }.property('creatingIn'),
+    return this.get('creating');
+  }.property('creating'),
 
   actions: {
     createComment: function() {
@@ -44,7 +44,7 @@ export default Ember.View.extend({
         creator: currentUser.get('id'),
       });
 
-      this.set('creatingIn', true);
+      this.set('creating', true);
       Alert.operating(Ember.I18n.t("post.comment.creating"));
 
       comment.save().then(function(record){
@@ -55,7 +55,7 @@ export default Ember.View.extend({
         post.setVal('comments', comments);
 
         post.save().then(function(){
-          __this.set('creatingIn', false);
+          __this.set('creating', false);
           __this.set("body", "");
           __this.set("creator_email", "");
           Alert.removeLoading();

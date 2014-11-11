@@ -6,7 +6,6 @@ export default Ember.View.extend({
   body: "",
 
   template: function() {
-    var converter = Markdown.getSanitizingConverter();
-    return Ember.Handlebars.compile(converter.makeHtml(this.get('body')));
+    return Ember.Handlebars.compile(marked(this.get('body')));
   }.property('body')
 });

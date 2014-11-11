@@ -90,12 +90,15 @@ var Model = Ember.Object.extend(Timestamps, {
     return this.get('modelData.%@'.fmt(keyName));
   },
 
-  changes: function() {
-    this.get('changeData');
-  },
-
   clearChanges: function() {
     this.set('changeData', {});
+  },
+
+  /*
+  * discard all changes before save.
+  */
+  discardChanges: function() {
+    this.get('store').normalize(this, this.get('modelData'));
   },
 
   save: function() {
