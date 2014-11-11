@@ -5,11 +5,11 @@ import Timestamps from '../mixins/timestamps';
 * how to use model
 *
 * var m = Model.create();
-* m.setVal('name', 'wluo');  ==> this will save name in modalData;
+* m.setVal('name', 'wluo');  ==> this will save name in modelData;
 * m.save();  ==> then, the name will save in model as a property.
 *
 * var m = store.find('modelType', id);
-* m.setVal('name', 'wluo11'); ==> this will save name in changeData and modalData.name is wluo11,
+* m.setVal('name', 'wluo11'); ==> this will save name in changeData and modelData.name is wluo11,
 *                                 but m.get('name') is wluo.
 * m.save();  ==> then changeData is empty, and m.get('name') is wluo11
 *
@@ -64,7 +64,7 @@ var Model = Ember.Object.extend(Timestamps, {
       v = value.getIds();
     }
 
-    // when the status is persistent, only after saving success, update the changes to modalData.
+    // when the status is persistent, only after saving success, update the changes to modelData.
     if (this.get('isPersistent')) {
       this.set('changeData.%@'.fmt(keyName), v);
     } else {
@@ -87,7 +87,7 @@ var Model = Ember.Object.extend(Timestamps, {
   },
 
   getVal: function(keyName) {
-    return this.get(keyName) || this.get('modelData.%@'.fmt(keyName));
+    return this.get('modelData.%@'.fmt(keyName));
   },
 
   changes: function() {
@@ -119,10 +119,10 @@ var Model = Ember.Object.extend(Timestamps, {
     } else {
       return store.updateRecord(clazz, this.get('id'), this.get('changeData')).then(function(responseJson){
         // update changeData
-        Ember.merge(__this.get('changeData'), responseJson);
+        Ember.merge(responseJson, __this.get('changeData'));
         __this.merge(responseJson);
 
-        store._reload(clazz, __this, __this.get('id'));
+        store._reload(clazz, __this, __this.get('modelData'));
         return Ember.RSVP.resolve(__this);
       }, function(errorJson){
         return Ember.RSVP.reject(errorJson || {'error': 'updateRecord error'});
@@ -135,7 +135,7 @@ var Model = Ember.Object.extend(Timestamps, {
       clazz = this.constructor,
       __this = this;
 
-    return store.distroyRecord(clazz, __this.get('id')).then(function(){
+    return store.destroyRecord(clazz, __this.get('id')).then(function(){
       __this.set('status', 'distroyed');
       store._pull(clazz, __this.get('id'));
       return Ember.RSVP.resolve();

@@ -19,12 +19,12 @@
             {{createdAtFormat}}
             <span class="divider"></span>
             {{t 'blog.category'}}<span class="colon"></span>
-            {{view 'post/post-category' category=category}}
+            {{view 'post/category' category=category}}
             {{#if tags.length}}
               <span class="divider"></span>
               {{t 'blog.tag'}}<span class="colon"></span>
               {{#each tags}}
-                {{view 'post/post-tag' tag=this}}
+                {{view 'post/tag' tag=this}}
               {{/each}}
             {{/if}}
             {{#if isMe}}
@@ -35,17 +35,13 @@
             {{/if}}
           </p>
         </header>
-        {{view 'post/post-body' body=body}}
+        {{view 'post/body' body=body}}
         <div class="post-commnets">
-          <div class="comment-header">{{comment_count}}{{t 'post.comment.count'}}</div>
-          {{!--#if model.comments}}
-            {{comment-list content=model.comments currentUser=currentUser}}
-          {{else}}
-            {{#gt model.comment_count 0}}
-              <div class="comment-loading"><div><i class="fa fa-spinner fa-spin"></i></div></div>
-            {{/gt}}
-          {{/if}}
-          {{comment-create post=model currentUser=currentUser--}}
+          <div class="comment-header">{{comments.length}}{{t 'post.comment.count'}}</div>
+          {{#greater-than comments.length 0}}
+            {{view 'post/comment-list' content=comments}}
+          {{/greater-than}}
+          {{view 'post/comment-create' post=model}}
         </div>
       </div>
     </div>

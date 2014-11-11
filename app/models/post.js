@@ -13,7 +13,7 @@ Post.reopenClass({
   typeKey: 'post',
   schema: {
     'belongTo': {'author': 'user', 'category': 'term'},
-    'hasMany': {'tags': 'term'}
+    'hasMany': {'tags': 'term', 'comments': 'comment'}
   }
 });
 

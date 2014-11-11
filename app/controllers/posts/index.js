@@ -70,8 +70,11 @@ export default Ember.ArrayController.extend({
     }, function(errorJson){
       Alert.warn(errorJson.error || errorJson.message);
     }).then(function(){
-      __this.set('isLoading', false);
-      Alert.removeLoading();
+      if (isFirstLoaded) {
+        __this.set('isLoading', false);
+      } else {
+        Alert.removeLoading();
+      }
 
       return Ember.RSVP.resolve();
     });

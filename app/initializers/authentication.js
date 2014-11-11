@@ -5,6 +5,9 @@ export var initialize = function(container, app) {
   // default to zh-cn
   Ember.I18n.translations = container.lookup("lang:zh-cn");
 
+  // moment lang
+  moment.locale("zh-cn");
+
   // don't boot until the user promise resolves.
   app.deferReadiness();
 
@@ -17,6 +20,7 @@ export var initialize = function(container, app) {
     app.inject('controller', 'currentUser', 'user:current');
     // set to user language
     Ember.I18n.translations = container.lookup("lang:%@".fmt(user.locale));
+    moment.locale(user.locale);
   }).catch(function(/*errorJson*/){
   }).then(function(){
     app.advanceReadiness();

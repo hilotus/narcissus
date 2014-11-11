@@ -1,0 +1,33 @@
+<div class="pure-g comment-item">
+  <div class="pure-u-1-8">
+    <div class="pure-g">
+      <img class="user-avatar" height="48" width="48" {{bind-attr src=view.content.creator.avatarPhoto}}>
+      <div class="pure-u-1 comment-username">{{view.content.creator.name}}</div>
+    </div>
+  </div>
+  <div class="pure-u-7-8">
+    {{#if view.isEditing}}
+      <div class="pure-form">
+        {{textarea class="pure-input-1" value=view.buffered}}
+      </div>
+      <div class="comment-operator">
+        <div class="ios-button" {{action 'cancel' target=view}}><label class="button-label">{{t 'button.cancel'}}</label></div>
+        <div class="ios-button" {{action 'save' target=view}}><label class="button-label">{{t 'button.save'}}</label></div>
+      </div>
+    {{else}}
+      {{view 'post/comment-body' body=view.content.body}}
+      <div class="pure-g">
+        <div class="pure-u-3-4 comment-time">{{view.content.format_created}}</div>
+        <div class="pure-u-1-4 comment-operator">
+          {{#if view.parentView.controller.currentUser}}
+            <div class="ios-button" {{action 'reply' target=view}}><label class="button-label">{{t 'button.reply'}}</label></div>
+          {{/if}}
+          {{#if view.content.isMe}}
+            <div class="ios-button" {{action 'edit' target=view}}><label class="button-label">{{t 'button.edit'}}</label></div>
+            <div class="ios-button" {{action 'delete' target=view}}><label class="button-label">{{t 'button.delete'}}</label></div>
+          {{/if}}
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</div>

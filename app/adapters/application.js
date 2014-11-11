@@ -87,7 +87,7 @@ export default Ember.Object.extend(ParseAjax, {
   * clazz: model class
   * id: record id
   */
-  distroyRecord: function(clazz, id) {
+  destroyRecord: function(clazz, id) {
     var typeKey;
     if (typeof(clazz) === 'string') {
       typeKey = clazz.capitalize();
