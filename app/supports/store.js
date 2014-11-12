@@ -154,9 +154,7 @@ export default Ember.Object.extend({
   * value: model column value
   */
   normalizeHasMany: function(record, typeKey, key, values) {
-    // TODO: normalize hasMany related column
     var store = this;
-
     record.set(key, []);
     values.forEach(function(value){
       store.find(typeKey, value).then(function(r){

@@ -22,13 +22,10 @@ export default Ember.ObjectController.extend({
         return;
       }
 
-      var model = this.get('model'), body,
+      var model = this.get('model'),
+        body = model.get('body'),
         store = this.store,
         __this = this;
-
-      try{
-        body = JSON.parse(localStorage['epiceditor']).epiceditor.content;
-      }catch(ex){}
 
       if (!model.get('title') || !model.get('title').trim() || !body || !model.get("category")) {
         Alert.warn(Ember.I18n.t("posts.create.error"), Ember.I18n.t("posts.create.error.check.unpass"));

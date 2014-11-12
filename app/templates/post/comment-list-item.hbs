@@ -8,7 +8,7 @@
   <div class="pure-u-7-8">
     {{#if view.isEditing}}
       <div class="pure-form">
-        {{textarea class="pure-input-1" value=view.buffered}}
+        {{epic-editor localStorageName=view.content.id body=view.buffered minHeight=150 maxHeight=200}}
       </div>
       <div class="comment-operator">
         <div class="ios-button" {{action 'cancel' target=view}}><label class="button-label">{{t 'button.cancel'}}</label></div>
