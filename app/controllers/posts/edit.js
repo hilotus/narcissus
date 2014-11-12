@@ -20,10 +20,9 @@ export default Ember.ObjectController.extend({
         return;
       }
 
-      var post = this.get('model'), body, __this = this;
-      try{
-        body = JSON.parse(localStorage['epiceditor-%@'.fmt(post.get('id'))]).epiceditor.content;
-      }catch(ex){}
+      var post = this.get('model'),
+        body = post.get('body'),
+        __this = this;
 
       if (!post.get('title') || !post.get('title').trim() || !body || !post.get("category")) {
         Alert.warn(Ember.I18n.t("posts.edit.error"), Ember.I18n.t("posts.edit.error.check.unpass"));

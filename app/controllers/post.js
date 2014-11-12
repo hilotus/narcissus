@@ -8,6 +8,7 @@ export default Ember.ObjectController.extend({
       var post = this.get("model");
       this.transitionToRoute("posts.edit", post);
     },
+
     delete: function() {
       var controller = this,
         post = this.get("model"),
@@ -29,6 +30,42 @@ export default Ember.ObjectController.extend({
             controller.transitionToRoute('posts.index');
           });
         }
+      });
+    },
+
+    // create comment for post
+    createComment: function(view) {
+      var __this = this,
+        currentUser = this.get('currentUser'),
+        store = this.get('store');
+
+      var comment = store._getModelClazz('comment').create();
+      comment.setVals({
+        post: this.get("model.id"),
+        body: view.get("body"),
+        creator_name: view.get('creator_name') || currentUser.get('name'),
+        creator_email: view.get('creator_email') || currentUser.get('email'),
+        creator_url: view.get('creator_url'),
+        creator_ip: view.get('creator_ip'),
+        creator: currentUser.get('id'),
+      });
+
+      view.set('creating', true);
+      Alert.operating(Ember.I18n.t("post.comment.creating"));
+
+      comment.save().then(function(record){
+        var post = __this.get('model'),
+          comments = post.getVal('comments');
+
+        comments.insertAt(0, record.get('id'));
+        post.setVal('comments', comments);
+
+        post.save().then(function(){
+          view.set('creating', false);
+          view.set("body", "");
+          view.set("creator_email", "");
+          Alert.removeLoading();
+        });
       });
     }
   }

@@ -6,7 +6,6 @@ export default Ember.View.extend({
   category: null,
   template: Ember.Handlebars.compile("{{view.category.name}}"),
 
-  // TODO: click category in post page.
   click: function() {
   },
 

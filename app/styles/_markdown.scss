@@ -355,6 +355,17 @@
   border:none;
 }
 
+.post .post-body strong{
+  font-weight:bold;
+}
+
+.post .post-body {
+  i, cite, em, var, address, dfn {
+    font-style: italic;
+  }
+}
+
+
 
 .comment-list-item .comment-body{
   padding-top:10px;
@@ -711,4 +722,14 @@
 .comment-list-item .comment-body pre tt{
   background-color:transparent;
   border:none;
+}
+
+.comment-list-item .comment-body strong{
+  font-weight:bold;
+}
+
+.comment-list-item .comment-body {
+  i, cite, em, var, address, dfn {
+    font-style: italic;
+  }
 }
