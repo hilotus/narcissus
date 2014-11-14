@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   tagName: 'li',
+  // layoutName: 'select-picker-single-list-item',
   classNameBindings: [':result', ':not-multiple', 'isMouseEnter:highlighted', 'isSelected:selected'],
   isMouseEnter: false,
 
@@ -27,8 +28,5 @@ export default Ember.Component.extend({
     this.set('parentView.isActive', false);
     this.set('parentView.selection', this.get('isSelected') ? null : content);
     return true;
-  },
-
-  // <div class="count">× 12</div>, for badge
-  layout: Ember.Handlebars.compile('<div class="badge">{{view.content.name}}</div>')
+  }
 });

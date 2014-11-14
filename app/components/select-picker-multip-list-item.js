@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   tagName: 'li',
+  // layoutName: 'select-picker-multip-list-item',
   classNameBindings: [':result'],
 
   attributeBindings: ['style'],
@@ -46,8 +47,6 @@ export default Ember.Component.extend({
       return v;
     }
   }.property(),
-
-  layout: Ember.Handlebars.compile('{{check-box text=content.name value=value isFocus=isFocus}}'),
 
   didInsertElement: function() {
     var self = this;

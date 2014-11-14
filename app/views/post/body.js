@@ -5,7 +5,16 @@ export default Ember.View.extend({
 
   body: "",
 
-  template: function() {
-    return Ember.Handlebars.compile(marked(this.get('body')));
-  }.property('body')
+  renderBody: function() {
+    this._renderView(this.get('body'));
+  }.observes('body'),
+
+  didInsertElement: function() {
+    this._renderView(this.get('body'));
+  },
+
+  _renderView: function(body) {
+    this.$().empty();
+    this.$().append(marked(body));
+  }
 });

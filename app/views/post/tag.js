@@ -4,8 +4,11 @@ export default Ember.View.extend({
   tagName: 'a',
   classNames: ['post-tag'],
   tag: null,
-  template: Ember.Handlebars.compile("{{view.tag.name}}"),
 
   click: function() {
+  },
+
+  didInsertElement: function() {
+    this.$().text(this.get('tag.name'));
   }
 });
