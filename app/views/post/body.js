@@ -6,11 +6,15 @@ export default Ember.View.extend({
   body: "",
 
   renderBody: function() {
-    this._renderView(this.get('body'));
+    if (!this.blank('body')) {
+      this._renderView(this.get('body'));
+    }
   }.observes('body'),
 
   didInsertElement: function() {
-    this._renderView(this.get('body'));
+    if (!this.blank('body')) {
+      this._renderView(this.get('body'));
+    }
   },
 
   _renderView: function(body) {
