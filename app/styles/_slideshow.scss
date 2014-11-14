@@ -1,20 +1,14 @@
 $img-width: 600px;
 $img-height: 300px;
 
-@-webkit-keyframes slideshow {
-  0% { opacity:0; }
-  12% { opacity:1; -webkit-transform:scale(1.03) }
-  25% { opacity:1; -webkit-transform:scale(1.06) }
-  37% { opacity:0; -webkit-transform:scale(1.30) }
-  100% { opacity:0; }
-}
-@-moz-keyframes slideshow {
+@include keyframes(slideshow) {
   0% { opacity:0; }
   12% { opacity:1; -moz-transform:scale(1.03) }
   25% { opacity:1; -moz-transform:scale(1.06) }
   37% { opacity:0; -moz-transform:scale(1.30) }
   100% { opacity:0; }
 }
+
 .slideshow {
   position: relative;
   width: 100%;
@@ -71,8 +65,7 @@ $img-height: 300px;
   zoom: $rate;
 }
 
-/*http://www.w3cplus.com/codes/Media-Queries-Using-EMs.html*/
-@media (min-width: 330px) {
+@media screen and (min-width: 330px) {
   .slideshow ul {
     @include slideshow-ul(0.6);
   }
@@ -80,7 +73,7 @@ $img-height: 300px;
     @include slideshow-ul-img(0.6);
   }
 }
-@media (min-width: 560px){
+@media screen and (min-width: 560px){
   .slideshow ul {
     @include slideshow-ul(0.7);
   }
@@ -88,7 +81,7 @@ $img-height: 300px;
     @include slideshow-ul-img(0.7);
   }
 }
-@media (min-width: 780px) {
+@media screen and (min-width: 780px) {
   .slideshow ul {
     @include slideshow-ul(0.8);
   }
@@ -96,7 +89,7 @@ $img-height: 300px;
     @include slideshow-ul-img(0.8);
   }
 }
-@media (min-width: 920px) {
+@media screen and (min-width: 920px) {
   .slideshow ul {
     @include slideshow-ul(1);
   }

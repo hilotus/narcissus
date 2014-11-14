@@ -173,16 +173,16 @@ $nav-width: 600px;
   }
 }
 
-@media (min-width: 330px) {
+@media screen and (min-width: 330px) {
   @include navigation-well-width(0.5)
 }
-@media (min-width: 560px){
+@media screen and (min-width: 560px){
   @include navigation-well-width(0.65)
 }
-@media (min-width: 780px) {
+@media screen and (min-width: 780px) {
   @include navigation-well-width(0.8)
 }
-@media (min-width: 920px) {
+@media screen and (min-width: 920px) {
   @include navigation-well-width(1)
 }
 
