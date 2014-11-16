@@ -47,7 +47,13 @@ export default Ember.Component.extend({
         __this.set('body', body);
       }catch(ex){}
     });
-    editor.load();
+    var previewer;
+    editor.on('preview', function () {
+      $(previewer.head).append('<link rel="stylesheet" href="https://github.com/components/highlightjs/raw/master/styles/github.css" type="text/css"/>');
+    });
+    editor.load(function(){
+      previewer = this.getElement('previewer');
+    });
   },
 
   willDestroyElement: function() {

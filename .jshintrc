@@ -8,8 +8,9 @@
     "md5",
     "moment",
     "Markdown",
+    "EpicEditor",
     "marked",
-    "EpicEditor"
+    "hljs"
   ],
   "browser" : true,
   "boss" : true,

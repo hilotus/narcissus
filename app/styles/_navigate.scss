@@ -1,20 +1,15 @@
-$nav-width: 600px;
-
 .navigation {
   width: 100%;
+  position: relative;
 
   .navigation-well {
-    width: $nav-width;
-    margin: 0 auto;
     overflow: hidden;
 
     .navigatable-channel {
       .navigatable {
-        width: $nav-width;
         float: left;
 
         .navigatable-title {
-          width: $nav-width;
           text-align: center;
           height: 44px;
           line-height: 44px;
@@ -35,8 +30,6 @@ $nav-width: 600px;
         }
 
         .sections {
-          width: $nav-width;
-
           .section {
             .section-title {
               height: 33px;
@@ -154,18 +147,41 @@ $nav-width: 600px;
   }
 }
 
+/*
+* Responsive navigation
+*/
+$navigatable-width: 600px;
+
+@mixin centre($axis: "both") {
+  position:absolute;
+  @if $axis == "y" {
+    top: 50%;
+    @include translateY(-50%);
+  }
+  @if $axis == "x" {
+    left: 50%;
+    @include translateX(-50%);
+  }
+  @if $axis == "both" {
+    top: 50%;
+    left: 50%;
+    @include translate(-50%, -50%);
+  }
+}
+
 @mixin navigation-well-width($rate) {
   .navigation {
     .navigation-well {
-      width: $nav-width * $rate;
+      width: $navigatable-width * $rate;
+      @include centre('x');
       .navigatable-channel {
         .navigatable {
-          width: $nav-width * $rate;
+          width: $navigatable-width * $rate;
           .navigatable-title {
-            width: $nav-width * $rate;
+            width: $navigatable-width * $rate;
           }
           .sections {
-            width: $nav-width * $rate;
+            width: $navigatable-width * $rate;
           }
         }
       }

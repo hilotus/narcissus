@@ -38,6 +38,11 @@ export var initialize = function(container/*, application*/) {
   var store = container.lookup('store:main');
   Model.reopen({store: store});
 
+  // marked
+  marked.defaults.highlight = function (code) {
+    return hljs.highlightAuto(code).value;
+  };
+
   // nicescroll
   $("html").niceScroll({ cursorwidth: "6px" });
 };

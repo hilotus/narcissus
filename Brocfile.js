@@ -25,11 +25,11 @@ app.import('bower_components/ember-i18n/lib/i18n.js');
 app.import('bower_components/pure/pure-min.css');
 
 // font awesome
-app.import('bower_components/font-awesome/fonts/fontawesome-webfont.ttf');
-app.import('bower_components/font-awesome/fonts/fontawesome-webfont.eot');
-app.import('bower_components/font-awesome/fonts/fontawesome-webfont.svg');
-app.import('bower_components/font-awesome/fonts/fontawesome-webfont.woff');
-app.import('bower_components/font-awesome/fonts/fontawesome.otf');
+app.import('bower_components/font-awesome/fonts/fontawesome-webfont.ttf', {destDir: "fonts"});
+app.import('bower_components/font-awesome/fonts/fontawesome-webfont.eot', {destDir: "fonts"});
+app.import('bower_components/font-awesome/fonts/fontawesome-webfont.svg', {destDir: "fonts"});
+app.import('bower_components/font-awesome/fonts/fontawesome-webfont.woff', {destDir: "fonts"});
+app.import('bower_components/font-awesome/fonts/fontawesome.otf', {destDir: "fonts"});
 app.import('bower_components/font-awesome/css/font-awesome.min.css');
 
 // moment
@@ -42,14 +42,10 @@ app.import('bower_components/pace/themes/blue/pace-theme-flash.css');
 // js-md5
 app.import('bower_components/js-md5/js/md5.min.js');
 
-// pageDown
-app.import('bower_components/pagedown/Markdown.Converter.js');
-app.import('bower_components/pagedown/Markdown.Sanitizer.js');
-app.import('bower_components/pagedown/Markdown.Editor.js');
-app.import('bower_components/pagedown/wmd-buttons.png');
-
 // epiceditor
 app.import('bower_components/EpicEditor/epiceditor/js/epiceditor.min.js');
+// highlightjs
+app.import('bower_components/highlightjs/highlight.pack.js');
 
 // nicescroll
 app.import('bower_components/jquery-nicescroll/jquery.nicescroll.min.js');
