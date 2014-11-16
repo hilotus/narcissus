@@ -68,7 +68,7 @@ export default Ember.ArrayController.extend({
         __this.set('isLoadedAll', true);
       }
     }, function(errorJson){
-      Alert.warn(errorJson.error || errorJson.message);
+      Alert.warn(errorJson.error);
     }).then(function(){
       if (isFirstLoaded) {
         __this.set('isLoading', false);

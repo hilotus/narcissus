@@ -22,7 +22,11 @@ export default Ember.Mixin.create({
         if (json instanceof Error) {
           Ember.run(null, reject, json);
         } else {
-          Ember.run(null, resolve, json);
+          if (!!options && !!options.batchRecords) {
+            Ember.run(null, resolve, {'responseJson': json, 'batchRecords': options.batchRecords});
+          } else {
+            Ember.run(null, resolve, json);
+          }
         }
       };
 
@@ -81,10 +85,15 @@ export default Ember.Mixin.create({
   buildUrl: function(url) {
     var adapter = this;
 
-    if (url.match(/users|Password|login/)) {
+    if (url.match(/users|Password|login|batch/)) {
       return adapter.get('host') + '/' + adapter.get('namespace') + '/' + url;
     } else {
       return adapter.get('host') + '/' + adapter.get('namespace') + '/' + adapter.get('classesPath') + '/' + url;
     }
+  },
+
+  buildBatchPath: function(typeKey, id) {
+    return '/' + this.get('namespace') + '/' + this.get('classesPath') + '/' +
+      typeKey + (Ember.isBlank(id) ? '' : ('/' + id));
   }
 });

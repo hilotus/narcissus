@@ -40,7 +40,7 @@ export default Ember.ObjectController.extend({
       post.save().then(function(){
         __this.transitionToRoute('post', post);
       }, function(errorJson){
-        Alert.warn(errorJson.error || errorJson.message);
+        Alert.warn(errorJson.error);
       }).then(function(){
         __this.set('editting', false);
         Alert.removeLoading();

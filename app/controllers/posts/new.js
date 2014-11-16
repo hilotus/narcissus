@@ -46,7 +46,7 @@ export default Ember.ObjectController.extend({
         __this.get('controllers.posts/index.model').insertAt(0, newRecord);
         __this.transitionToRoute("posts.index");
       }, function(errorJson){
-        Alert.warn(errorJson.error || errorJson.message);
+        Alert.warn(errorJson.error);
       }).then(function(){
         __this.set('creating', true);
         Alert.removeLoading();

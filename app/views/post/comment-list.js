@@ -31,25 +31,27 @@ export default Ember.CollectionView.extend({
       },
 
       delete: function() {
-        var comment = this.get('content'),
+        var store = this.container.lookup('store:main'),
+          comment = this.get('content'),
           post = this.get('content.post');
 
         Alert.warn(Ember.I18n.t("post.comment.delete.confirm"), "", [
           Ember.I18n.t("button.cancel"),
           Ember.I18n.t("button.delete")
         ], function(i) {
-          if (i === 2) {  // 删除
+          if (i === 2) {  // ok to destory
             Alert.operating(Ember.I18n.t("post.comment.deleting"));
 
-            comment.destroyRecord().then(function(){
-              var comments = post.getVal('comments');
+            var comments = post.getVal('comments');
+            comments.removeObject(comment.get('id'));
+            post.setVal('comments', comments);
 
-              comments.removeObject(comment.get('id'));
-              post.setVal('comments', comments);
-
-              post.save().then(function(){
-                Alert.removeLoading();
-              });
+            store.batch({'destroys': [comment], 'updates': [post]}).then(function(){
+            }, function(errorJson){
+                Alert.warn(errorJson.error);
+              }
+            ).then(function(){
+              Alert.removeLoading();
             });
           }
         });

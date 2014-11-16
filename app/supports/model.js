@@ -90,6 +90,16 @@ var Model = Ember.Object.extend(Timestamps, {
     return this.get('modelData.%@'.fmt(keyName));
   },
 
+  // return post
+  getTypeKey: function() {
+    return this.constructor.typeKey;
+  },
+
+  // return Post
+  getCapitalizeTypeKey: function() {
+    return this.constructor.typeKey.capitalize();
+  },
+
   clearChanges: function() {
     this.set('changeData', {});
   },
@@ -112,23 +122,17 @@ var Model = Ember.Object.extend(Timestamps, {
 
     if (this.get('isNew')) {
       return store.createRecord(clazz, this.get('modelData')).then(function(responseJson){
-        __this.merge(responseJson);
-
-        store._push(clazz, __this);
+        store._push(clazz, responseJson, __this);
         return Ember.RSVP.resolve(__this);
       }, function(errorJson){
-        return Ember.RSVP.reject(errorJson || {'error': 'createRecord error'});
+        return Ember.RSVP.reject(errorJson);
       });
     } else {
       return store.updateRecord(clazz, this.get('id'), this.get('changeData')).then(function(responseJson){
-        // update changeData
-        Ember.merge(responseJson, __this.get('changeData'));
-        __this.merge(responseJson);
-
-        store._reload(clazz, __this, __this.get('modelData'));
+        store._reload(__this.getTypeKey(), __this, responseJson);
         return Ember.RSVP.resolve(__this);
       }, function(errorJson){
-        return Ember.RSVP.reject(errorJson || {'error': 'updateRecord error'});
+        return Ember.RSVP.reject(errorJson);
       });
     }
   },
@@ -140,10 +144,10 @@ var Model = Ember.Object.extend(Timestamps, {
 
     return store.destroyRecord(clazz, __this.get('id')).then(function(){
       __this.set('status', 'distroyed');
-      store._pull(clazz, __this.get('id'));
+      store._pull(__this.getTypeKey(), __this.get('id'));
       return Ember.RSVP.resolve();
     }, function(errorJson){
-      return Ember.RSVP.reject(errorJson || {'error': 'destroyRecord error'});
+      return Ember.RSVP.reject(errorJson);
     });
   }
 });

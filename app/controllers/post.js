@@ -11,23 +11,27 @@ export default Ember.ObjectController.extend({
 
     delete: function() {
       var controller = this,
+        store = this.get('store'),
         post = this.get("model"),
-        comments = post.get('comments');
+        comments = post.get('comments'),
+        destroys = [];
 
       Alert.warn(Ember.I18n.t("posts.destroy.prompt"), Ember.I18n.t("posts.destroy.body"),
         [Ember.I18n.t("button.cancel"), Ember.I18n.t("button.delete")], function(i){
-        if (i === 2) { // ok
+        if (i === 2) { // ok to delete post
           Alert.operating(Ember.I18n.t("button.deleting"));
 
-          post.destroyRecord().then(function(){
-            comments.forEach(function(comment){
-              comment.destroyRecord();
-            });
+          destroys.pushObjects(comments);
+          destroys.pushObject(post);
 
-            Alert.removeLoading();
-          }).then(function(){
+          store.batch({'destroys': destroys}).then(function(){
             controller.get('controllers.posts/index.model').removeObject(post);
             controller.transitionToRoute('posts.index');
+          }, function(errorJson){
+              Alert.warn(errorJson.error);
+            }
+          ).then(function(){
+            Alert.removeLoading();
           });
         }
       });

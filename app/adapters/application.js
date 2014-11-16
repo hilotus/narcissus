@@ -96,5 +96,51 @@ export default Ember.Object.extend(ParseAjax, {
     }
 
     return this.ajax(typeKey + '/' + id, 'DELETE');
+  },
+
+  /*
+  * Batch Operations:
+  *   https://www.parse.com/docs/rest#objects-batch
+  * operations: {creates: [], updates: [], destroys: []}, record arrays.
+  */
+  batch: function(operations) {
+    var requests = [],
+      records = [],
+      __this = this;
+
+    operations.creates = operations.creates || [];
+    operations.updates = operations.updates || [];
+    operations.destroys = operations.destroys || [];
+
+    // create record
+    operations.creates.forEach(function(record){
+      requests.push({
+        'method': 'POST',
+        'path': __this.buildBatchPath(record.getCapitalizeTypeKey()),
+        'body': record.get('modelData')
+      });
+      records.push(record);
+    });
+
+    // update record
+    operations.updates.forEach(function(record){
+      requests.push({
+        'method': 'PUT',
+        'path': __this.buildBatchPath(record.getCapitalizeTypeKey(), record.get('id')),
+        'body': record.get('changeData')
+      });
+      records.push(record);
+    });
+
+    // destroy record
+    operations.destroys.forEach(function(record){
+      requests.push({
+        'method': 'DELETE',
+        'path': __this.buildBatchPath(record.getCapitalizeTypeKey(), record.get('id'))
+      });
+      records.push(record);
+    });
+
+    return this.ajax('batch', 'POST', {'data': {'requests': requests}, 'batchRecords': records});
   }
 });

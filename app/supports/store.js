@@ -49,6 +49,8 @@ export default Ember.Object.extend({
       return Ember.RSVP.resolve(records);
     }, function(response){
       return Ember.RSVP.reject(response.responseJSON || {'error': 'find no records.'});
+    }).catch(function(exception){
+      return Ember.RSVP.reject({'error': exception.message});
     });
   },
 
@@ -67,7 +69,9 @@ export default Ember.Object.extend({
       var record = store._push(clazz, responseJson);
       return Ember.RSVP.resolve(record);
     }, function(response){
-      return Ember.RSVP.reject(response.responseJSON || {'error': 'find no records.'});
+      return Ember.RSVP.reject(response.responseJSON || {'error': 'find no records has some errors.'});
+    }).catch(function(exception){
+      return Ember.RSVP.reject({'error': exception.message});
     });
   },
 
@@ -81,7 +85,9 @@ export default Ember.Object.extend({
       data.updatedAt = responseJson.createdAt;
       return Ember.RSVP.resolve(Ember.merge(data, responseJson));
     }, function(response){
-      return Ember.RSVP.reject(response.responseJSON || {'error': 'can not create record.'});
+      return Ember.RSVP.reject(response.responseJSON || {'error': 'create record has some errors.'});
+    }).catch(function(exception){
+      return Ember.RSVP.reject({'error': exception.message});
     });
   },
 
@@ -93,7 +99,9 @@ export default Ember.Object.extend({
     return adapter.updateRecord(clazz, id, data).then(function(responseJson){
       return Ember.RSVP.resolve(responseJson);
     }, function(response){
-      return Ember.RSVP.reject(response.responseJSON || {'error': 'can not update record.'});
+      return Ember.RSVP.reject(response.responseJSON || {'error': 'update record has some errors.'});
+    }).catch(function(exception){
+      return Ember.RSVP.reject({'error': exception.message});
     });
   },
 
@@ -105,13 +113,38 @@ export default Ember.Object.extend({
     return adapter.destroyRecord(clazz, id).then(function(){
       return Ember.RSVP.resolve();
     }, function(response){
-      return Ember.RSVP.reject(response.responseJSON || {'error': 'can not destroy record.'});
+      return Ember.RSVP.reject(response.responseJSON || {'error': 'destroy record has some errors.'});
+    }).catch(function(exception){
+      return Ember.RSVP.reject({'error': exception.message});
     });
   },
 
-  batchRecord: function() {
+  batch: function(operations) {
+    var adapter = this.container.lookup('adapter:application'),
+      store = this;
 
+    return adapter.batch(operations).then(function(response){
+      var results = response.responseJson,
+        records = response.batchRecords;
+
+      results.forEach(function(result, index){
+        var record = records[index];
+        if (typeof(result.success) === 'boolean') {  // destroy success
+          store._pull(record.getTypeKey(), record.get('id'));
+        } else if (result.success.objectId) {  // create success
+          store._push(record.constructor, result, record);
+        } else {  // update success
+          store._reload(record.getTypeKey(), record, result);
+        }
+      });
+      return Ember.RSVP.resolve();
+    }, function(response){
+      return Ember.RSVP.reject(response.responseJSON || {'error': 'batch operations has some errors.'});
+    }).catch(function(exception){
+      return Ember.RSVP.reject({'error': exception.message});
+    });
   },
+
 
   /*
   * set model properties
@@ -181,44 +214,41 @@ export default Ember.Object.extend({
   /*
   * get Model instance
   */
-  _push: function(clazz, data) {
-    var record;
+  _push: function(clazz, json, record) {
+    json.id = json.id || json.objectId;
 
-    if (data instanceof Ember.Object) {
-      record = data;
-    } else {
-      data.id = data.id || data.objectId;
+    if (Ember.isNone(record)) {
       record = clazz.create();
-      record.merge(data);
     }
+
+    record.merge(json);
 
     cache[clazz.typeKey] = cache[clazz.typeKey] || {};
-    cache[clazz.typeKey][data.id] = record;
+    cache[clazz.typeKey][json.id] = record;
 
     // normalize record.
-    if (data instanceof Ember.Object) {
-      this.normalize(record, data.get('modelData'));
-    } else {
-      this.normalize(record, data);
-    }
-
+    this.normalize(record, record.get('modelData'));
     return record;
   },
 
   /*
   * Update a record in cache
   */
-  _reload: function(clazz, record, modalData) {
-    cache[clazz.typeKey][modalData.id] = record;
-    this.normalize(record, modalData);
+  _reload: function(typeKey, record, json) {
+    // use merged responseJson to update changeData
+    Ember.merge(json, record.get('changeData'));
+    record.merge(json);
+
+    cache[typeKey][record.get('id')] = record;
+    this.normalize(record, record.get('modelData'));
   },
 
   /*
   * Delete a record from cache
   */
-  _pull: function(clazz, id) {
-    if (cache[clazz.typeKey][id]) {
-      delete cache[clazz.typeKey][id];
+  _pull: function(typeKey, id) {
+    if (cache[typeKey][id]) {
+      delete cache[typeKey][id];
     }
   }
 });
