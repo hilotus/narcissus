@@ -1,9 +1,9 @@
 <div class="modal-body">
   <div class="pure-form">
-    <fieldset class="pure-group">
+    {{!--<fieldset class="pure-group">
       <button type="button" class="pure-button" {{action 'externalLogin' 'google'}}><i class="fa fa-google-plus-square" style="font-size:18px;"></i>&nbsp;{{t "login.with.google"}}</button>
       <button type="button" class="pure-button" {{action 'externalLogin' 'github'}}><i class="fa fa-github-alt" style="font-size:18px;"></i>&nbsp;{{t "login.with.github"}}</button>
-    </fieldset>
+    </fieldset>--}}
     <fieldset class="pure-group">
       {{input type="text" class="pure-input-1-2" autocorrect="off" autocapitalize="off" autofocus="autofocus" value=username placeholderTranslation="login.username"}}
       {{input type="password" class="pure-input-1-2" value=password placeholderTranslation="login.password"}}

@@ -23,9 +23,9 @@ export default Ember.Component.extend({
       textarea: $textarea[0],
       localStorageName: this.get('localStorageName'),
       theme: {
-        base: 'http://epiceditor.com/epiceditor/themes/base/epiceditor.css',
-        preview: 'http://epiceditor.com/epiceditor/themes/preview/github.css',
-        editor: 'http://epiceditor.com/epiceditor/themes/editor/epic-light.css'
+        base: 'http://lotus-assets.qiniudn.com/epiceditor/themes/base/epiceditor.css',
+        preview: 'http://lotus-assets.qiniudn.com/epiceditor/themes/preview/github.css',
+        editor: 'http://lotus-assets.qiniudn.com/epiceditor/themes/editor/epic-light.css'
       },
       autogrow: {
         minHeight: this.get('minHeight') || 350,
@@ -49,7 +49,7 @@ export default Ember.Component.extend({
     });
     var previewer;
     editor.on('preview', function () {
-      $(previewer.head).append('<link rel="stylesheet" href="https://github.com/components/highlightjs/raw/master/styles/github.css" type="text/css"/>');
+      $(previewer.head).append('<link rel="stylesheet" href="http://lotus-assets.qiniudn.com/highlightjs/styles/github.css" type="text/css"/>');
     });
     editor.load(function(){
       previewer = this.getElement('previewer');
