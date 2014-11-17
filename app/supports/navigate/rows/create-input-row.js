@@ -29,12 +29,16 @@ export default Row.extend({
     data[this.get('bindedName')] = value;
     data = Ember.merge(data, this.get('defaultValue'));
 
-    var term = store._getModelClazz(this.get('bindedModel')).create();
-    term.setVals(data);
-    term.save().then(function(newRecord){
+    var record = store._getModelClazz(this.get('bindedModel')).create();
+    record.setVals(data);
+
+    Alert.operating(Ember.I18n.t("button.creating"));
+    record.save().then(function(newRecord){
       __this.onCreateSuccess(__this, newRecord);
     }, function(errorJson){
       Alert.warn(errorJson.error);
+    }).then(function(){
+      Alert.removeLoading();
     });
   }
 });

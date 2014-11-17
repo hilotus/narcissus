@@ -1,11 +1,25 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend({
-  type: "",
-  // a navigatable view which contains the row
+  /*
+  * a navigatable view which contains the row.
+  * controller in navigatable view is a navigationController.
+  */
   owner: null,
-  store: null,
-  currentUser: null,
+
+  // a section which contains the row
+  section: null,
+
+  store: function() {
+    return this.get('owner.controller.store');
+  }.property('owner'),
+
+  currentUser: function() {
+    return this.get('owner.controller.currentUser');
+  }.property('owner'),
+
+  // row type
+  type: '',
 
   isSelect: function() {
     return this.get("type") === "select";
@@ -37,5 +51,5 @@ export default Ember.Object.extend({
 
   isButton: function() {
     return this.get('type') === "button";
-  }.property("type"),
+  }.property("type")
 });

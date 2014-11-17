@@ -2,6 +2,7 @@ import Ember from 'ember';
 import Alert from 'narcissus/utils/alert';
 import NavigatableView from '../navigate/navigatable';
 
+import Section from '../../supports/navigate/section';
 import DescriptionRow from '../../supports/navigate/rows/description-row';
 import SwitchRow from '../../supports/navigate/rows/switch-row';
 import DescriptionUpdateRow from '../../supports/navigate/rows/description-update-row';
@@ -18,37 +19,34 @@ export default NavigatableView.extend({
   },
 
   sections: ["optionsSection"],
-  optionsSection: Ember.Object.extend({
+  optionsSection: Section.extend({
     titleTranslation: 'settings.sectionheader.option',
 
     rows: ['username','email', 'name', 'demo'],
 
     username: DescriptionRow.extend({
       titleTranslation: 'settings.mine.username',
-      description: Ember.computed.oneWay('currentUser.username')
+      description: Ember.computed.oneWay('owner.controller.currentUser.username')
     }),
 
     email: DescriptionRow.extend({
       titleTranslation: 'settings.mine.email',
-      description: Ember.computed.oneWay('currentUser.email')
+      description: Ember.computed.oneWay('owner.controller.currentUser.email')
     }),
 
     name: DescriptionUpdateRow.extend({
       titleTranslation: 'settings.mine.name',
-      description: Ember.computed.oneWay('currentUser.name'),
-      bufferedDescription: Ember.computed.oneWay('currentUser.name'),
+      description: Ember.computed.oneWay('owner.controller.currentUser.name'),
+      bufferedDescription: Ember.computed.oneWay('owner.controller.currentUser.name'),
 
       doneEditing: function() {
-        var __this = this;
-        // update logic
+        // update user name logic
         if (Ember.isEmpty(this.get('bufferedDescription'))) {
           this.set('bufferedDescription', this.get('description'));
         } else if (this.get('description') !== this.get('bufferedDescription')) {
-          var user = this.get('currentUser');
+          var user = this.get('owner.controller.currentUser');
           user.setVal('name', this.get('bufferedDescription'));
-          user.save().then(function(){
-            __this.set('description', __this.get('bufferedDescription'));
-          }).catch(function(errorJson){
+          user.save().catch(function(errorJson){
             Alert.warn(errorJson.error);
           });
         }

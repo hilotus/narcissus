@@ -86,9 +86,11 @@
                   .select-icon {
                     position: absolute;
                     height: inherit;
-                    right: 10px;
+                    right: 0px;
                     top: 0px;
                     font-size: 14px;
+                    width: 30px;
+                    text-align: center;
 
                     /* 针对于selectRow右边的有按钮意义的图标 */
                     &:hover {

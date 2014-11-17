@@ -24,15 +24,14 @@ export default Row.extend({
     if (Ember.isEmpty(this.get('bufferedTitle'))) {
       this.set('bufferedTitle', this.get('title'));
     } else if (this.get('title') !== this.get('bufferedTitle')) {
-      var record = this.get('record'),
-        __this = this;
+      Alert.operating(Ember.I18n.t("button.editting"));
 
+      var record = this.get('record');
       record.setVal(this.get('bindedName'), this.get('bufferedTitle'));
-      record.save().then(function(){
-        // set title new value
-        __this.set('title', __this.get('bufferedTitle'));
-      }).catch(function(errorJson){
+      record.save().catch(function(errorJson){
         Alert.warn(errorJson.error);
+      }).then(function(){
+        Alert.removeLoading();
       });
     }
 
@@ -51,10 +50,18 @@ export default Row.extend({
     var record = this.get('record'),
       __this = this;
 
-    record.destroyRecord().then(function(){
-      __this.onDeletedSuccess(__this);
-    }).catch(function(errorJson){
-      Alert.warn(errorJson.error);
+    Alert.warn(Ember.I18n.t("destroy.prompt"), Ember.I18n.t("destroy.body"),
+      [Ember.I18n.t("button.cancel"), Ember.I18n.t("button.delete")], function(i){
+      if (i === 2) { // ok to delete
+        Alert.operating(Ember.I18n.t("button.deleting"));
+        record.destroyRecord().then(function(){
+          __this.onDeletedSuccess(__this);
+        }).catch(function(errorJson){
+          Alert.warn(errorJson.error);
+        }).then(function(){
+          Alert.removeLoading();
+        });
+      }
     });
   }
 });
