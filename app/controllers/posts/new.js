@@ -34,6 +34,7 @@ export default Ember.ObjectController.extend({
 
       this.set('creating', true);
       Alert.operating(Ember.I18n.t("button.creating"));
+
       var __post = store._getModelClazz('post').create();
       __post.setVal('title', model.get('title'));
       __post.setVal('body', body);

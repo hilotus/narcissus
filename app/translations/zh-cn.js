@@ -25,6 +25,9 @@ export default {
   "ajax.error.post": "加载post失败。",
   "ajax.error.timeout": "请求超时。。",
 
+  "destroy.prompt": "删除",
+  "destroy.body": "确定删除吗？",
+
   "blog.title": "问道",
   "blog.description": "路漫漫其修远兮，吾将上下而求索",
   "blog.home": "首页",

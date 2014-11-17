@@ -139,7 +139,7 @@ export default Ember.Controller.extend(ModalFunctionality, {
           password: this.get('accountPassword'),
           email: this.get('accountEmail'),
           locale: 'zh_cn',
-          status: 1
+          locked: 1
         };
 
       User.createAccount(this.container, data).then(function(){

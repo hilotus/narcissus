@@ -1,13 +1,13 @@
 import Ember from 'ember';
 import BaseUtil from '../../utils/base';
-
 import NavigatableView from '../navigate/navigatable';
 
+import Section from '../../supports/navigate/section';
 import CreateInputRow from '../../supports/navigate/rows/create-input-row';
-import TitleUpdateRow from '../../supports/navigate/rows/title-update-row';
 
 export default NavigatableView.extend({
   type: '',
+
   title: function() {
     return Ember.I18n.t("settings.%@.create".fmt(this.get("type")));
   }.property('type'),
@@ -21,7 +21,7 @@ export default NavigatableView.extend({
   },
 
   sections: ["termsSection"],
-  termsSection: Ember.Object.extend({
+  termsSection: Section.extend({
     title: function() {
       return Ember.I18n.t("settings.%@.list".fmt(this.get('owner.type')));
     }.property('owner.type'),
@@ -43,30 +43,22 @@ export default NavigatableView.extend({
         };
       }.property('bindedModel', 'bindedName'),
 
-      onCreateSuccess: function(self, newRecord) {
-        self.get("owner.content").pushObject(newRecord);
-        self.get("owner").rerender();
-      },
+      onCreateSuccess: function(row, newRecord) {
+        if (row.get('owner.type') === 'tag') {
+          row.get("owner.controller.tags").pushObject(newRecord);
+        } else {
+          row.get("owner.controller.categories").pushObject(newRecord);
+        }
+      }
     }),
 
-    rowCollection: function() {
-      var rows = [];
-      this.get("owner.content").forEach(function(term){
-        rows.pushObject(TitleUpdateRow.extend({
-          record: term,
-          canDelete: true,
-          title: Ember.computed.oneWay('record.name'),
-          bufferedTitle: Ember.computed.oneWay('record.name'),
-          // which column binded to title
-          bindedName: 'name',
+    content: function() {
+      if (this.get('owner.type') === 'tag') {
+        return this.get('owner.controller.tags');
+      } else {
+        return this.get('owner.controller.categories');
+      }
+    }.property('owner.type', 'owner.controller.tags.length', 'owner.controller.categories.length'),
 
-          onDeletedSuccess: function(self){
-            self.get("owner.content").removeObject(self.get('record'));
-            self.get("owner").rerender();
-          },
-        }));
-      });
-      return rows;
-    }.property('owner.content.length')
   })
 });

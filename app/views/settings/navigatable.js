@@ -1,9 +1,9 @@
-import Ember from 'ember';
-import SelectRow from '../../supports/navigate/rows/select-row';
 import NavigatableView from '../navigate/navigatable';
-
 import SettingsOptionsNavigatable from '../../views/settings/options-navigatable';
 import SettingsTermsNavigatable from '../../views/settings/terms-navigatable';
+
+import Section from '../../supports/navigate/section';
+import SelectRow from '../../supports/navigate/rows/select-row';
 
 export default NavigatableView.extend({
   titleTranslation: 'settings.title',
@@ -12,7 +12,7 @@ export default NavigatableView.extend({
   hasRightButton: false,
 
   sections: ["menuSection"],
-  menuSection: Ember.Object.extend({
+  menuSection: Section.extend({
     titleTranslation: 'settings.sectionheader.option',
 
     rows: ["mine", "tag", "category"],
@@ -28,7 +28,7 @@ export default NavigatableView.extend({
       titleTranslation: 'settings.tag.title',
 
       onSelect: function(controller) {
-        controller.push(SettingsTermsNavigatable.extend({type: "tag", content: controller.get('tags')}));
+        controller.push(SettingsTermsNavigatable.extend({type: 'tag'}));
       }
     }),
 
@@ -36,7 +36,7 @@ export default NavigatableView.extend({
       titleTranslation: 'settings.category.title',
 
       onSelect: function(controller) {
-        controller.push(SettingsTermsNavigatable.extend({type: "category", content: controller.get('categories')}));
+        controller.push(SettingsTermsNavigatable.extend({type: 'category'}));
       }
     })
   })
