@@ -67,7 +67,7 @@ export default Ember.Component.extend({
       var isActive = __this.get("isActive");
       __this.set("isActive", !isActive);
     });
-    this.$("ul").niceScroll();
+    this.$("ul").niceScroll({'cursorwidth': '6px', 'scrollspeed': 60, 'mousescrollstep': 60});
 
     // 点击其他地方，关闭picker
     var callback = function(evt) {
