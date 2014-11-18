@@ -44,7 +44,7 @@ export var initialize = function(container/*, application*/) {
   };
 
   // nicescroll
-  $("html").niceScroll({ cursorwidth: "6px" });
+  $("html").niceScroll({'cursorwidth': '6px', 'scrollspeed': 60, 'mousescrollstep': 60});
 };
 
 export default {
