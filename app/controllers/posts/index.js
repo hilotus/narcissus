@@ -23,7 +23,7 @@ export default Ember.ArrayController.extend({
       var filters = posts.filter(function(post){
         var title = post.get('title'),
           cName = post.get('category.name'),
-          aName = post.get('author.name');
+          aName = post.get('creator.name');
 
         if (title && title.toLocaleLowerCase().indexOf(keywords) > -1) {
           return true;

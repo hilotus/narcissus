@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Mixin.create({
   applicationId: '4f3ATEailRoi1A49sh4vlNppWKk8G8xf6ThymKkG',
   restApiKey: 'm2CUMzzcTkqZLTR2v7BVbXLIg9vAzqAxWYVUvyjm',
-  masterKey: 'CSLMenf3XKL4a9fjUmwB7ExiXiTXLkQz5KTC3Ey5',
+  // masterKey: 'CSLMenf3XKL4a9fjUmwB7ExiXiTXLkQz5KTC3Ey5',
 
   host: "https://api.parse.com",
   namespace: '1',
@@ -46,6 +46,13 @@ export default Ember.Mixin.create({
     hash.type = type.toUpperCase();
     hash.dataType = 'json';
     // hash.xhrFields = { 'withCredentials': true };
+
+    // set acl for normal parse class.
+    // if (hash.type.match(/POST/) && hash.data && hash.data.creator) {
+    //   hash.data.ACL = {};
+    //   hash.data.ACL[hash.data.creator] = {'read': true, 'write': true};
+    //   hash.data.ACL['*'] = {'read': true};
+    // }
 
     if (hash.data && hash.type !== 'GET') {
       hash.contentType = 'application/json; charset=utf-8';

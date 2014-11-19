@@ -3,7 +3,7 @@
     <div class="pure-u-4-5">
       {{#link-to "posts.index" class="pure-button pure-button-primary" }}{{t 'button.back'}}{{/link-to}}
     </div>
-    <div class="pure-u-1-5 horizontal-right">{{author.name}}</div>
+    <div class="pure-u-1-5 horizontal-right">{{creator.name}}</div>
   </div>
 </div>
 {{#if model}}
@@ -13,13 +13,15 @@
         <header class="post-header">
           <h2 class="post-title">
             <div class="post-title-label"><a>{{title}}</a></div>
-            <img class="post-avatar" height="48" width="48" {{bind-attr src=author.avatarPhoto}}>
+            <img class="post-avatar" height="48" width="48" {{bind-attr src=creator.avatarPhoto}}>
           </h2>
           <p class="post-meta">
             {{createdAtFormat}}
             <span class="divider"></span>
             {{t 'blog.category'}}<span class="colon"></span>
-            {{view 'post/category' category=category}}
+            {{#if category}}
+              {{view 'post/category' category=category}}
+            {{/if}}
             {{#if tags.length}}
               <span class="divider"></span>
               {{t 'blog.tag'}}<span class="colon"></span>

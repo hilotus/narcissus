@@ -1,14 +1,14 @@
 <div class="pure-u-1 article-wrapper">
   <article>
     {{#link-to "post" view.content class="more"}}{{t 'posts.read.more'}}<i class="fa fa-chevron-right"></i>{{/link-to}}
-    <div class="img-wrapper"><img {{bind-attr src=view.content.author.avatarPhoto80}}/></div>
+    <div class="img-wrapper"><img {{bind-attr src=view.content.creator.avatarPhoto80}}/></div>
     <h1>{{view.content.title}}</h1>
     {{!--post-description body=view.content.body--}}
   </article>
   <div class="post">
     <div class="post-header">
       <div class="post-meta">
-        By {{view.content.author.name}} Posted at {{view.content.createdAtFormat}} in {{view.content.category.name}}
+        By {{view.content.creator.name}} Posted at {{view.content.createdAtFormat}} in {{view.content.category.name}}
       </div>
     </div>
   </div>

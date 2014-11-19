@@ -51,7 +51,7 @@ export default Ember.ObjectController.extend({
         creator_email: view.get('creator_email') || currentUser.get('email'),
         creator_url: view.get('creator_url'),
         creator_ip: view.get('creator_ip'),
-        creator: currentUser.get('id'),
+        creator: (!!currentUser ? currentUser.get('id') : '')
       });
 
       view.set('creating', true);
@@ -68,6 +68,7 @@ export default Ember.ObjectController.extend({
           view.set('creating', false);
           view.set("body", "");
           view.set("creator_email", "");
+          view.set("creator_name", "");
           Alert.removeLoading();
         });
       });

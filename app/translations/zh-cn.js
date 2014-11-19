@@ -34,7 +34,7 @@ export default {
   "blog.posts": "文章",
   "blog.posts.body": "文章内容，请使用markdown格式编写",
   "blog.admin": "设置",
-  "blog.author": "作者",
+  "blog.creator": "作者",
   "blog.tag": "标签",
   "blog.category": "分类",
 

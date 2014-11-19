@@ -38,7 +38,7 @@ export default NavigatableView.extend({
       defaultValue: function() {
         return {
           'type': this.get('owner.type'),
-          'owner': this.get('currentUser.id'),
+          'creator': this.get('currentUser.id'),
           'color': BaseUtil.color()
         };
       }.property('bindedModel', 'bindedName'),
