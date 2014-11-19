@@ -149,7 +149,7 @@ export default Ember.Object.extend({
   /*
   * set model properties
   * schema: {
-  *   'belongTo': {'author': 'user', 'category': 'term'},
+  *   'belongTo': {'creator': 'user', 'category': 'term'},
   *   'hasMany': {'tags': 'term'}
   * }
   */

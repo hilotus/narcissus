@@ -40,7 +40,7 @@ export default Ember.ObjectController.extend({
       __post.setVal('body', body);
       __post.setVal('category', model.get('category.id'));
       __post.setVal('tags', model.get('tags').getIds());
-      __post.setVal('author', this.get("currentUser.id"));
+      __post.setVal('creator', this.get("currentUser.id"));
       __post.setVal('comments', []);
 
       __post.save().then(function(newRecord){
