@@ -13,6 +13,7 @@ set :keep_releases, 5
 # set(:linked_files, %w(config/mongoid.yml))
 
 # set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{bin log tmp vendor/bundle public/system}
 
 # without any test
 # set :tests, %w(spec)

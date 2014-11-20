@@ -1,4 +1,4 @@
-set :server_name, '54.169.57.62'
+set :server_name, 'www.hilotus.com'
 
 set :full_app_name, "#{fetch(:application)}"
 
