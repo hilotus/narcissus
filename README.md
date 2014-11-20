@@ -39,7 +39,7 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Deploying
 
-* User [capistrano](https://github.com/capistrano/capistrano) to deploy the app.
+* Use [capistrano](https://github.com/capistrano/capistrano) to deploy the app.
 
 ```
 1. make sure you have install ruby
