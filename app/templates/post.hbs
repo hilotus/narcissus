@@ -37,7 +37,7 @@
             {{/if}}
           </p>
         </header>
-        {{view 'post/body' body=body}}
+        {{markdown-body body=body class="post-body"}}
         <div class="post-commnets">
           <div class="comment-header">{{comments.length}}{{t 'post.comment.count'}}</div>
           {{#greater-than comments.length 0}}

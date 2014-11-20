@@ -6,11 +6,7 @@
     "$",
     "Pace",
     "md5",
-    "moment",
-    "Markdown",
-    "EpicEditor",
-    "marked",
-    "hljs"
+    "moment"
   ],
   "browser" : true,
   "boss" : true,

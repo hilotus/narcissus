@@ -1,9 +1,9 @@
-import NavigatableView from '../navigate/navigatable';
-import SettingsOptionsNavigatable from '../../views/settings/options-navigatable';
-import SettingsTermsNavigatable from '../../views/settings/terms-navigatable';
+import NavigatableView from 'ember-cli-coreweb/views/navigate/navigatable';
+import SettingsOptionsNavigatable from './options-navigatable';
+import SettingsTermsNavigatable from './terms-navigatable';
 
-import Section from '../../supports/navigate/section';
-import SelectRow from '../../supports/navigate/rows/select-row';
+import Section from 'ember-cli-coreweb/supports/navigate/section';
+import SelectRow from 'ember-cli-coreweb/supports/navigate/rows/select-row';
 
 export default NavigatableView.extend({
   titleTranslation: 'settings.title',
