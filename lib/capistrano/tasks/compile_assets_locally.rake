@@ -2,7 +2,7 @@ namespace :deploy do
   desc "compiles assets locally then rsyncs"
   task :compile_assets_locally do
     run_locally do
-      execute "ember build --environment=#{fetch(:environment)}"
+      execute "ember build --environment #{fetch(:environment)}"
     end
     on roles(:app) do |role|
       run_locally do

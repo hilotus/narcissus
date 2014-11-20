@@ -1,6 +1,7 @@
 server {
   server_name <%= fetch(:server_name) %>;
   listen 80;
+  listen [::]:80 ipv6only=on;
 
   root <%= fetch(:deploy_to) %>/current/public;
 
@@ -8,7 +9,7 @@ server {
   error_log <%= fetch(:shared_path) %>/log/nginx-error.log;
   rewrite_log on;
 
-  location ~* \.(?:ico|css|js|gif|jpe?g|png|eot|svg|ttf|woff)$ {
+  location ~* ^(/assets|/fonts|/favicon.ico) {
     access_log off;
     log_not_found off;
     gzip_static on;
@@ -17,9 +18,7 @@ server {
     break;
   }
 
-  location / {
-    try_files $uri $uri/ /index.html =404;
-  }
+  try_files $uri/index.html $uri /;
 
   error_page 404 422 /500.html;
   client_max_body_size 4G;
