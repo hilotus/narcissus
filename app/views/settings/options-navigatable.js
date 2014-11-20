@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import Alert from 'narcissus/utils/alert';
-import NavigatableView from '../navigate/navigatable';
+import NavigatableView from 'ember-cli-coreweb/views/navigate/navigatable';
 
-import Section from '../../supports/navigate/section';
-import DescriptionRow from '../../supports/navigate/rows/description-row';
-import SwitchRow from '../../supports/navigate/rows/switch-row';
-import DescriptionUpdateRow from '../../supports/navigate/rows/description-update-row';
+import Section from 'ember-cli-coreweb/supports/navigate/section';
+import DescriptionRow from 'ember-cli-coreweb/supports/navigate/rows/description-row';
+import SwitchRow from 'ember-cli-coreweb/supports/navigate/rows/switch-row';
+import DescriptionUpdateRow from 'ember-cli-coreweb/supports/navigate/rows/description-update-row';
 
 export default NavigatableView.extend({
   titleTranslation: 'settings.mine.title',

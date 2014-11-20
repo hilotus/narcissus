@@ -8,14 +8,14 @@
   <div class="pure-u-7-8">
     {{#if view.isEditing}}
       <div class="pure-form">
-        {{epic-editor localStorageName=view.content.id body=view.buffered minHeight=100 maxHeight=200}}
+        {{markdown-editor localStorageName=view.content.id body=view.buffered minHeight=100 maxHeight=200}}
       </div>
       <div class="comment-operator">
         <div class="ios-button" {{action 'cancel' target=view}}><label class="button-label">{{t 'button.cancel'}}</label></div>
         <div class="ios-button" {{action 'save' target=view}}><label class="button-label">{{t 'button.save'}}</label></div>
       </div>
     {{else}}
-      {{view 'post/comment-body' body=view.content.body}}
+      {{markdown-body body=view.content.body class="comment-body"}}
       <div class="pure-g">
         <div class="pure-u-3-4 comment-time">{{view.content.format_created}}</div>
         <div class="pure-u-1-4 comment-operator">

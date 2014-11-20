@@ -16,14 +16,10 @@
   },
   "devDependencies": {
     "pace": "~1.0.2",
-    "pure": "~0.5.0",
     "moment": "~2.8.3",
-    "font-awesome": "~4.2.0",
     "js-md5": "~1.1.0",
     "cldr": "~1.0.2",
     "ember-i18n": "~2.2.2",
-    "jquery-nicescroll": "~3.5.6",
-    "EpicEditor": "~0.2.2",
-    "highlightjs": "~8.3.0"
+    "jquery-nicescroll": "~3.5.6"
   }
 }
