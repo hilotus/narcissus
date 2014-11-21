@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import injection from 'ember-cli-coreweb/initializers/injection';
+
 import Model from '../supports/model';
 import Presence from '../mixins/presence';
 
@@ -37,6 +39,9 @@ export var initialize = function(container/*, application*/) {
   // Model: set store as Model instance's property.
   var store = container.lookup('store:main');
   Model.reopen({store: store});
+
+  // markd highlight
+  injection.initialize();
 
   // nicescroll
   $("html").niceScroll({'cursorwidth': '6px', 'scrollspeed': 60, 'mousescrollstep': 60});
