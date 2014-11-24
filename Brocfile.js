@@ -31,7 +31,4 @@ app.import('bower_components/pace/themes/blue/pace-theme-flash.css');
 // js-md5
 app.import('bower_components/js-md5/js/md5.min.js');
 
-// nicescroll
-app.import('bower_components/jquery-nicescroll/jquery.nicescroll.min.js');
-
 module.exports = app.toTree();

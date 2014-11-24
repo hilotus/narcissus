@@ -19,7 +19,6 @@
     "moment": "~2.8.3",
     "js-md5": "~1.1.0",
     "cldr": "~1.0.2",
-    "ember-i18n": "~2.2.2",
-    "jquery-nicescroll": "~3.5.6"
+    "ember-i18n": "~2.2.2"
   }
 }
