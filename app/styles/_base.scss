@@ -157,49 +157,6 @@ input,select,textarea{
 }
 
 
-/* checkbox */
-.checkbox {
-  position: relative;
-  outline: none;
-  cursor: pointer;
-  border: 0px none;
-  margin-right: 4px;
-  margin-left: 4px;
-  vertical-align: middle;
-  text-align: left;
-  height: 20px;
-
-  .label {
-    padding-left: 25px;
-    white-space: nowrap;
-    line-height: 20px;
-    cursor: inherit
-  }
-
-  .box {
-    position: absolute;
-    height: 18px;
-    width: 18px;
-    top: 1px;
-    cursor: inherit;
-    font-size: 18px !important;
-  }
-
-  &.disabled {
-    cursor: default !important;
-    color: #dadada
-  }
-
-  &.focus .box {
-    color: #3875d7
-  }
-
-  &.focus .label {
-    color: #3875d7
-  }
-}
-
-
 /* search */
 .search {
   margin: 0;
