@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Alert from '../../utils/alert';
+import Alert from 'ember-cli-coreweb/utils/alert';
 
 export default Ember.ArrayController.extend({
   model: [],

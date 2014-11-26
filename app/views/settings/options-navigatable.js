@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Alert from 'narcissus/utils/alert';
+import Alert from 'ember-cli-coreweb/utils/alert';
 import NavigatableView from 'ember-cli-coreweb/views/navigate/navigatable';
 
 import Section from 'ember-cli-coreweb/supports/navigate/section';
