@@ -138,7 +138,7 @@ export default Ember.Controller.extend(ModalFunctionality, {
           username: this.get('accountName'),
           password: this.get('accountPassword'),
           email: this.get('accountEmail'),
-          locale: 'zh_cn',
+          locale: 'zh-cn',
           locked: 1
         };
 

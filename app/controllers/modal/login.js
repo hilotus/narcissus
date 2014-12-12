@@ -38,7 +38,7 @@ export default Ember.Controller.extend(ModalFunctionality, {
 
       User.login(this.get('container'), data).then(function(user){
         self.set('loggingIn', false);
-        localStorage.setItem("user-session-token", user.sessionToken);
+        localStorage.setItem("user-session-token", user.sessionToken || user.id || user._id);
         window.location.reload();
       }).catch(function(errorJson){
         self.set('loggingIn', false);

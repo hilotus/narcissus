@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
-var cache = {};
-
 export default Ember.Object.extend({
+  cache: {},
+
   find: function(clazz, id) {
     if (typeof(id) === 'string') {
       return this.findById(clazz, id);
@@ -21,18 +21,28 @@ export default Ember.Object.extend({
     * query = {limit: 0, skip: 0, order: 0, count: 0, where: {}}
     */
     // TODO: Query from cache without paginate and order now, change in future.
-    if (!id.limit && !id.order && cache[typeKey]) {
-      for(var idKey in cache[typeKey]) {
+    if (!id.limit && !id.order && this.get('cache')[typeKey]) {
+      for(var idKey in this.get('cache')[typeKey]) {
         var isExist = true;
         for(var key in id.where) {
-          if (!Ember.isEqual(id.where[key], cache[typeKey][idKey].get(key))) {
-            isExist = false;
+          var _tempValue = this.get('cache')[typeKey][idKey].get(key);
+          if (Ember.isArray(id.where[key])) {
+            isExist = Ember.isEqual(id.where[key].getIds().join(','), _tempValue.getIds().join(','));
+          } else {
+            if (_tempValue instanceof Ember.Object) {
+              isExist = Ember.isEqual(id.where[key], _tempValue.get('id'));
+            } else {
+              isExist = Ember.isEqual(id.where[key], _tempValue);
+            }
+          }
+
+          if (!isExist) {
             break;
           }
         }
 
         if (isExist) {
-          records.pushObject(cache[typeKey][idKey]);
+          records.pushObject(this.get('cache')[typeKey][idKey]);
         }
       }
 
@@ -61,8 +71,8 @@ export default Ember.Object.extend({
       typeKey = clazz.typeKey,
       store = this;
 
-    if (cache[typeKey] && cache[typeKey][id]) {
-      return Ember.RSVP.resolve(cache[typeKey][id]);
+    if (this.get('cache')[typeKey] && this.get('cache')[typeKey][id]) {
+      return Ember.RSVP.resolve(this.get('cache')[typeKey][id]);
     }
 
     return adapter.find(clazz, id).then(function(responseJson){
@@ -81,7 +91,7 @@ export default Ember.Object.extend({
     var adapter = this.container.lookup('adapter:application');
 
     return adapter.createRecord(clazz, data).then(function(responseJson){
-      data.id = responseJson.objectId;
+      data.id = responseJson.objectId || responseJson._id;
       data.updatedAt = responseJson.createdAt;
       return Ember.RSVP.resolve(Ember.merge(data, responseJson));
     }, function(response){
@@ -131,9 +141,9 @@ export default Ember.Object.extend({
         var record = records[index];
         if (typeof(result.success) === 'boolean') {  // destroy success
           store._pull(record.getTypeKey(), record.get('id'));
-        } else if (result.success.objectId) {  // create success
+        } else if (result.success.objectId || result.success._id) {  // create success
           store._push(record.constructor, result, record);
-        } else {  // update success
+        }  {  // update success
           store._reload(record.getTypeKey(), record, result);
         }
       });
@@ -215,7 +225,7 @@ export default Ember.Object.extend({
   * get Model instance
   */
   _push: function(clazz, json, record) {
-    json.id = json.id || json.objectId;
+    json.id = json.id || json.objectId || json._id;
 
     if (Ember.isNone(record)) {
       record = clazz.create();
@@ -223,8 +233,8 @@ export default Ember.Object.extend({
 
     record.merge(json);
 
-    cache[clazz.typeKey] = cache[clazz.typeKey] || {};
-    cache[clazz.typeKey][json.id] = record;
+    this.get('cache')[clazz.typeKey] = this.get('cache')[clazz.typeKey] || {};
+    this.get('cache')[clazz.typeKey][json.id] = record;
 
     // normalize record.
     this.normalize(record, record.get('modelData'));
@@ -239,7 +249,7 @@ export default Ember.Object.extend({
     Ember.merge(json, record.get('changeData'));
     record.merge(json);
 
-    cache[typeKey][record.get('id')] = record;
+    this.get('cache')[typeKey][record.get('id')] = record;
     this.normalize(record, record.get('modelData'));
   },
 
@@ -247,8 +257,8 @@ export default Ember.Object.extend({
   * Delete a record from cache
   */
   _pull: function(typeKey, id) {
-    if (cache[typeKey][id]) {
-      delete cache[typeKey][id];
+    if (this.get('cache')[typeKey][id]) {
+      delete this.get('cache')[typeKey][id];
     }
   }
 });

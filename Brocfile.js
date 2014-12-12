@@ -23,6 +23,8 @@ app.import('bower_components/ember-i18n/lib/i18n.js');
 
 // moment
 app.import('bower_components/moment/min/moment-with-locales.min.js');
+// moment-timezone
+app.import('bower_components/moment-timezone/builds/moment-timezone-with-data.min.js');
 
 // pace
 app.import('bower_components/pace/pace.min.js');

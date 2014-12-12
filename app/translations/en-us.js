@@ -41,7 +41,7 @@ export default {
   "current.user.externalloginexplain": "您正在使用%@帐号登录",
 
   "posts.latest": "最新文章",
-  "posts.loading": "加载中...",
+  "loading.title": "加载中...",
   "posts.loadedall": "已全部加载",
   "posts.create.input.title": "标题",
   "posts.search": "按标题、分类或作者搜索",

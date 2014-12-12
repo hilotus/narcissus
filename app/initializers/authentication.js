@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import User from '../models/user';
+import User from 'narcissus/models/user';
 
 export var initialize = function(container, app) {
   // default to zh-cn
@@ -24,7 +24,7 @@ export var initialize = function(container, app) {
 
     // inject tags and categories for signIned users.
     var store = container.lookup('store:main');
-    store.find('term', {'creator': user.get('id')}).then(function(terms){
+    store.find('term', {'where': {'creator': user.get('id')}}).then(function(terms){
       var tags = terms.filter(function(term){return term.get('type') === 'tag';});
       var categories = terms.filter(function(term){return term.get('type') === 'category';});
 
@@ -41,6 +41,10 @@ export var initialize = function(container, app) {
       app.advanceReadiness();
     });
 
+    // register to baidu
+    if (Ember.browser.isAndroid) {
+      container.lookup('controller:push').registerBaidu();
+    }
   }).catch(function(/*errorJson*/){
     app.advanceReadiness();
   });
