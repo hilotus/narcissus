@@ -43,7 +43,7 @@ export var initialize = function(container, app) {
 
     // register to baidu
     if (Ember.browser.isAndroid) {
-      container.lookup('controller:push').registerBaidu();
+      container.lookup('controller:push').registerToBaidu();
     }
   }).catch(function(/*errorJson*/){
     app.advanceReadiness();

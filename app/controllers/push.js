@@ -23,8 +23,8 @@ export default Ember.Controller.extend({
             }
           );
         },
-        function(error){
-          Alert.error("Push: Registering failed:" + JSON.stringify(error));
+        function(errorJson){
+          Alert.error("Push: Registering failed: %@".fmt(JSON.stringify(errorJson)));
         },
         {
           "api_key":"5MdUpTLcx2D6zahWuaWpIlnu",

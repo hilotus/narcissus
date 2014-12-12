@@ -53,8 +53,6 @@ export default {
   "posts.edit": "修改文章",
   "posts.editting": "修改中...",
   "posts.edit.error": "修改文章失败",
-  "posts.edit.error.unlogon": "您还未登录，请先登录。",
-  "posts.edit.error.check.unpass": "标题不能为空，内容必须填写，分类必须选择。",
   "posts.destroy.prompt": "删除文章",
   "posts.destroy.body": "确定删除？",
   "posts.destroying": "删除中...",
