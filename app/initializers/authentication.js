@@ -2,11 +2,11 @@ import Ember from 'ember';
 import User from 'narcissus/models/user';
 
 export var initialize = function(container, app) {
-  // default to zh-cn
-  Ember.I18n.translations = container.lookup("lang:zh-cn");
+  // default to en-us
+  Ember.I18n.translations = container.lookup("lang:en-us");
 
   // moment lang
-  moment.locale("zh-cn");
+  moment.locale("en-us");
 
   // don't boot until the user promise resolves.
   app.deferReadiness();

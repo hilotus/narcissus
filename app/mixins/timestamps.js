@@ -51,20 +51,19 @@ export default Ember.Mixin.create({
     }
   }),
 
-  format: "LLL",
   createdAtFormat: function() {
     if (!!this.get("createdAt")) {
-      return moment(this.get("createdAt")).format(this.get("format"));
+      return moment(this.get("createdAt")).fromNow();
     } else {
-      return moment(this.get("created_at")).format(this.get("format"));
+      return moment(this.get("created_at")).fromNow();
     }
-  }.property('format', 'createdAt', 'created_at'),
+  }.property('createdAt', 'created_at'),
 
   updatedAtFormat: function() {
     if (!!this.get("updatedAt")) {
-      return moment(this.get("updatedAt")).format(this.get("format"));
+      return moment(this.get("updatedAt")).fromNow();
     } else {
-      return moment(this.get("updated_at")).format(this.get("format"));
+      return moment(this.get("updated_at")).fromNow();
     }
-  }.property('format', 'updatedAt', 'updated_at')
+  }.property('updatedAt', 'updated_at')
 });
