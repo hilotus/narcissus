@@ -17,7 +17,8 @@ export default Ember.ArrayController.extend({
         this.get('day'), this.get('hour'), this.get('minute'));
 
     datetime = moment(datetime);
-    datetime = datetime.clone().tz("Europe/London").format('YYYY-MM-DD HH:mm');
+    // change to gmt datetime
+    datetime = datetime.clone().tz("America/Danmarkshavn").format('YYYY-MM-DD HH:mm');
 
     _event = store._getModelClazz('event').create();
     _event.setVal('user', this.get('currentUser.id'));
@@ -30,11 +31,11 @@ export default Ember.ArrayController.extend({
       _this.get('model').pushObject(newRecord);
       _this.setProperties({
         eventTitle: '',
-        year: 0,
-        month: 0,
-        day: 0,
-        hour: 0,
-        minute: 0,
+        year: '',
+        month: '',
+        day: '',
+        hour: '',
+        minute: '',
       });
     }, function(errorJson){
       Alert.warn(errorJson.error);
