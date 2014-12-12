@@ -54,7 +54,7 @@ export default Ember.ArrayController.extend({
     if (isFirstLoaded) {
       this.set('isLoading', true);
     } else {
-      Alert.loading(Ember.I18n.t("posts.loading"));
+      Alert.loading(Ember.I18n.t("loading.title"));
     }
 
     return this.store.find('post', {limit: perPage, skip: (page - 1) * perPage}).then(function(posts){

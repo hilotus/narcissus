@@ -1,7 +1,8 @@
 import Ember from 'ember';
-import ParseAjax from 'narcissus/mixins/parse-ajax';
+// import ParseAjax from 'narcissus/mixins/parse-ajax';
+import Ajax from 'narcissus/mixins/ajax';
 
-export default Ember.Object.extend(ParseAjax, {
+export default Ember.Object.extend(Ajax, {
   /*
   * clazz: model class
   * id: is a string or a query json

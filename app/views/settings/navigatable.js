@@ -1,6 +1,7 @@
 import NavigatableView from 'ember-cli-coreweb/views/navigate/navigatable';
 import SettingsOptionsNavigatable from './options-navigatable';
 import SettingsTermsNavigatable from './terms-navigatable';
+import SettingsEventsNavigatable from './events-navigatable';
 
 import Section from 'ember-cli-coreweb/supports/navigate/section';
 import SelectRow from 'ember-cli-coreweb/supports/navigate/rows/select-row';
@@ -15,7 +16,7 @@ export default NavigatableView.extend({
   menuSection: Section.extend({
     titleTranslation: 'settings.sectionheader.option',
 
-    rows: ["mine", "tag", "category"],
+    rows: ["mine", "tag", "category", 'events'],
     mine: SelectRow.extend({
       titleTranslation: 'settings.mine.title',
 
@@ -37,6 +38,15 @@ export default NavigatableView.extend({
 
       onSelect: function(controller) {
         controller.push(SettingsTermsNavigatable.extend({type: 'category'}));
+      }
+    }),
+
+    events: SelectRow.extend({
+      titleTranslation: 'settings.events.title',
+
+      onSelect: function(controller) {
+        controller.get('controllers.settings/events').findEvents();
+        controller.push(SettingsEventsNavigatable);
       }
     })
   })

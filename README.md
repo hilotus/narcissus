@@ -47,6 +47,19 @@ Make use of the many generators for code, try `ember help generate` for more det
 3. bundle exec cap production deploy
 ```
 
+### Adapter & Store & Ajax
+* if we customer a ajax, we should use in adapters/application.js, maybe also change the store logics, another
+* files don't need to change.
+
+
+### Add PushPlugin in cordova
+* PushPlugin: https://github.com/hilotus/PushPlugin
+* add baidu push for android instead of gcm in china.
+
+```bash
+cordova plugin add 'https://github.com/hilotus/PushPlugin.git'
+```
+
 
 ## Further Reading / Useful Links
 
