@@ -22,6 +22,8 @@ export default NavigatableView.extend({
 
   sections: ["termsSection"],
   termsSection: Section.extend({
+    controller: Ember.computed.oneWay('owner.controller.controllers.settings/terms'),
+
     title: function() {
       return Ember.I18n.t("settings.%@.list".fmt(this.get('owner.type')));
     }.property('owner.type'),

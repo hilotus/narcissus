@@ -2,10 +2,13 @@ import Ember from 'ember';
 import Alert from 'ember-cli-coreweb/utils/alert';
 
 export default Ember.ObjectController.extend({
-  needs: ['posts/index'],
+  needs: ['posts/index', 'settings/terms'],
 
   headerTitleTranslation: 'posts.create',
   creating: false,
+
+  bufferedTagsBinding: 'controllers.settings/terms.tags',
+  bufferedCategoriesBinding: 'controllers.settings/terms.categories',
 
   showSpinner: function() {
     return this.get('creating');

@@ -30,15 +30,8 @@ export var initialize = function(container, app) {
 
       app.register('term:tag', tags, {instantiate: false, singleton: true});
       app.register('term:category', categories, {instantiate: false, singleton: true});
-
-      app.inject('controller:posts/new', 'bufferedTags', 'term:tag');
-      app.inject('controller:posts/new', 'bufferedCategories', 'term:category');
-      app.inject('controller:posts/edit', 'bufferedTags', 'term:tag');
-      app.inject('controller:posts/edit', 'bufferedCategories', 'term:category');
-      app.inject('controller:settings/navigation', 'tags', 'term:tag');
-      app.inject('controller:settings/navigation', 'categories', 'term:category');
-
-      app.advanceReadiness();
+      app.inject('controller:settings/terms', 'tags', 'term:tag');
+      app.inject('controller:settings/terms', 'categories', 'term:category');
     });
 
     // register to baidu
@@ -46,6 +39,7 @@ export var initialize = function(container, app) {
       container.lookup('controller:push').registerToBaidu();
     }
   }).catch(function(/*errorJson*/){
+  }).then(function(){
     app.advanceReadiness();
   });
 };

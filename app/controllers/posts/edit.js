@@ -2,8 +2,13 @@ import Ember from 'ember';
 import Alert from 'ember-cli-coreweb/utils/alert';
 
 export default Ember.ObjectController.extend({
+  needs: ['settings/terms'],
+
   headerTitleTranslation: 'posts.edit',
   editting: false,
+
+  bufferedTagsBinding: 'controllers.settings/terms.tags',
+  bufferedCategoriesBinding: 'controllers.settings/terms.categories',
 
   showSpinner: function() {
     return this.get('editting');
