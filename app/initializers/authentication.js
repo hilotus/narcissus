@@ -27,11 +27,7 @@ export var initialize = function(container, app) {
     store.find('term', {'where': {'creator': user.get('id')}}).then(function(terms){
       var tags = terms.filter(function(term){return term.get('type') === 'tag';});
       var categories = terms.filter(function(term){return term.get('type') === 'category';});
-
-      app.register('term:tag', tags, {instantiate: false, singleton: true});
-      app.register('term:category', categories, {instantiate: false, singleton: true});
-      app.inject('controller:settings/terms', 'tags', 'term:tag');
-      app.inject('controller:settings/terms', 'categories', 'term:category');
+      container.lookup('controller:settings/terms').setProperties({'tags': tags, 'categories': categories});
     });
 
     // register to baidu

@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
-  // host: "http://localhost:3000",
+  host: "http://0.0.0.0:3000",
   // host: "http://10.63.88.84:3000",
-  host: "http://reminderws.hilotus.com",
+  // host: "http://reminderws.hilotus.com",
   namespace: 'v1',
 
   sessionToken: "",
@@ -40,7 +40,7 @@ export default Ember.Mixin.create({
         if ((hash.url.match(/users\/me/) && hash.type === 'GET') ||
           (hash.type.match(/PUT|DELETE/) && hash.url.match(/users/)) ||
           hash.url.match(/getToken/)) {
-          xhr.setRequestHeader('X-Reminder-Session-Token', adapter.get('sessionToken'));
+          xhr.setRequestHeader('X-Narcissus-Session-Token', adapter.get('sessionToken'));
         }
       };
 
