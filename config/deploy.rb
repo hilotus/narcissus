@@ -5,7 +5,7 @@ set :application, 'narcissus'
 set :deploy_user, 'ubuntu'
 
 set :scm, :git
-set :repo_url, 'https://luoguanzhong:96f7bbc595b894e749ffc631ab7588360fe74a55@github.com/luoguanzhong/narcissus.git'
+set :repo_url, 'https://luoguanzhong:96f7bbc595b894e749ffc631ab7588360fe74a55@github.com/hilotus/narcissus.git'
 set :branch, 'master'
 
 set :keep_releases, 5
