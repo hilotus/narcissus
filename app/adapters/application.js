@@ -1,6 +1,6 @@
 import Ember from 'ember';
-// import Ajax from 'narcissus/mixins/parse-ajax';
-import Ajax from 'narcissus/mixins/ajax';
+import Ajax from 'narcissus/mixins/parse-ajax';
+// import Ajax from 'narcissus/mixins/ajax';
 
 export default Ember.Object.extend(Ajax, {
   /*
