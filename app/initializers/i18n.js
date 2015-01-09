@@ -12,6 +12,5 @@ export function initialize(container, application) {
 
 export default {
   name: 'i18n',
-  after: 'extension',
   initialize: initialize
 };
