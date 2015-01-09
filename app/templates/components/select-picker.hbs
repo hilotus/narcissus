@@ -1,0 +1,24 @@
+<a {{bind-attr class=":select-picker-single view.isActive:select-picker-single-with-drop"}}>
+  <span>{{view.title}}</span>
+  <div>
+    {{#if view.isActive}}
+      <i class="fa fa-caret-up"></i>
+    {{else}}
+      <i class="fa fa-caret-down"></i>
+    {{/if}}
+  </div>
+</a>
+<div class="select-picker-drop">
+  <div class="select-picker-search">
+    {{input type="text" tabindex="-1" autocomplete="off" value=view.keywords}}<i class="fa fa-search"></i>
+  </div>
+  <ul class="select-picker-results">
+    {{#each view.searchContent}}
+      {{#if view.isMultiple}}
+        {{select-picker-multip-list-item content=this}}
+      {{else}}
+        {{select-picker-single-list-item content=this}}
+      {{/if}}
+    {{/each}}
+  </ul>
+</div>

@@ -1,0 +1,122 @@
+<div class="navigatable-title">{{view.title}}</div>
+<div class="navigatable-toolbar">
+  {{#if view.hasLeftButton}}
+    <div class="ios-button regular left-button" {{action 'leftButtonAction' controller target=view}}>
+      <label class="button-label"><i class="fa fa-angle-left"></i>&nbsp;{{view.leftButtonTitle}}</label>
+    </div>
+  {{/if}}
+  {{#if view.hasRightButton}}
+    <div class="ios-button regular right-button" {{action 'rightButtonAction' controller target=view}}>
+      <label class="button-label">{{view.rightButtonTitle}}</label>
+    </div>
+  {{/if}}
+</div>
+<div class="sections">
+  {{#each section in view.sectionsView}}
+    <div class="section">
+      <div class="section-title">{{section.title}}</div>
+      <div class="rows">
+        {{#each row in section.rowsView}}
+          {{#if row.isSelect}}
+            <div class="row select-row" {{action 'onSelect' controller target=row}}>
+              <div class="select-title">{{row.title}}</div>
+              <div class="select-icon"><i class="fa fa-angle-right"></i></div>
+            </div>
+          {{/if}}
+
+          {{#if row.isDescription}}
+            <div class="row description-row">
+              <div class="left">{{row.title}}</div>
+              <div class="right">{{row.description}}</div>
+            </div>
+          {{/if}}
+
+          {{#if row.isDescriptionUpdate}}
+            {{#if row.isEditing}}
+              <div class="row input-row pure-form">
+                {{edit-input value=row.bufferedDescription target=row}}
+              </div>
+            {{else}}
+              <div class="row update-row" {{action 'edit' target=row}}>
+                <div class="left">{{row.title}}</div>
+                <div class="right">{{row.description}}</div>
+              </div>
+            {{/if}}
+          {{/if}}
+
+          {{#if row.isCreateInput}}
+            <div class="row input-row pure-form">
+              {{create-input target=row autocomplete="off" placeholder=row.placeholder}}
+            </div>
+          {{/if}}
+
+          {{#if row.isTitleUpdate}}
+            {{#if row.isEditing}}
+              <div class="row input-row pure-form">
+                {{edit-input value=row.bufferedTitle target=row}}
+              </div>
+            {{else}}
+              {{#if row.canDelete}}
+                <div class="row select-row">
+                  <div class="select-title" {{action 'edit' target=row}}>{{row.title}}</div>
+                  <div class="select-icon" {{action 'delete' target=row}}><i class="fa fa-times"></i></div>
+                </div>
+              {{else}}
+                <div class="row update-row" {{action 'edit' target=row}}>
+                  <div class="left">{{row.title}}</div>
+                </div>
+              {{/if}}
+            {{/if}}
+          {{/if}}
+
+          {{#if row.isSwitch}}
+            <div class="row switch-row">{{row.title}}
+              <label class="switch">
+                <input type="checkbox" class="switch-input" checked>
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+              </label>
+            </div>
+          {{/if}}
+
+          {{#if row.isInput}}
+            <div class="row input-row pure-form">
+              {{input type="text" placeholder=row.placeholder value=row.value}}
+            </div>
+          {{/if}}
+
+          {{#if row.isButton}}
+            <div {{bind-attr class=":row :button-row section.isDisabled:disabled"}} {{action 'submit' section target=row}}>{{row.title}}</div>
+          {{/if}}
+
+          {{#if row.isDate}}
+            <div class="row date-row pure-form">
+              <span>{{row.prompt}}</span>
+              {{input type="number" step="1" placeholder=row.placeholderYear value=row.year}}
+              -
+              {{input type="number" step="1" placeholder=row.placeholderMonth value=row.month}}
+              -
+              {{input type="number" step="1" placeholder=row.placeholderDay value=row.day}}
+            </div>
+          {{/if}}
+
+          {{#if row.isTime}}
+            <div class="row time-row pure-form">
+              <span>{{row.prompt}}</span>
+              {{input type="number" step="1" placeholder=row.placeholderHour value=row.hour}}
+              :
+              {{input type="number" step="1" placeholder=row.placeholderMinute value=row.minute}}
+            </div>
+          {{/if}}
+
+          {{#if row.isTitleSelect}}
+            <div class="row select-row" {{action 'onSelect' controller target=row}}>
+              <div class="select-title">{{row.title}}</div>
+              <div class="select-icon"><i class="fa fa-angle-right"></i></div>
+            </div>
+          {{/if}}
+        {{/each}}
+      </div>
+    </div>
+  {{/each}}
+</div>

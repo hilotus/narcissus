@@ -1,9 +1,9 @@
-import NavigatableView from 'ember-cli-coreweb/views/navigate/navigatable';
+import NavigatableView from 'narcissus/views/navigate/navigatable';
 import SettingsOptionsNavigatable from './options-navigatable';
 import SettingsTermsNavigatable from './terms-navigatable';
 
-import Section from 'ember-cli-coreweb/supports/navigate/section';
-import SelectRow from 'ember-cli-coreweb/supports/navigate/rows/select-row';
+import Section from 'narcissus/supports/navigate/section';
+import SelectRow from 'narcissus/supports/navigate/rows/select-row';
 
 export default NavigatableView.extend({
   titleTranslation: 'settings.title',

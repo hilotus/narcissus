@@ -1,4 +1,4 @@
-import NavigationController from 'ember-cli-coreweb/controllers/navigate/navigation';
+import NavigationController from 'narcissus/controllers/navigate/navigation';
 
 export default NavigationController.extend({
   needs: ['settings/terms'],

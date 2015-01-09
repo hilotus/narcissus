@@ -1,9 +1,9 @@
 import Ember from 'ember';
 import BaseUtil from '../../utils/base';
-import NavigatableView from 'ember-cli-coreweb/views/navigate/navigatable';
+import NavigatableView from 'narcissus/views/navigate/navigatable';
 
-import Section from 'ember-cli-coreweb/supports/navigate/section';
-import CreateInputRow from 'ember-cli-coreweb/supports/navigate/rows/create-input-row';
+import Section from 'narcissus/supports/navigate/section';
+import CreateInputRow from 'narcissus/supports/navigate/rows/create-input-row';
 
 export default NavigatableView.extend({
   type: '',

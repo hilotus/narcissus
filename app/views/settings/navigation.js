@@ -1,4 +1,4 @@
-import NavigationView from 'ember-cli-coreweb/views/navigate/navigation';
+import NavigationView from 'narcissus/views/navigate/navigation';
 import SettingsNavigatable from './navigatable';
 
 export default NavigationView.extend({
