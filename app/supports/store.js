@@ -239,6 +239,7 @@ export default Ember.Object.extend({
 
   /*
   * push record(s) into store
+  * clazz: string / model class
   */
   _push: function(clazz, json, record) {
     if (Ember.isArray(json)) {

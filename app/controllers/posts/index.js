@@ -46,7 +46,9 @@ export default Ember.ArrayController.extend({
       return undefined;
     }
 
-    var page = this.get('page'),
+    var adapter = this.container.lookup('adapter:application'),
+      store = this.get('store'),
+      page = this.get('page'),
       perPage = this.get('perPage'),
       __this = this;
 
@@ -57,11 +59,12 @@ export default Ember.ArrayController.extend({
       Alert.loading(Ember.I18n.t("loading.title"));
     }
 
-    return this.store.find('post', {limit: perPage, skip: (page - 1) * perPage}).then(function(posts){
+    return adapter.find('post', {limit: perPage, skip: (page - 1) * perPage}).then(function(response){
+      var posts = response.results;
       var length = posts.get('length');
       if (length > 0) {
         __this.set('page', page + 1);
-        __this.get('model').pushObjects(posts);
+        __this.get('model').pushObjects(store._push('post', posts));
       }
 
       if (length === 0) {
