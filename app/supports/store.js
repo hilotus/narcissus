@@ -7,12 +7,17 @@ export default Ember.Object.extend({
     if (typeof(id) === 'string') {
       return this.findById(clazz, id);
     }
+    if (!id) {
+      id = {};
+    }
 
     clazz = this._getModelClazz(clazz);
 
     var adapter = this.container.lookup('adapter:application'),
       typeKey = clazz.typeKey,
       records = [],
+      idKey = "",
+      whereKey = "",
       store = this;
 
     /*
@@ -21,28 +26,39 @@ export default Ember.Object.extend({
     * query = {limit: 0, skip: 0, order: 0, count: 0, where: {}}
     */
     // TODO: Query from cache without paginate and order now, change in future.
-    if (!id.limit && !id.order && this.get('cache')[typeKey]) {
-      for(var idKey in this.get('cache')[typeKey]) {
-        var isExist = true;
-        for(var key in id.where) {
-          var _tempValue = this.get('cache')[typeKey][idKey].get(key);
-          if (Ember.isArray(id.where[key])) {
-            isExist = Ember.isEqual(id.where[key].getIds().join(','), _tempValue.getIds().join(','));
-          } else {
-            if (_tempValue instanceof Ember.Object) {
-              isExist = Ember.isEqual(id.where[key], _tempValue.get('id'));
-            } else {
-              isExist = Ember.isEqual(id.where[key], _tempValue);
-            }
-          }
-
-          if (!isExist) {
-            break;
-          }
+    var cachedRecords = this.get('cache')[typeKey];
+    if (cachedRecords) {
+      if ($.isEmptyObject(id)) {
+        for(idKey in cachedRecords) {
+          records.pushObject(cachedRecords[idKey]);
         }
+      } else {
+        for(idKey in cachedRecords) {
+          var isExist = true;
 
-        if (isExist) {
-          records.pushObject(this.get('cache')[typeKey][idKey]);
+          // make sure the any condition in id.where, could find the relative obj in cache.
+          for(whereKey in id.where) {
+            var _tempValue = cachedRecords[idKey].get(whereKey),
+              whereValue = id.where[whereKey];
+
+            if (!Ember.isNone(_tempValue)) {
+              if (Ember.isArray(whereValue)) {  // column value is an array obj.
+                isExist = Ember.isEqual(whereValue.getIds().join(','), _tempValue.getIds().join(','));
+              } else {
+                if (_tempValue instanceof Ember.Object) {  // column value is an obj.
+                  isExist = Ember.isEqual(whereValue, _tempValue.get('id'));
+                } else {  // column value is other type.
+                  isExist = Ember.isEqual(whereValue, _tempValue);
+                }
+              }
+            }
+
+            if (!isExist) { break; }
+          }
+
+          if (isExist) {
+            records.pushObject(this.get('cache')[typeKey][idKey]);
+          }
         }
       }
 
@@ -91,8 +107,8 @@ export default Ember.Object.extend({
     var adapter = this.container.lookup('adapter:application');
 
     return adapter.createRecord(clazz, data).then(function(responseJson){
-      data.id = responseJson.objectId || responseJson._id;
-      data.updatedAt = responseJson.createdAt;
+      data.id = responseJson._id;
+      data.updated_at = responseJson.created_at;
       return Ember.RSVP.resolve(Ember.merge(data, responseJson));
     }, function(response){
       return Ember.RSVP.reject(response.responseJSON || {'error': 'create record has some errors.'});
@@ -144,7 +160,7 @@ export default Ember.Object.extend({
         } else if (result.success.objectId || result.success._id) {  // create success
           store._push(record.constructor, result, record);
         }  {  // update success
-          store._reload(record.getTypeKey(), record, result);
+          store._reload(record.getTypeKey(), result, record);
         }
       });
       return Ember.RSVP.resolve();
@@ -215,22 +231,33 @@ export default Ember.Object.extend({
   */
   _getModelClazz: function(clazz) {
     if (typeof(clazz) === 'string') {
-      return this.container.lookup('model:%@'.fmt(clazz)).constructor;
+      return this.container.lookup('model:%@'.fmt(clazz.toLowerCase())).constructor;
     } else {
       return clazz;
     }
   },
 
   /*
-  * get Model instance
+  * push record(s) into store
   */
   _push: function(clazz, json, record) {
+    if (Ember.isArray(json)) {
+      var records = [];
+      for (var i = 0; i < json.length; i++) {
+         records.push(this._push_one(clazz, json[i], record));
+      }
+      return records;
+    } else {
+      return this._push_one(clazz, json, record);
+    }
+  },
+  _push_one: function(clazz, json, record) {
+    clazz = this._getModelClazz(clazz);
     json.id = json.id || json.objectId || json._id;
 
     if (Ember.isNone(record)) {
       record = clazz.create();
     }
-
     record.merge(json);
 
     this.get('cache')[clazz.typeKey] = this.get('cache')[clazz.typeKey] || {};
@@ -243,13 +270,18 @@ export default Ember.Object.extend({
 
   /*
   * Update a record in cache
+  * record: modle instance/model id
   */
-  _reload: function(typeKey, record, json) {
+  _reload: function(clazz, json, record) {
+    if (typeof(record) === 'string') {
+      record = this.get('cache')[clazz.typeKey][record];
+    }
+
     // use merged responseJson to update changeData
     Ember.merge(json, record.get('changeData'));
     record.merge(json);
 
-    this.get('cache')[typeKey][record.get('id')] = record;
+    this.get('cache')[clazz.typeKey][record.get('id')] = record;
     this.normalize(record, record.get('modelData'));
   },
 

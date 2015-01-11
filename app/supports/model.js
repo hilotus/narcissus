@@ -129,7 +129,7 @@ var Model = Ember.Object.extend(Timestamps, {
       });
     } else {
       return store.updateRecord(clazz, this.get('id'), this.get('changeData')).then(function(responseJson){
-        store._reload(__this.getTypeKey(), __this, responseJson);
+        store._reload(__this.getTypeKey(), responseJson, __this);
         return Ember.RSVP.resolve(__this);
       }, function(errorJson){
         return Ember.RSVP.reject(errorJson);
