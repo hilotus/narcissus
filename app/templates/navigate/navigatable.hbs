@@ -88,33 +88,6 @@
           {{#if row.isButton}}
             <div {{bind-attr class=":row :button-row section.isDisabled:disabled"}} {{action 'submit' section target=row}}>{{row.title}}</div>
           {{/if}}
-
-          {{#if row.isDate}}
-            <div class="row date-row pure-form">
-              <span>{{row.prompt}}</span>
-              {{input type="number" step="1" placeholder=row.placeholderYear value=row.year}}
-              -
-              {{input type="number" step="1" placeholder=row.placeholderMonth value=row.month}}
-              -
-              {{input type="number" step="1" placeholder=row.placeholderDay value=row.day}}
-            </div>
-          {{/if}}
-
-          {{#if row.isTime}}
-            <div class="row time-row pure-form">
-              <span>{{row.prompt}}</span>
-              {{input type="number" step="1" placeholder=row.placeholderHour value=row.hour}}
-              :
-              {{input type="number" step="1" placeholder=row.placeholderMinute value=row.minute}}
-            </div>
-          {{/if}}
-
-          {{#if row.isTitleSelect}}
-            <div class="row select-row" {{action 'onSelect' controller target=row}}>
-              <div class="select-title">{{row.title}}</div>
-              <div class="select-icon"><i class="fa fa-angle-right"></i></div>
-            </div>
-          {{/if}}
         {{/each}}
       </div>
     </div>

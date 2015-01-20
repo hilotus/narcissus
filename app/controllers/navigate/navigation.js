@@ -7,35 +7,36 @@ export default Ember.Controller.extend({
   wait: 0.4,
 
   isMove: false,
-  push: function(navigatableViewClass) {
+  push: function(navigatableViewClass, callback) {
     if (this.get("isMove")) {
       return;
     }
 
     this.set("isMove", true);
 
-    this.__previous(navigatableViewClass);
+    this.__previous(navigatableViewClass, callback);
   },
 
-  pop: function() {
+  pop: function(callback) {
     if (this.get("isMove")) {
       return;
     }
 
     this.set("isMove", true);
 
-    this.__back();
+    this.__back(callback);
   },
 
   /*
    * Private method
    */
-  __previous: function(navigatableViewClass) {
+  __previous: function(navigatableViewClass, callback) {
     var user = this.get("currentUser"),
       store = this.get("store"),
       wait = this.get("wait"),
       $well = this.get("well"),
       $channel = this.get("channel"),
+      $navigation = this.get('navigationView'),
       pages = this.get("pages"),
       width = $well.width();
 
@@ -57,12 +58,19 @@ export default Ember.Controller.extend({
       this.set("isMove", false);
       this.set("pages", pages);
       Ember.run.cancel(runLater);
+
+      $navigation.css({'height': '%@px'.fmt($well.height())});
+
+      if (typeof(callback) === 'function') {
+        callback();
+      }
     }, wait * 1000);
   },
 
-  __back: function() {
+  __back: function(callback) {
     var $well = this.get("well"),
       $channel = this.get("channel"),
+      $navigation = this.get('navigationView'),
       pages = this.get("pages"),
       width = $well.width(),
       wait = this.get("wait");
@@ -77,6 +85,12 @@ export default Ember.Controller.extend({
       this.set("isMove", false);
       this.set("pages", pages - 1);
       Ember.run.cancel(runLater);
+
+      $navigation.css({'height': '%@px'.fmt($well.height())});
+
+      if (typeof(callback) === 'function') {
+        callback();
+      }
     }, wait * 1000);
   }
 });

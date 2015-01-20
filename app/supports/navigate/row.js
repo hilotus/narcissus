@@ -51,17 +51,5 @@ export default Ember.Object.extend({
 
   isButton: function() {
     return this.get('type') === "button";
-  }.property("type"),
-
-  isDate: function() {
-    return this.get('type') === "date";
-  }.property('type'),
-
-  isTime: function() {
-    return this.get('type') === "time";
-  }.property('type'),
-
-  isTitleSelect: function() {
-    return this.get('type') === 'title-select';
-  }.property('type')
+  }.property("type")
 });

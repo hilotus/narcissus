@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
 import TitleUpdateRow from './rows/title-update-row';
-import TitleSelectRow from './rows/title-select-row';
 
 export default Ember.Object.extend({
   owner: null,
@@ -24,7 +23,6 @@ export default Ember.Object.extend({
   content: [],
 
   contentRowTitleBindedName: 'name',
-  contentRowType: '',
 
   contentRows: function() {
     var __this = this;
@@ -46,45 +44,27 @@ export default Ember.Object.extend({
   * You can override this method to be dead against your logic specially.
   */
   _createContentRow: function(record, section) {
-    var type = section.get('contentRowType');
-    if (type === 'title-select') {
-      return TitleSelectRow.extend({
-        section: section,
-        owner: section.get('owner'),
-        record: record,
+    return TitleUpdateRow.extend({
+      section: section,
+      owner: section.get('owner'),
+      record: record,
 
-        init: function() {
-          this.set('title', this.get('record.%@'.fmt(this.get('section.contentRowTitleBindedName'))));
-          this._super();
-        },
+      canDelete: true,
 
-        onSelect: function() {
-          this.get('section').rowOnSelect(this);
+      init: function() {
+        this.set('bindedName', this.get('section.contentRowTitleBindedName'));
+        this.set('title', this.get('record.%@'.fmt(this.get('section.contentRowTitleBindedName'))));
+        this.set('bufferedTitle', this.get('record.%@'.fmt(this.get('section.contentRowTitleBindedName'))));
+        this._super();
+      },
+
+      onDeletedSuccess: function(row){
+        if (row.get('owner.type') === 'tag') {
+          row.get("owner.controller.tags").removeObject(row.get('record'));
+        } else {
+          row.get("owner.controller.categories").removeObject(row.get('record'));
         }
-      }).create();
-    } else {
-      return TitleUpdateRow.extend({
-        section: section,
-        owner: section.get('owner'),
-        record: record,
-
-        canDelete: true,
-
-        init: function() {
-          this.set('bindedName', this.get('section.contentRowTitleBindedName'));
-          this.set('title', this.get('record.%@'.fmt(this.get('section.contentRowTitleBindedName'))));
-          this.set('bufferedTitle', this.get('record.%@'.fmt(this.get('section.contentRowTitleBindedName'))));
-          this._super();
-        },
-
-        onDeletedSuccess: function(row){
-          if (row.get('owner.type') === 'tag') {
-            row.get("owner.controller.tags").removeObject(row.get('record'));
-          } else {
-            row.get("owner.controller.categories").removeObject(row.get('record'));
-          }
-        },
-      }).create();
-    }
+      },
+    }).create();
   }
 });
