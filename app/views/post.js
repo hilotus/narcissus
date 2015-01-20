@@ -6,7 +6,7 @@ export default Ember.View.extend({
   willDestroyElement: function() {
     this._super();
 
-    // TODO: when transit from post page, the page cannot auto remove.
+    // TODO: when leave from post page, the post page cannot auto remove.
     this.$().remove();
   }
 });

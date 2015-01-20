@@ -282,6 +282,7 @@ export default Ember.Object.extend({
     Ember.merge(json, record.get('changeData'));
     record.merge(json);
 
+    clazz = this._getModelClazz(clazz);
     this.get('cache')[clazz.typeKey][record.get('id')] = record;
     this.normalize(record, record.get('modelData'));
   },

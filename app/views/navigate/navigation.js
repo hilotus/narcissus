@@ -22,6 +22,6 @@ export default Ember.View.extend({
     this.set("controller.channel", $channel);
     this.set("controller.navigationView", $elem);
 
-    // TODO: 当 Navigation 在大于第一页处(如: 第二页)时，窗口大小变化，正确计算magin-left的值
+    // TODO: 当 Navigation 在大于第一页处(如: 第二页)时，改变浏览器宽度，更加准确的计算magin-left
   }
 });

@@ -20,7 +20,11 @@
         <div class="pure-u-3-4 comment-time">{{view.content.format_created}}</div>
         <div class="pure-u-1-4 comment-operator">
           {{#if view.parentView.controller.currentUser}}
-            <div class="ios-button" {{action 'reply' target=view}}><label class="button-label">{{t 'button.reply'}}</label></div>
+            {{!-- TODO: Reply a comment.
+            <div class="ios-button" {{action 'reply' target=view}}>
+              <label class="button-label">{{t 'button.reply'}}</label>
+            </div>
+            --}}
           {{/if}}
           {{#if view.content.isMe}}
             <div class="ios-button" {{action 'edit' target=view}}><label class="button-label">{{t 'button.edit'}}</label></div>
