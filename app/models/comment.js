@@ -1,7 +1,6 @@
 import Ember from 'ember';
-import Model from '../supports/model';
-
-import Gravatar from '../mixins/gravatar';
+import Model from 'ember-cli-coreweb/supports/model';
+import Gravatar from 'ember-cli-coreweb/mixins/gravatar';
 
 var Comment = Model.extend(Gravatar, {
   email: Ember.computed('creator.email', function(){

@@ -1,5 +1,4 @@
-// import Ember from 'ember';
-import Model from '../supports/model';
+import Model from 'ember-cli-coreweb/supports/model';
 
 var Post = Model.extend({
   // 是否为登录用户创建

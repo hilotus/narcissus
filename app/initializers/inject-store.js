@@ -1,4 +1,4 @@
-import Store from '../supports/store';
+import Store from 'ember-cli-coreweb/supports/parse-store';
 
 export function initialize(container, application) {
   // application.inject('route', 'foo', 'service:foo');

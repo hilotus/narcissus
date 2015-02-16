@@ -1,8 +1,7 @@
 import Ember from 'ember';
 import injection from 'ember-cli-coreweb/initializers/injection';
-
-import Model from '../supports/model';
-import Presence from '../mixins/presence';
+import Model from 'ember-cli-coreweb/supports/model';
+import Presence from 'ember-cli-coreweb/mixins/presence';
 
 export var initialize = function(container/*, application*/) {
   // Object
