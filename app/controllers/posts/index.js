@@ -35,9 +35,9 @@ export default Ember.ArrayController.extend({
           return false;
         }
       });
-      return filters.reverseSortBy("createdAt");
+      return filters;
     } else {
-      return posts.reverseSortBy("createdAt");
+      return posts;
     }
   }.property('keywords', 'model.length'),
 
@@ -59,28 +59,34 @@ export default Ember.ArrayController.extend({
       Alert.loading(Ember.I18n.t("loading.title"));
     }
 
-    return adapter.find('post', {limit: perPage, skip: (page - 1) * perPage}).then(function(response){
-      var posts = response.results;
-      var length = posts.get('length');
-      if (length > 0) {
-        __this.set('page', page + 1);
-        __this.get('model').pushObjects(store._push('post', posts));
-      }
+    var data = {'order': '-createdAt', 'limit': perPage, 'skip': (page - 1) * perPage};
+    return adapter.find('post', data).then(
+      function(response) {
+        var posts = response.results;
+        var length = posts.get('length');
+        if (length > 0) {
+          __this.set('page', page + 1);
+          __this.get('model').pushObjects(store._push('post', posts));
+        }
 
-      if (length === 0) {
-        __this.set('isLoadedAll', true);
+        if (length === 0) {
+          __this.set('isLoadedAll', true);
+        }
+      },
+      function(errorJson) {
+        Alert.warn(errorJson.error);
       }
-    }, function(errorJson){
-      Alert.warn(errorJson.error);
-    }).then(function(){
-      if (isFirstLoaded) {
-        __this.set('isLoading', false);
-      } else {
-        Alert.removeLoading();
-      }
+    ).then(
+      function() {
+        if (isFirstLoaded) {
+          __this.set('isLoading', false);
+        } else {
+          Alert.removeLoading();
+        }
 
-      return Ember.RSVP.resolve();
-    });
+        return Ember.RSVP.resolve();
+      }
+    );
   },
 
   actions: {

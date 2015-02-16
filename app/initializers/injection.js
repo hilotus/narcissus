@@ -9,10 +9,10 @@ export var initialize = function(container/*, application*/) {
 
   // Route
   Ember.Route.reopenClass({
-    /**
-      Shows a modal
-      @method showModal
-    **/
+    /*
+    * Shows a modal
+    * @method showModal
+    */
     __showModal: function(router, name, model) {
       router.controllerFor('modal/modal').set('modalClass', null);
       router.render('modal/modal', {into: 'application', outlet: 'modal'});
@@ -37,6 +37,7 @@ export var initialize = function(container/*, application*/) {
 
   // Model: set store as Model instance's property.
   var store = container.lookup('store:main');
+  // add property to Model instance
   Model.reopen({store: store});
 
   // markd highlight

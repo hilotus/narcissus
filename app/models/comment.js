@@ -34,6 +34,7 @@ var Comment = Model.extend(Gravatar, {
   }.property('creator', 'post.creator')
 });
 
+// add property to Model Class
 Comment.reopenClass({
   typeKey: 'comment',
   schema: {

@@ -1,7 +1,6 @@
 server {
   server_name <%= fetch(:server_name) %>;
   listen 80;
-  listen [::]:80 ipv6only=on;
 
   root <%= fetch(:deploy_to) %>/current/public;
 
