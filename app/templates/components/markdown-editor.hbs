@@ -1,0 +1,5 @@
+{{textarea}}
+<div {{bind-attr class=":preview isEditting:hidden:block"}}>{{markdown-body body=body}}</div>
+<div class="utilbars">
+  <button style="cursor:pointer;" {{bind-attr class=":button isEditting:toggle-preview:toggle-edit"}} {{action 'toggle'}}></button>
+</div>

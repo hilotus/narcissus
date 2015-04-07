@@ -2,7 +2,10 @@ import Ember from 'ember';
 import ModalBodyView from '../modal/modal-body';
 
 export default ModalBodyView.extend({
-  titleTranslation: 'forgot.title',
+  title: function() {
+    var t = this.container.lookup('utils:t');
+    return t('forgot.title');
+  }.property(),
 
   classNames: ["forgot-password-modal"],
   templateName: 'modal/forgot-password',

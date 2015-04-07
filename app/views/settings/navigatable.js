@@ -6,18 +6,27 @@ import Section from 'narcissus/supports/navigate/section';
 import SelectRow from 'narcissus/supports/navigate/rows/select-row';
 
 export default NavigatableView.extend({
-  titleTranslation: 'settings.title',
+  title: function() {
+    var t = this.container.lookup('utils:t');
+    return t('settings.title');
+  }.property(),
 
   hasLeftButton: false,
   hasRightButton: false,
 
   sections: ["menuSection"],
   menuSection: Section.extend({
-    titleTranslation: 'settings.sectionheader.option',
+    title: function() {
+      var t = this.get('owner.container').lookup('utils:t');
+      return t('settings.section.header.option');
+    }.property(),
 
     rows: ["mine", "tag", "category"],
     mine: SelectRow.extend({
-      titleTranslation: 'settings.mine.title',
+      title: function() {
+        var t = this.get('owner.container').lookup('utils:t');
+        return t('settings.mine.title');
+      }.property(),
 
       onSelect: function(controller) {
         controller.push(SettingsOptionsNavigatable);
@@ -25,7 +34,10 @@ export default NavigatableView.extend({
     }),
 
     tag: SelectRow.extend({
-      titleTranslation: 'settings.tag.title',
+      title: function() {
+        var t = this.get('owner.container').lookup('utils:t');
+        return t('settings.tag.title');
+      }.property(),
 
       onSelect: function(controller) {
         controller.push(SettingsTermsNavigatable.extend({type: 'tag'}));
@@ -33,7 +45,10 @@ export default NavigatableView.extend({
     }),
 
     category: SelectRow.extend({
-      titleTranslation: 'settings.category.title',
+      title: function() {
+        var t = this.get('owner.container').lookup('utils:t');
+        return t('settings.category.title');
+      }.property(),
 
       onSelect: function(controller) {
         controller.push(SettingsTermsNavigatable.extend({type: 'category'}));

@@ -1,4 +1,4 @@
-import Model from 'ember-cli-coreweb/supports/model';
+import Model from 'ember-cli-coreweb/supports/parse-model';
 
 var Term = Model.extend({
 });

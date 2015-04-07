@@ -5,10 +5,10 @@
       <button type="button" class="pure-button" {{action 'externalLogin' 'github'}}><i class="fa fa-github-alt" style="font-size:18px;"></i>&nbsp;{{t "login.with.github"}}</button>
     </fieldset>--}}
     <fieldset class="pure-group">
-      {{input type="text" class="pure-input-1-2" autocorrect="off" autocapitalize="off" autofocus="autofocus" value=username placeholderTranslation="login.username"}}
-      {{input type="password" class="pure-input-1-2" value=password placeholderTranslation="login.password"}}
+      {{input type="text" class="pure-input-1-2" autocorrect="off" autocapitalize="off" autofocus="autofocus" value=username placeholder=(t 'login.username')}}
+      {{input type="password" class="pure-input-1-2" value=password placeholder=(t 'login.password')}}
     </fieldset>
-    <a {{action 'forgotPassword'}} class="pure-input-1-2 forgot-password">{{t 'login.forgot.password'}}</a>
+    <a {{action 'forgotPassword'}} class="pure-input-1-2 forgot-password">{{t 'login.forgotPassword'}}</a>
   </div>
 </div>
 <div class="modal-footer">
@@ -19,6 +19,6 @@
   {{#if showSpinner}}
     &nbsp; <i class='fa fa-spinner fa-spin'></i>
   {{/if}}
-  &nbsp;{{t 'create.account.tip'}}
-  <a {{action 'createAccount'}}>{{t 'create.account.now'}}</a>
+  &nbsp;{{t 'createAccount.tip'}}
+  <a {{action 'createAccount'}}>{{t 'createAccount.now'}}</a>
 </div>

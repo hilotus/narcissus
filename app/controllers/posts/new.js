@@ -1,10 +1,13 @@
 import Ember from 'ember';
-import Alert from 'ember-cli-coreweb/utils/alert';
+import Alert from 'narcissus/utils/alert';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   needs: ['posts/index', 'settings/terms'],
 
-  headerTitleTranslation: 'posts.create',
+  headerTitle: function() {
+    var t = this.container.lookup('utils:t');
+    return t('posts.create.header');
+  }.property(),
   creating: false,
 
   bufferedTagsBinding: 'controllers.settings/terms.tags',
@@ -15,44 +18,41 @@ export default Ember.ObjectController.extend({
   }.property('creating'),
 
   createTitle: function() {
-    return this.get('creating') ? Ember.I18n.t("button.creating") : Ember.I18n.t("button.create");
+    var t = this.container.lookup('utils:t');
+    return this.get('creating') ? t("button.creating") : t("button.create");
   }.property('creating'),
+
+  createDisabled: function() {
+    return this.get('creating') || this.blank('currentUser') ||
+      this.blank('model.title') || this.blank('model.body') || this.blank("model.category");
+  }.property('creating', 'currentUser', 'model.title', 'model.category', 'model.body'),
 
   actions: {
     createPost: function() {
-      if (!this.get('currentUser')) {
-        Alert.warn(Ember.I18n.t("posts.create.error"), Ember.I18n.t("posts.create.error.unlogon"));
-        return;
-      }
-
       var model = this.get('model'),
         body = model.get('body'),
         store = this.store,
-        __this = this;
-
-      if (!model.get('title') || !model.get('title').trim() || !body || !model.get("category")) {
-        Alert.warn(Ember.I18n.t("posts.create.error"), Ember.I18n.t("posts.create.error.check.unpass"));
-        return;
-      }
+        t = this.container.lookup('utils:t'),
+        that = this;
 
       this.set('creating', true);
-      Alert.operating(Ember.I18n.t("button.creating"));
+      Alert.operating(t("button.creating"));
 
-      var __post = store._getModelClazz('post').create();
-      __post.setVal('title', model.get('title'));
-      __post.setVal('body', body);
-      __post.setVal('category', model.get('category.id'));
-      __post.setVal('tags', model.get('tags').getIds());
-      __post.setVal('creator', this.get("currentUser.id"));
-      __post.setVal('comments', []);
+      var post = store._getModelClazz('post').create();
+      post.setVal('title', model.get('title'));
+      post.setVal('body', body);
+      post.setVal('category', model.get('category.id'));
+      post.setVal('tags', model.get('tags').getIds());
+      post.setVal('creator', this.get("currentUser.id"));
+      post.setVal('comments', []);
 
-      __post.save().then(function(newRecord){
-        __this.get('controllers.posts/index.model').insertAt(0, newRecord);
-        __this.transitionToRoute("posts.index");
+      post.save().then(function(newRecord){
+        that.get('controllers.posts/index.model').insertAt(0, newRecord);
+        that.transitionToRoute("posts.index");
       }, function(errorJson){
         Alert.warn(errorJson.error);
       }).then(function(){
-        __this.set('creating', true);
+        that.set('creating', true);
         Alert.removeLoading();
       });
     },

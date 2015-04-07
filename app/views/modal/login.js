@@ -2,7 +2,10 @@ import Ember from 'ember';
 import ModalBodyView from '../modal/modal-body';
 
 export default ModalBodyView.extend({
-  titleTranslation: 'login.title',
+  title: function() {
+    var t = this.container.lookup('utils:t');
+    return t('login.title');
+  }.property(),
 
   classNames: ["login-modal"],
   templateName: 'modal/login',

@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   actions: {
     logout: function() {
-      localStorage.removeItem("user-session-token");
+      localStorage.removeItem("NARCISSUS-USER-TOKEN");
       window.location.reload();
     },
 

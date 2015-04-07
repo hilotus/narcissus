@@ -14,11 +14,12 @@
       <fieldset>
         <div class="pure-g">
           <div class="pure-u-1" style="text-align:right;">
-            <button type="button" class="pure-button pure-button-primary" {{bind-attr disabled=view.createDisabled}} {{action 'createComment' view}}>{{t 'post.comment.create'}}</button>
+            <button type="button" class="pure-button pure-button-primary" {{bind-attr disabled=view.createDisabled}} {{action 'createComment' view}}>{{t 'button.create'}}</button>
             {{#if view.showSpinner}}
               &nbsp; <i class='fa fa-spinner fa-spin'></i>
             {{/if}}
           </div>
+        </div>
       </fieldset>
     </div>
   {{else}}
@@ -26,12 +27,12 @@
       <fieldset>
         <div class="pure-g">
           <div class="pure-u-1">
-            <label for="creator_email">{{t 'post.comment.email'}}</label>
-            {{input elementId="creator_email" type="text" class="pure-input-1-2" placeholderTranslation="placeholder.required" value=view.creator_email}}
+            <label for="creator_email">{{t 'posts.comment.email'}}</label>
+            {{input elementId="creator_email" type="text" class="pure-input-1-2" placeholder=(t "placeholder.required") value=view.creator_email}}
           </div>
           <div class="pure-u-1">
-            <label for="creator_name">{{t 'post.comment.name'}}</label>
-            {{input elementId="creator_name" type="text" class="pure-input-1-2" placeholderTranslation="placeholder.unrequired" value=view.creator_name}}
+            <label for="creator_name">{{t 'posts.comment.name'}}</label>
+            {{input elementId="creator_name" type="text" class="pure-input-1-2" placeholder=(t "placeholder.unrequired") value=view.creator_name}}
           </div>
         </div>
       </fieldset>
@@ -45,11 +46,12 @@
       <fieldset>
         <div class="pure-g">
           <div class="pure-u-1" style="text-align: right;">
-            <button type="button" class="pure-button pure-button-primary" {{bind-attr disabled=view.createDisabled}} {{action 'createComment' view}}>{{t 'post.comment.create'}}</button>
+            <button type="button" class="pure-button pure-button-primary" {{bind-attr disabled=view.createDisabled}} {{action 'createComment' view}}>{{t 'button.create'}}</button>
             {{#if view.showSpinner}}
               &nbsp; <i class='fa fa-spinner fa-spin'></i>
             {{/if}}
           </div>
+        </div>
       </fieldset>
     </div>
   {{/if}}

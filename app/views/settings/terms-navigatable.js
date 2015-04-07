@@ -9,11 +9,15 @@ export default NavigatableView.extend({
   type: '',
 
   title: function() {
-    return Ember.I18n.t("settings.%@.create".fmt(this.get("type")));
+    var t = this.container.lookup('utils:t');
+    return t("settings.%@.title".fmt(this.get("type")));
   }.property('type'),
 
   hasLeftButton: true,
-  leftButtonTitleTranslation: 'settings.title',
+  leftButtonTitle: function() {
+    var t = this.container.lookup('utils:t');
+    return t('settings.title');
+  }.property(),
   actions: {
     leftButtonAction: function(controller) {
       controller.pop();
@@ -25,7 +29,8 @@ export default NavigatableView.extend({
     controller: Ember.computed.oneWay('owner.controller.controllers.settings/terms'),
 
     title: function() {
-      return Ember.I18n.t("settings.%@.list".fmt(this.get('owner.type')));
+      var t = this.get('owner.container').lookup('utils:t');
+      return t("settings.%@.header".fmt(this.get('owner.type')));
     }.property('owner.type'),
 
     rows: ["createInput"],
@@ -34,7 +39,8 @@ export default NavigatableView.extend({
       bindedModel: 'term',
 
       placeholder: function() {
-        return Ember.I18n.t('settings.%@.create'.fmt(this.get('owner.type')));
+        var t = this.get('owner.container').lookup('utils:t');
+        return t("settings.%@.create".fmt(this.get('owner.type')));
       }.property('owner.type'),
 
       defaultValue: function() {

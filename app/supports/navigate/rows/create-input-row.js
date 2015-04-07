@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Row from '../row';
-import Alert from 'ember-cli-coreweb/utils/alert';
+import Alert from 'narcissus/utils/alert';
 
 export default Row.extend({
   type: 'create-input',
@@ -23,8 +23,9 @@ export default Row.extend({
     }
 
     var data = {},
-    store = this.get('store'),
-    __this = this;
+      store = this.get('store'),
+      t = this.get('owner.container').lookup('utils:t'),
+      that = this;
 
     data[this.get('bindedName')] = value;
     data = Ember.merge(data, this.get('defaultValue'));
@@ -32,9 +33,9 @@ export default Row.extend({
     var record = store._getModelClazz(this.get('bindedModel')).create();
     record.setVals(data);
 
-    Alert.operating(Ember.I18n.t("button.creating"));
+    Alert.operating(t("button.creating"));
     record.save().then(function(newRecord){
-      __this.onCreateSuccess(__this, newRecord);
+      that.onCreateSuccess(that, newRecord);
     }, function(errorJson){
       Alert.warn(errorJson.error);
     }).then(function(){

@@ -31,10 +31,6 @@ app.import('bower_components/font-awesome/fonts/fontawesome-webfont.woff', {dest
 app.import('bower_components/font-awesome/fonts/fontawesome.otf', {destDir: "fonts"});
 app.import('bower_components/font-awesome/css/font-awesome.min.css');
 
-// ember i18n
-app.import('bower_components/cldr/plurals.js');
-app.import('bower_components/ember-i18n/lib/i18n.js');
-
 // moment
 app.import('bower_components/moment/min/moment-with-locales.min.js');
 // moment-timezone
@@ -46,5 +42,20 @@ app.import('bower_components/pace/themes/blue/pace-theme-flash.css');
 
 // js-md5
 app.import('bower_components/js-md5/js/md5.min.js');
+
+// codemirror
+app.import('bower_components/codemirror/lib/codemirror.js');
+app.import('bower_components/codemirror/addon/fold/foldcode.js');
+app.import('bower_components/codemirror/addon/fold/foldgutter.js');
+app.import('bower_components/codemirror/addon/fold/markdown-fold.js');
+app.import('bower_components/codemirror/mode/markdown/markdown.js');
+app.import('bower_components/codemirror/lib/codemirror.css');
+app.import('bower_components/codemirror/addon/fold/foldgutter.css');
+
+// marked
+app.import('bower_components/marked/lib/marked.js');
+
+// highlightjs
+app.import('bower_components/highlightjs/highlight.pack.js');
 
 module.exports = app.toTree();

@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import Alert from 'ember-cli-coreweb/utils/alert';
+import Alert from 'narcissus/utils/alert';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   needs: ['posts/index'],
   actions: {
     edit: function() {
@@ -11,15 +11,16 @@ export default Ember.ObjectController.extend({
 
     delete: function() {
       var controller = this,
+        t = this.container.lookup('utils:t'),
         store = this.get('store'),
         post = this.get("model"),
         comments = post.get('comments'),
         destroys = [];
 
-      Alert.warn(Ember.I18n.t("posts.destroy.prompt"), Ember.I18n.t("posts.destroy.body"),
-        [Ember.I18n.t("button.cancel"), Ember.I18n.t("button.delete")], function(i){
+      Alert.warn(t("posts.destroy.prompt"), t("posts.destroy.body"),
+        [t("button.cancel"), t("button.delete")], function(i){
         if (i === 2) { // ok to delete post
-          Alert.operating(Ember.I18n.t("button.deleting"));
+          Alert.operating(t("button.deleting"));
 
           destroys.pushObjects(comments);
           destroys.pushObject(post);
@@ -27,8 +28,8 @@ export default Ember.ObjectController.extend({
           store.batch({'destroys': destroys}).then(function(){
             controller.get('controllers.posts/index.model').removeObject(post);
             controller.transitionToRoute('posts.index');
-          }, function(errorJson){
-              Alert.warn(errorJson.error);
+          }, function(reason){
+              Alert.warn(reason.error);
             }
           ).then(function(){
             Alert.removeLoading();
@@ -39,8 +40,9 @@ export default Ember.ObjectController.extend({
 
     // create comment for post
     createComment: function(view) {
-      var __this = this,
+      var that = this,
         currentUser = this.get('currentUser'),
+        t = this.container.lookup('utils:t'),
         store = this.get('store');
 
       var comment = store._getModelClazz('comment').create();
@@ -55,10 +57,10 @@ export default Ember.ObjectController.extend({
       });
 
       view.set('creating', true);
-      Alert.operating(Ember.I18n.t("post.comment.creating"));
+      Alert.operating(t("button.creating"));
 
       comment.save().then(function(record){
-        var post = __this.get('model'),
+        var post = that.get('model'),
           comments = post.getVal('comments');
 
         comments.insertAt(0, record.get('id'));

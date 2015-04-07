@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import User from '../../models/user';
-import ModalFunctionality from '../../mixins/modal-functionality';
+import User from 'narcissus/models/user';
+import ModalFunctionality from 'narcissus/mixins/modal-functionality';
 
 export default Ember.Controller.extend(ModalFunctionality, {
-  needs: ['modal/modal', 'modal/create-account', 'modal/forgot-password'],
+  needs: ['modal/create-account', 'modal/forgot-password'],
   authenticate: null,
   loggingIn: false,
 
@@ -13,7 +13,8 @@ export default Ember.Controller.extend(ModalFunctionality, {
   },
 
   loginButtonText: function() {
-    return this.get('loggingIn') ? Ember.I18n.t('login.logging') : Ember.I18n.t('login.title');
+    var t = this.container.lookup('utils:t');
+    return this.get('loggingIn') ? t('login.logging') : t('login.title');
   }.property('loggingIn'),
 
   loginDisabled: function() {
@@ -30,20 +31,17 @@ export default Ember.Controller.extend(ModalFunctionality, {
       this.set('loggingIn', true);
 
       var self = this,
-        data = {
-          username: encodeURI(this.get('username')),
-          password: encodeURI(this.get('password'))
-        };
+        t = this.container.lookup('utils:t'),
+        data = {username: encodeURI(this.get('username')), password: encodeURI(this.get('password'))};
 
-
-      User.login(this.get('container'), data).then(function(user){
+      User.login(this.get('container'), data).then(function(json){
         self.set('loggingIn', false);
-        localStorage.setItem("user-session-token", user.sessionToken || user.id || user._id);
+        localStorage.setItem("NARCISSUS-USER-TOKEN", json.sessionToken || json.id || json._id);
         window.location.reload();
       }).catch(function(errorJson){
         self.set('loggingIn', false);
         if (errorJson.code === 101) {
-          self.flash(Ember.I18n.t("login.authenticate.error"), 'error');
+          self.flash(t("login.authenticate.error"), 'error');
         } else {
           self.flash(errorJson.error, 'error');
         }
@@ -52,15 +50,6 @@ export default Ember.Controller.extend(ModalFunctionality, {
 
     externalLogin: function(loginMethod) {
       this.set('authenticate', loginMethod);
-      // var w = window.open("%@/account/auth/%@".fmt(Utilities.get("baseServerUrl"), loginMethod), "_blank",
-      //   "menubar=no,status=no,height=400,width=800,left=100,top=50");
-      // var self = this;
-      // var timer = setInterval(function() {
-      //   if(w.closed) {
-      //     clearInterval(timer);
-          // self.set('authenticate', null);
-      //   }
-      // }, 1000);
     },
 
     createAccount: function() {

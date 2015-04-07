@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Alert from 'ember-cli-coreweb/utils/alert';
+import Alert from 'narcissus/utils/alert';
 import NavigatableView from 'narcissus/views/navigate/navigatable';
 
 import Section from 'narcissus/supports/navigate/section';
@@ -8,10 +8,17 @@ import SwitchRow from 'narcissus/supports/navigate/rows/switch-row';
 import DescriptionUpdateRow from 'narcissus/supports/navigate/rows/description-update-row';
 
 export default NavigatableView.extend({
-  titleTranslation: 'settings.mine.title',
+  title: function() {
+    var t = this.container.lookup('utils:t');
+    return t('settings.mine.title');
+  }.property(),
 
   hasLeftButton: true,
-  leftButtonTitleTranslation: 'settings.title',
+  leftButtonTitle: function() {
+    var t = this.container.lookup('utils:t');
+    return t('settings.title');
+  }.property(),
+
   actions: {
     leftButtonAction: function(controller) {
       controller.pop();
@@ -20,22 +27,34 @@ export default NavigatableView.extend({
 
   sections: ["optionsSection"],
   optionsSection: Section.extend({
-    titleTranslation: 'settings.sectionheader.option',
+    title: function() {
+      var t = this.get('owner.container').lookup('utils:t');
+      return t('settings.section.header.option');
+    }.property(),
 
     rows: ['username','email', 'name', 'demo'],
 
     username: DescriptionRow.extend({
-      titleTranslation: 'settings.mine.username',
+      title: function() {
+        var t = this.get('owner.container').lookup('utils:t');
+        return t('settings.mine.username');
+      }.property(),
       description: Ember.computed.oneWay('owner.controller.currentUser.username')
     }),
 
     email: DescriptionRow.extend({
-      titleTranslation: 'settings.mine.email',
+      title: function() {
+        var t = this.get('owner.container').lookup('utils:t');
+        return t('settings.mine.email');
+      }.property(),
       description: Ember.computed.oneWay('owner.controller.currentUser.email')
     }),
 
     name: DescriptionUpdateRow.extend({
-      titleTranslation: 'settings.mine.name',
+      title: function() {
+        var t = this.get('owner.container').lookup('utils:t');
+        return t('settings.mine.name');
+      }.property(),
       description: Ember.computed.oneWay('owner.controller.currentUser.name'),
       bufferedDescription: Ember.computed.oneWay('owner.controller.currentUser.name'),
 

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Row from '../row';
-import Alert from 'ember-cli-coreweb/utils/alert';
+import Alert from 'narcissus/utils/alert';
 
 export default Row.extend({
   type: 'title-update',
@@ -22,6 +22,7 @@ export default Row.extend({
   doneEditing: function() {
     // update logic
     var bufferedTitle = this.get('bufferedTitle'),
+      t = this.get('owner.container').lookup('utils:t'),
       title = this.get('title');
 
     if (Ember.isEmpty(bufferedTitle)) {
@@ -30,15 +31,17 @@ export default Row.extend({
       if (Ember.isNone(this.get('record.id'))) {
         this.set('bufferedTitle', title);
       } else {
-        Alert.operating(Ember.I18n.t("button.editting"));
+        Alert.operating(t("button.editting"));
 
-        var record = this.get('record'), _this = this;
+        var record = this.get('record'),
+          that = this;
+
         record.setVal(this.get('bindedName'), bufferedTitle);
         record.save().catch(function(errorJson){
           Alert.warn(errorJson.error);
         }).then(function(){
           Alert.removeLoading();
-          _this.set('title', bufferedTitle);
+          that.set('title', bufferedTitle);
         });
       }
     }
@@ -59,17 +62,16 @@ export default Row.extend({
     }
 
     var record = this.get('record'),
-    _this = this;
+      t = this.get('owner.container').lookup('utils:t'),
+      that = this;
 
-    Alert.warn(
-      Ember.I18n.t("destroy.prompt"),
-      Ember.I18n.t("destroy.body"),
-      [Ember.I18n.t("button.cancel"), Ember.I18n.t("button.delete")],
+    Alert.warn(t("destroy.prompt"),t("destroy.body"),
+      [t("button.cancel"), t("button.delete")],
       function(i){
         if (i === 2) { // ok to delete
-          Alert.operating(Ember.I18n.t("button.deleting"));
+          Alert.operating(t("button.deleting"));
           record.destroyRecord().then(function(){
-            _this.onDeletedSuccess(_this);
+            that.onDeletedSuccess(that);
           }).catch(function(errorJson){
             Alert.warn(errorJson.error);
           }).then(function(){

@@ -1,6 +1,7 @@
-import Model from 'ember-cli-coreweb/supports/model';
+import Model from 'ember-cli-coreweb/supports/parse-model';
+import Timestamps from 'narcissus/mixins/timestamps';
 
-var Post = Model.extend({
+var Post = Model.extend(Timestamps, {
   // 是否为登录用户创建
   isMe: function() {
     var user = this.container.lookup("user:current");

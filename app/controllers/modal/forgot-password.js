@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import User from '../../models/user';
-import Validation from '../../utils/validation';
-import ModalFunctionality from '../../mixins/modal-functionality';
+import User from 'narcissus/models/user';
+import Validation from 'narcissus/utils/validation';
+import ModalFunctionality from 'narcissus/mixins/modal-functionality';
 
 export default Ember.Controller.extend(ModalFunctionality, {
   email: '',
@@ -15,7 +15,8 @@ export default Ember.Controller.extend(ModalFunctionality, {
   },
 
   forgotButtonText: function() {
-    return this.get('sending') ? Ember.I18n.t('forgot.sending') : Ember.I18n.t('forgot.send');
+    var t = this.container.lookup('utils:t');
+    return this.get('sending') ? t('forgot.sending') : t('forgot.send');
   }.property('sending'),
 
   forgotDisabled: function() {
@@ -28,13 +29,14 @@ export default Ember.Controller.extend(ModalFunctionality, {
 
   actions: {
     forgotPassword: function() {
-      this.set('sending', true);
-
+      var t = this.container.lookup('utils:t');
       var self = this;
+
+      this.set('sending', true);
       User.forgotPassword(this.get('container'), {email: this.get('email')}).then(function(){
         self.set('sending', false);
         self.set('complete', true);
-        self.flash(Ember.I18n.t("forgot.send.success"));
+        self.flash(t("forgot.sendSuccess"));
       }).catch(function(errorJson){
         self.set('sending', false);
         self.flash(errorJson.error, 'error');

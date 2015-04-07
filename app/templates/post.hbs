@@ -3,7 +3,7 @@
     <div class="pure-u-4-5">
       {{#link-to "posts.index" class="pure-button pure-button-primary" }}{{t 'button.back'}}{{/link-to}}
     </div>
-    <div class="pure-u-1-5 horizontal-right">{{creator.name}}</div>
+    <div class="pure-u-1-5 horizontal-right">{{model.creator.name}}</div>
   </div>
 </div>
 {{#if model}}
@@ -12,24 +12,24 @@
       <div class="post">
         <header class="post-header">
           <h2 class="post-title">
-            <div class="post-title-label"><a>{{title}}</a></div>
-            <img class="post-avatar" height="48" width="48" {{bind-attr src=creator.avatarPhoto}}>
+            <div class="post-title-label"><a>{{model.title}}</a></div>
+            <img class="post-avatar" height="48" width="48" {{bind-attr src=model.creator.avatarPhoto}}>
           </h2>
           <p class="post-meta">
-            {{createdAtFormat}}
+            {{model.createdAtFormat}}
             <span class="divider"></span>
             {{t 'blog.category'}}<span class="colon"></span>
-            {{#if category}}
-              {{view 'post/category' category=category}}
+            {{#if model.category}}
+              {{view 'post/category' content=model.category}}
             {{/if}}
-            {{#if tags.length}}
+            {{#if model.tags.length}}
               <span class="divider"></span>
               {{t 'blog.tag'}}<span class="colon"></span>
-              {{#each tags}}
-                {{view 'post/tag' tag=this}}
+              {{#each t in model.tags}}
+                {{view 'post/tag' content=t}}
               {{/each}}
             {{/if}}
-            {{#if isMe}}
+            {{#if model.isMe}}
               <span class="divider"></span>
               <a href="javascript:void(0);" class="post-edit" {{action 'edit'}}>{{t 'button.edit'}}</a>
               <span class="divider"></span>
@@ -37,17 +37,17 @@
             {{/if}}
           </p>
         </header>
-        {{markdown-body body=body class="post-body"}}
+        {{markdown-body body=model.body class="post-body"}}
         <div class="post-commnets">
-          <div class="comment-header">{{comments.length}}{{t 'post.comment.count'}}</div>
-          {{#greater-than comments.length 0}}
-            {{view 'post/comment-list' content=comments}}
-          {{/greater-than}}
+          <div class="comment-header">{{model.comments.length}}{{t 'posts.comment.count'}}</div>
+          {{#if model.comments.length}}
+            {{view 'post/comment-list' content=model.comments}}
+          {{/if}}
           {{view 'post/comment-create' post=model}}
         </div>
       </div>
     </div>
-  <div>
+  </div>
 {{else}}
   <div class="post-loading"></div>
 {{/if}}

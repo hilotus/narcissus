@@ -2,7 +2,10 @@ import Ember from 'ember';
 import ModalBodyView from '../modal/modal-body';
 
 export default ModalBodyView.extend({
-  titleTranslation: 'create.account.title',
+  title: function() {
+    var t = this.container.lookup('utils:t');
+    return t('createAccount.title');
+  }.property(),
 
   classNames: ["create-account-modal"],
   templateName: 'modal/create-account',

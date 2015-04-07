@@ -3,8 +3,6 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   tagName: 'li',
   classNameBindings: [':result'],
-
-  attributeBindings: ['style'],
   style: "margin: 5px 6px;padding: 0;",
 
   isFocus: false,

@@ -8,7 +8,7 @@ var Router = Ember.Router.extend({
 Router.map(function() {
   this.route('settings', {path: '/settings'});
   this.resource('posts', {path: '/posts'}, function(){
-    this.route('index');
+    this.route('index', {path: '/'});
     this.route('new');
     this.route('edit', {path: '/edit/:post_id'});
   });

@@ -1,8 +1,9 @@
 import Ember from 'ember';
-import Model from 'ember-cli-coreweb/supports/model';
-import Gravatar from 'ember-cli-coreweb/mixins/gravatar';
+import ParseModel from 'ember-cli-coreweb/supports/parse-model';
+import Gravatar from 'narcissus/mixins/gravatar';
+import Timestamps from 'narcissus/mixins/timestamps';
 
-var Comment = Model.extend(Gravatar, {
+var CommentModel = ParseModel.extend(Gravatar, Timestamps, {
   email: Ember.computed('creator.email', function(){
     if (!Ember.isNone(this.get('creator.email'))) {
       return this.get('creator.email');
@@ -35,7 +36,7 @@ var Comment = Model.extend(Gravatar, {
 });
 
 // add property to Model Class
-Comment.reopenClass({
+CommentModel.reopenClass({
   typeKey: 'comment',
   schema: {
     'belongTo': {'post': 'post', 'creator': 'user'},
@@ -43,4 +44,4 @@ Comment.reopenClass({
   }
 });
 
-export default Comment;
+export default CommentModel;

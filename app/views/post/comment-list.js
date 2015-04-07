@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Alert from 'ember-cli-coreweb/utils/alert';
+import Alert from 'narcissus/utils/alert';
 
 export default Ember.CollectionView.extend({
   classNames: ['comment-list'],
@@ -31,30 +31,31 @@ export default Ember.CollectionView.extend({
       },
 
       delete: function() {
-        var store = this.container.lookup('store:main'),
+        var store = this.container.lookup('store:parse'),
+          t = this.container.lookup('utils:t'),
           comment = this.get('content'),
           post = this.get('content.post');
 
-        Alert.warn(Ember.I18n.t("post.comment.delete.confirm"), "", [
-          Ember.I18n.t("button.cancel"),
-          Ember.I18n.t("button.delete")
-        ], function(i) {
-          if (i === 2) {  // ok to destory
-            Alert.operating(Ember.I18n.t("post.comment.deleting"));
+        Alert.warn(t("posts.comment.delete.confirm"), "",
+          [t("button.cancel"), t("button.delete")],
+          function(i) {
+            if (i === 2) {  // ok to destory
+              Alert.operating(t("button.deleting"));
 
-            var comments = post.getVal('comments');
-            comments.removeObject(comment.get('id'));
-            post.setVal('comments', comments);
+              var comments = post.getVal('comments');
+              comments.removeObject(comment.get('id'));
+              post.setVal('comments', comments);
 
-            store.batch({'destroys': [comment], 'updates': [post]}).then(function(){
-            }, function(errorJson){
-                Alert.warn(errorJson.error);
-              }
-            ).then(function(){
-              Alert.removeLoading();
-            });
+              store.batch({'destroys': [comment], 'updates': [post]}).then(function(){
+              }, function(reason){
+                  Alert.warn(reason.error);
+                }
+              ).then(function(){
+                Alert.removeLoading();
+              });
+            }
           }
-        });
+        );
       },
 
       cancel: function() {

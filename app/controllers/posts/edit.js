@@ -1,10 +1,13 @@
 import Ember from 'ember';
-import Alert from 'ember-cli-coreweb/utils/alert';
+import Alert from 'narcissus/utils/alert';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   needs: ['settings/terms'],
 
-  headerTitleTranslation: 'posts.edit',
+  headerTitle: function() {
+    var t = this.container.lookup('utils:t');
+    return t('posts.edit.header');
+  }.property(),
   editting: false,
 
   bufferedTagsBinding: 'controllers.settings/terms.tags',
@@ -15,27 +18,24 @@ export default Ember.ObjectController.extend({
   }.property('editting'),
 
   editTitle: function() {
-    return this.get('editting') ? Ember.I18n.t("button.editting") : Ember.I18n.t("button.edit");
+    var t = this.container.lookup('utils:t');
+    return this.get('editting') ? t("button.editting") : t("button.edit");
   }.property('editting'),
+
+  editDisabled: function() {
+    return this.get('editting') || this.blank('currentUser') ||
+      this.blank('model.title') || this.blank('model.body') || this.blank("model.category");
+  }.property('editting', 'currentUser', 'model.title', 'model.category', 'model.body'),
 
   actions: {
     editPost: function() {
-      if (!this.get('currentUser')) {
-        Alert.warn(Ember.I18n.t("posts.edit.error"), Ember.I18n.t("posts.edit.error.unlogon"));
-        return;
-      }
-
       var post = this.get('model'),
         body = post.get('body'),
-        __this = this;
-
-      if (!post.get('title') || !post.get('title').trim() || !body || !post.get("category")) {
-        Alert.warn(Ember.I18n.t("posts.edit.error"), Ember.I18n.t("posts.edit.error.check.unpass"));
-        return;
-      }
+        t = this.container.lookup('utils:t'),
+        that = this;
 
       this.set('editting', true);
-      Alert.operating(Ember.I18n.t("button.editting"));
+      Alert.operating(t("button.editting"));
 
       post.setVal('title', post.get('title'));
       post.setVal('body', body);
@@ -43,11 +43,11 @@ export default Ember.ObjectController.extend({
       post.setVal('tags', post.get('tags').getIds());
 
       post.save().then(function(){
-        __this.transitionToRoute('post', post);
+        that.transitionToRoute('post', post);
       }, function(errorJson){
         Alert.warn(errorJson.error);
       }).then(function(){
-        __this.set('editting', false);
+        that.set('editting', false);
         Alert.removeLoading();
       });
     },

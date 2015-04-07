@@ -13,11 +13,11 @@
     {{input type="text" tabindex="-1" autocomplete="off" value=view.keywords}}<i class="fa fa-search"></i>
   </div>
   <ul class="select-picker-results">
-    {{#each view.searchContent}}
+    {{#each item in view.searchContent}}
       {{#if view.isMultiple}}
-        {{select-picker-multip-list-item content=this}}
+        {{select-picker-multip-list-item content=item}}
       {{else}}
-        {{select-picker-single-list-item content=this}}
+        {{select-picker-single-list-item content=item}}
       {{/if}}
     {{/each}}
   </ul>

@@ -6,7 +6,9 @@
     "$",
     "Pace",
     "md5",
-    "moment"
+    "moment",
+    "marked",
+    "CodeMirror"
   ],
   "browser" : true,
   "boss" : true,

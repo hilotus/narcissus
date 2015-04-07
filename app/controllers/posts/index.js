@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Alert from 'ember-cli-coreweb/utils/alert';
+import Alert from 'narcissus/utils/alert';
 
 export default Ember.ArrayController.extend({
   model: [],
@@ -47,16 +47,17 @@ export default Ember.ArrayController.extend({
     }
 
     var adapter = this.container.lookup('adapter:application'),
+      t = this.container.lookup('utils:t'),
       store = this.get('store'),
       page = this.get('page'),
       perPage = this.get('perPage'),
-      __this = this;
+      that = this;
 
     // Loading
     if (isFirstLoaded) {
       this.set('isLoading', true);
     } else {
-      Alert.loading(Ember.I18n.t("loading.title"));
+      Alert.loading(t("posts.loading"));
     }
 
     var data = {'order': '-createdAt', 'limit': perPage, 'skip': (page - 1) * perPage};
@@ -65,12 +66,12 @@ export default Ember.ArrayController.extend({
         var posts = response.results;
         var length = posts.get('length');
         if (length > 0) {
-          __this.set('page', page + 1);
-          __this.get('model').pushObjects(store._push('post', posts));
+          that.set('page', page + 1);
+          that.get('model').pushObjects(store.push('post', posts));
         }
 
         if (length === 0) {
-          __this.set('isLoadedAll', true);
+          that.set('isLoadedAll', true);
         }
       },
       function(errorJson) {
@@ -79,7 +80,7 @@ export default Ember.ArrayController.extend({
     ).then(
       function() {
         if (isFirstLoaded) {
-          __this.set('isLoading', false);
+          that.set('isLoading', false);
         } else {
           Alert.removeLoading();
         }
@@ -87,9 +88,5 @@ export default Ember.ArrayController.extend({
         return Ember.RSVP.resolve();
       }
     );
-  },
-
-  actions: {
-
   }
 });

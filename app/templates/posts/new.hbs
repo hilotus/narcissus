@@ -4,24 +4,24 @@
   </div>
   <div class="pure-form pure-form-stacked">
     <fieldset>
-      {{input type="text" class="pure-input-1" placeholderTranslation="posts.create.input.title" value=title}}
-      {{select-picker content=bufferedTags selection=tags promptTranslation="blog.tag" isMultiple=true}}
-      {{select-picker content=bufferedCategories selection=category promptTranslation="blog.category"}}
+      {{input type="text" class="pure-input-1" placeholder=(t "posts.title") value=model.title}}
+      {{select-picker content=bufferedTags selection=model.tags prompt=(t "blog.tag") isMultiple=true}}
+      {{select-picker content=bufferedCategories selection=model.category prompt=(t "blog.category")}}
     </fieldset>
     <fieldset>
-      {{markdown-editor body=body}}
+      {{markdown-editor body=model.body}}
     </fieldset>
     <fieldset>
       <div class="pure-g">
         <div class="pure-u-1">
-          <button {{action 'createPost'}} class="pure-button pure-button-primary" {{bind-attr disabled="creating"}}>{{createTitle}}</button>
+          <button {{action 'createPost'}} class="pure-button pure-button-primary" {{bind-attr disabled=createDisabled}}>{{createTitle}}</button>
           {{#if showSpinner}}
             &nbsp; <i class='fa fa-spinner fa-spin'></i>
           {{else}}
             <button {{action 'cancel'}} class="pure-button">{{t 'button.cancel'}}</button>
           {{/if}}
         </div>
-      <div>
+      </div>
     </fieldset>
   </div>
 {{/if}}

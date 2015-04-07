@@ -3,8 +3,8 @@
     <div class="pure-form pure-form-aligned">
       <fieldset style="color:#777;">
         <div class="pure-control-group">
-          <label for="create_account_name">{{t 'create.account.username'}}</label>
-          {{input id="create_account_name" class="pure-input-1-2" type="text" autocorrect="off" autocapitalize="off" autofocus="autofocus" value=accountName placeholderTranslation="create.account.username"}}
+          <label for="create_account_name">{{t 'createAccount.username'}}</label>
+          {{input id="create_account_name" class="pure-input-1-2" type="text" autocorrect="off" autocapitalize="off" autofocus="autofocus" value=accountName placeholder=(t "createAccount.username")}}
           {{#if nameValidation.failed}}
             {{#if nameValidation.reason}}
               <div class="tip bad"><i class="fa fa-times"></i>{{nameValidation.reason}}</div>
@@ -15,8 +15,8 @@
           {{/if}}
         </div>
         <div class="pure-control-group">
-          <label for="create_account_email">{{t 'create.account.email'}}</label>
-          {{input id="create_account_email" class="pure-input-1-2" type="email" autocorrect="off" autocapitalize="off" value=accountEmail placeholderTranslation="create.account.email"}}
+          <label for="create_account_email">{{t 'createAccount.email'}}</label>
+          {{input id="create_account_email" class="pure-input-1-2" type="email" autocorrect="off" autocapitalize="off" value=accountEmail placeholder=(t "createAccount.email")}}
           {{#if emailValidation.failed}}
             {{#if emailValidation.reason}}
               <div class="tip bad"><i class="fa fa-times"></i>{{emailValidation.reason}}</div>
@@ -27,8 +27,8 @@
           {{/if}}
         </div>
         <div class="pure-control-group">
-          <label for="create_account_password">{{t 'create.account.password'}}</label>
-          {{input id="create_account_password" class="pure-input-1-2" type="password" autocorrect="off" autocapitalize="off" value=accountPassword placeholderTranslation="create.account.password"}}
+          <label for="create_account_password">{{t 'createAccount.password'}}</label>
+          {{input id="create_account_password" class="pure-input-1-2" type="password" autocorrect="off" autocapitalize="off" value=accountPassword placeholder=(t "createAccount.password")}}
           {{#if passwordValidation.failed}}
             {{#if passwordValidation.reason}}
               <div class="tip bad"><i class="fa fa-times"></i>{{passwordValidation.reason}}</div>
@@ -46,7 +46,7 @@
     {{#if formSubmitted}}
       &nbsp; <i class='fa fa-spinner fa-spin'></i>
     {{else}}
-      &nbsp; <a {{action 'cancel'}}>{{t 'create.account.cancel'}}</a>
+      &nbsp; <a {{action 'cancel'}}>{{t 'createAccount.cancel'}}</a>
     {{/if}}
   </div>
 {{/unless}}

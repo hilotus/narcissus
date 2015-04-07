@@ -69,3 +69,9 @@ cordova plugin add 'https://github.com/hilotus/PushPlugin.git'
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
 
+
+
+## TODO List
+
+* 1. Search from app folder.
+* 2. Reload on new/edit post page, the terms will be not rendered.

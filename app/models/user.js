@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import Model from 'ember-cli-coreweb/supports/model';
-import Gravatar from 'ember-cli-coreweb/mixins/gravatar';
+import Model from 'ember-cli-coreweb/supports/parse-model';
+import Gravatar from 'narcissus/mixins/gravatar';
 
 var User = Model.extend(Gravatar, {
   externalLoginExplain: function() {
@@ -15,23 +15,23 @@ User.reopenClass({
   typeKey: 'user',
 
   validateSessionToken: function(container) {
-    var sessionToken = localStorage.getItem("user-session-token");
+    var sessionToken = localStorage.getItem("NARCISSUS-USER-TOKEN");
     if (!sessionToken) {
       return Ember.RSVP.reject({"error": "no user login."});
     }
 
     var adapter = container.lookup("adapter:application"),
-      store = container.lookup("store:main"),
+      store = container.lookup("store:parse"),
       model = this;
 
     adapter.set('sessionToken', sessionToken);
     return adapter.ajax('users/me', 'GET').then(
       function(response) {
-        var record = store._push(model, response);
+        var record = store.push(model, response);
         return Ember.RSVP.resolve(record);
       },
       function(response) {
-        return Ember.RSVP.reject(response.responseJSON);
+        return Ember.RSVP.reject(response);
       }
     );
   },
@@ -44,7 +44,7 @@ User.reopenClass({
         return Ember.RSVP.resolve(response);
       },
       function(response){
-        return Ember.RSVP.reject(response.responseJSON);
+        return Ember.RSVP.reject(response);
       }
     );
   },
@@ -57,7 +57,7 @@ User.reopenClass({
         return Ember.RSVP.resolve(response);
       },
       function(response){
-        return Ember.RSVP.reject(response.responseJSON);
+        return Ember.RSVP.reject(response);
       }
     );
   },
@@ -70,7 +70,7 @@ User.reopenClass({
         return Ember.RSVP.resolve();
       },
       function(response){
-        return Ember.RSVP.reject(response.responseJSON);
+        return Ember.RSVP.reject(response);
       }
     );
   },
@@ -83,13 +83,13 @@ User.reopenClass({
         return Ember.RSVP.resolve();
       },
       function(response){
-        return Ember.RSVP.reject(response.responseJSON);
+        return Ember.RSVP.reject(response);
       }
     );
   },
 
   updateUser: function(container, id, data) {
-    var sessionToken = localStorage.getItem("user-session-token");
+    var sessionToken = localStorage.getItem('NARCISSUS-USER-TOKEN');
     if (!sessionToken) {
       return Ember.RSVP.reject({"error": "no user login."});
     }
@@ -106,7 +106,7 @@ User.reopenClass({
         return Ember.RSVP.resolve();
       },
       function(response) {
-        return Ember.RSVP.reject(response.responseJSON);
+        return Ember.RSVP.reject(response);
       }
     );
   }

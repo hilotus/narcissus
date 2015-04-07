@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Alert from 'ember-cli-coreweb/utils/alert';
+import Alert from 'narcissus/utils/alert';
 
 export default Ember.Controller.extend({
   registerToBaidu: function() {
