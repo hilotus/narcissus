@@ -20,7 +20,7 @@ export default Ember.ArrayController.extend({
     var posts = this.get('model');
 
     if (keywords) {
-      var filters = posts.filter(function(post){
+      return posts.filter(function(post){
         var title = post.get('title'),
           cName = post.get('category.name'),
           aName = post.get('creator.name');
@@ -35,7 +35,6 @@ export default Ember.ArrayController.extend({
           return false;
         }
       });
-      return filters;
     } else {
       return posts;
     }

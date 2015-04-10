@@ -74,4 +74,4 @@ cordova plugin add 'https://github.com/hilotus/PushPlugin.git'
 ## TODO List
 
 * 1. Search from app folder.
-* 2. Reload on new/edit post page, the terms will be not rendered.
+* 2. Posts page add pre button and next button.
