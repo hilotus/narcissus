@@ -24,7 +24,7 @@
     "ember-cli-babel": "^5.0.0",
     "ember-cli-compass-compiler": "0.0.18",
     "ember-cli-content-security-policy": "0.4.0",
-    "ember-cli-coreweb": "git://github.com/hilotus/ember-cli-coreweb",
+    "ember-cli-coreweb": "git://github.com/hilotus/ember-cli-coreweb.git",
     "ember-cli-dependency-checker": "0.0.8",
     "ember-cli-htmlbars": "0.7.4",
     "ember-cli-i18n": "0.0.6",

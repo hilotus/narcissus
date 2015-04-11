@@ -3,7 +3,7 @@ import corewebInit from 'ember-cli-coreweb/utils/coreweb';
 
 export var initialize = function(container, app) {
   // Coreweb initialize
-  corewebInit(container, app);
+  corewebInit(container, app, true);
 
   // Route
   Ember.Route.reopenClass({
