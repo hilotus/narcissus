@@ -122,7 +122,7 @@ export default Ember.Controller.extend(ModalFunctionality, {
       if (users.results.length > 0) {
         return _this.set("uniqueEmailValidation", Ember.Object.create({
           failed: true,
-          reason: Ember.I18n.t('createAccount.prompt.exists', 'email')
+          reason: t('createAccount.prompt.exists', 'email')
         }));
       } else {
         return _this.set("uniqueEmailValidation", Ember.Object.create({

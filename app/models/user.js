@@ -2,11 +2,7 @@ import Ember from 'ember';
 import Model from 'ember-cli-coreweb/supports/parse-model';
 import Gravatar from 'narcissus/mixins/gravatar';
 
-var User = Model.extend(Gravatar, {
-  externalLoginExplain: function() {
-    return !!this.get("external_login") ? Ember.I18n.t("current.user.externalloginexplain").fmt(this.get("external_login")) : "";
-  }.property('external_login')
-});
+var User = Model.extend(Gravatar, {});
 
 /*
  * User Action

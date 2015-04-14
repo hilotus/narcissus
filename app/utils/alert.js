@@ -41,7 +41,8 @@ export default Ember.Object.create({
         }
 
         if (!buttons || buttons.length === 0) {  // alert
-          buttons = Ember.I18n.t("button.ok");
+          // buttons = Ember.i18n.t('button.ok');
+          buttons = "OK";
           navigator.notification.alert(message, callback, title, buttons);
         } else {
           if (buttons.length === 1) {
@@ -60,7 +61,7 @@ export default Ember.Object.create({
         var cancel = '<div class="ios-button small cancel"><label class="button-label">%@</label></div>';
 
         if (!buttons || buttons.length === 0) {
-          result = result.fmt(type, title || "Title", message || "&nbsp;", ok.fmt(Ember.I18n.t("button.ok")), "");
+          result = result.fmt(type, title || "Title", message || "&nbsp;", ok.fmt("OK", "");
         } else {
           if (buttons.length === 1) {
             result = result.fmt(type, title || "Title", message || "&nbsp;", ok.fmt(buttons[0]), "");

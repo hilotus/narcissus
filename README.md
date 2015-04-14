@@ -75,3 +75,4 @@ cordova plugin add 'https://github.com/hilotus/PushPlugin.git'
 
 * 1. Search from app folder.
 * 2. Posts page add pre button and next button.
+* 3. I18n in util alert...
