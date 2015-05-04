@@ -61,7 +61,7 @@ export default Ember.Object.create({
         var cancel = '<div class="ios-button small cancel"><label class="button-label">%@</label></div>';
 
         if (!buttons || buttons.length === 0) {
-          result = result.fmt(type, title || "Title", message || "&nbsp;", ok.fmt("OK", "");
+          result = result.fmt(type, title || "Title", message || "&nbsp;", ok.fmt("OK", ""));
         } else {
           if (buttons.length === 1) {
             result = result.fmt(type, title || "Title", message || "&nbsp;", ok.fmt(buttons[0]), "");
