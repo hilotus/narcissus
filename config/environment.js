@@ -26,7 +26,7 @@ module.exports = function(environment) {
       'font-src': "'self' http://fonts.gstatic.com", // Allow fonts to be loaded from http://fonts.gstatic.com
       // 'connect-src': "'self' https://api.mixpanel.com http://custom-api.local", // Allow data (ajax/websocket) from api.mixpanel.com and custom-api.local
       'connect-src': "'self' https://api.parse.com",
-      'img-src': "'self' http://lotus-assets.qiniudn.com http://gravatar.duoshuo.com https://bam.nr-data.net data:",
+      'img-src': "'self' http://cdn.infoqstatic.com http://lotus-assets.qiniudn.com http://gravatar.duoshuo.com https://bam.nr-data.net data:",
       'style-src': "'self' 'unsafe-inline' http://fonts.googleapis.com", // Allow inline styles and loaded CSS from http://fonts.googleapis.com
       'media-src': "'self'"
     }
