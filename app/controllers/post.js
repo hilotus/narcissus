@@ -45,7 +45,7 @@ export default Ember.Controller.extend({
         t = this.container.lookup('utils:t'),
         store = this.get('store');
 
-      var comment = store._getModelClazz('comment').create();
+      var comment = store.__getModelClazz('comment').create();
       comment.setVals({
         post: this.get("model.id"),
         body: view.get("body"),

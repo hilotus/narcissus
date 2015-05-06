@@ -30,7 +30,7 @@ export default Row.extend({
     data[this.get('bindedName')] = value;
     data = Ember.merge(data, this.get('defaultValue'));
 
-    var record = store._getModelClazz(this.get('bindedModel')).create();
+    var record = store.__getModelClazz(this.get('bindedModel')).create();
     record.setVals(data);
 
     Alert.operating(t("button.creating"));

@@ -38,7 +38,7 @@ export default Ember.Controller.extend({
       this.set('creating', true);
       Alert.operating(t("button.creating"));
 
-      var post = store._getModelClazz('post').create();
+      var post = store.__getModelClazz('post').create();
       post.setVal('title', model.get('title'));
       post.setVal('body', body);
       post.setVal('category', model.get('category.id'));
