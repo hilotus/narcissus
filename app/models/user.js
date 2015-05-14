@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Model from 'ember-cli-coreweb/supports/parse-model';
+import Model from 'narcissus/supports/parse-model';
 import Gravatar from 'narcissus/mixins/gravatar';
 
 var User = Model.extend(Gravatar, {});

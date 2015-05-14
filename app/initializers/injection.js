@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import corewebInit from 'ember-cli-coreweb/utils/coreweb';
+import corewebInit from 'narcissus/utils/coreweb';
 
 export var initialize = function(container, app) {
   // Coreweb initialize

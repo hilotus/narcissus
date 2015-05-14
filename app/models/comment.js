@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ParseModel from 'ember-cli-coreweb/supports/parse-model';
+import ParseModel from 'narcissus/supports/parse-model';
 import Gravatar from 'narcissus/mixins/gravatar';
 import Timestamps from 'narcissus/mixins/timestamps';
 

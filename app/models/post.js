@@ -1,4 +1,4 @@
-import Model from 'ember-cli-coreweb/supports/parse-model';
+import Model from 'narcissus/supports/parse-model';
 import Timestamps from 'narcissus/mixins/timestamps';
 
 var Post = Model.extend(Timestamps, {
