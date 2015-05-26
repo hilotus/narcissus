@@ -46,11 +46,9 @@ export default Ember.CollectionView.extend({
               comments.removeObject(comment.get('id'));
               post.setVal('comments', comments);
 
-              store.batch({'destroys': [comment], 'updates': [post]}).then(function(){
-              }, function(reason){
-                  Alert.warn(reason.error);
-                }
-              ).then(function(){
+              store.batch({'destroys': [comment], 'updates': [post]}).catch(function(reason){
+                Alert.warn(reason.error);
+              }).finally(function(){
                 Alert.removeLoading();
               });
             }

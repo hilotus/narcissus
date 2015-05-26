@@ -28,10 +28,9 @@ export default Ember.Controller.extend({
           store.batch({'destroys': destroys}).then(function(){
             controller.get('controllers.posts/index.model').removeObject(post);
             controller.transitionToRoute('posts.index');
-          }, function(reason){
-              Alert.warn(reason.error);
-            }
-          ).then(function(){
+          }).catch(function(reason){
+            Alert.warn(reason.error);
+          }).finally(function(){
             Alert.removeLoading();
           });
         }

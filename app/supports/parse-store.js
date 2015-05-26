@@ -150,6 +150,33 @@ export default Ember.Object.extend({
   },
 
   /*
+  * Batch Request
+  */
+  batch: function(operations) {
+    var adapter = this.container.lookup('adapter:application'),
+      self = this;
+
+    return adapter.batch(operations).then(function(response){
+      var results = response.responseJson,
+        batchRecords = response.batchRecords;
+
+      results.forEach(function(result, index){
+        var record = batchRecords[index];
+        if (typeof(result.success) === 'boolean') {  // destroy success
+          self.pull(record.getTypeKey(), record.get('id'));
+        } else if (result.success.objectId || result.success._id) {  // create success
+          self.push(record.constructor, result, record);
+        } else {  // update success
+          self.reload(record.getTypeKey(), result, record);
+        }
+      });
+      return Ember.RSVP.resolve();
+    }, function(reason){
+      return Ember.RSVP.reject(reason);
+    });
+  },
+
+  /*
   * push record(s) into store
   * clazz: string / model class
   */
