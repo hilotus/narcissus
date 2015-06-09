@@ -16,7 +16,6 @@
     "markdown-it": "~4.2.1",
     "markdown-it-footnote": "~1.0.0",
     "codemirror": "~5.3.0",
-    "emojify.js": "~1.0.2",
     "highlightjs": "~8.5.0"
   },
   "devDependencies": {
@@ -24,6 +23,7 @@
     "pace": "~1.0.2",
     "js-md5": "~1.1.0",
     "moment": "~2.8.4",
-    "moment-timezone": "~0.2.5"
+    "moment-timezone": "~0.2.5",
+    "ic-ajax": "~2.0.2"
   }
 }

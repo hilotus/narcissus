@@ -1,8 +1,7 @@
 import Ember from 'ember';
-import Model from 'narcissus/supports/parse-model';
 import Gravatar from 'narcissus/mixins/gravatar';
 
-var User = Model.extend(Gravatar, {});
+var User = CW.Model.extend(Gravatar, {});
 
 /*
  * User Action
@@ -17,7 +16,7 @@ User.reopenClass({
     }
 
     var adapter = container.lookup("adapter:application"),
-      store = container.lookup("store:parse"),
+      store = container.lookup("store:-cw"),
       model = this;
 
     adapter.set('sessionToken', sessionToken);

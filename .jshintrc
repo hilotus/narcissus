@@ -7,8 +7,7 @@
     "Pace",
     "md5",
     "moment",
-    "marked",
-    "CodeMirror"
+    "CW"
   ],
   "browser" : true,
   "boss" : true,

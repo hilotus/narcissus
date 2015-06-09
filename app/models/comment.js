@@ -1,9 +1,8 @@
 import Ember from 'ember';
-import ParseModel from 'narcissus/supports/parse-model';
 import Gravatar from 'narcissus/mixins/gravatar';
 import Timestamps from 'narcissus/mixins/timestamps';
 
-var CommentModel = ParseModel.extend(Gravatar, Timestamps, {
+var CommentModel = CW.Model.extend(Gravatar, Timestamps, {
   email: Ember.computed('creator.email', function(){
     if (!Ember.isNone(this.get('creator.email'))) {
       return this.get('creator.email');

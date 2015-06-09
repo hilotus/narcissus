@@ -8,16 +8,16 @@
 
       <nav class="nav">
         <ul class="nav-list">
-          <li class="nav-item">{{#link-to 'index' class="pure-button"}}{{t 'blog.home'}}{{/link-to}}</li>
-          <li class="nav-item">{{#link-to 'posts.index' class="pure-button"}}{{t 'blog.posts'}}{{/link-to}}</li>
+          <li class="nav-item">{{#link-to 'index' class="link-button"}}{{t 'blog.home'}}{{/link-to}}</li>
+          <li class="nav-item">{{#link-to 'index' class="link-button"}}{{t 'blog.posts'}}{{/link-to}}</li>
           {{#if currentUser}}
-            <li class="nav-item">{{#link-to 'settings' class="pure-button"}}{{t 'blog.admin'}}{{/link-to}}</li>
+            <li class="nav-item">{{#link-to 'settings' class="link-button"}}{{t 'blog.admin'}}{{/link-to}}</li>
           {{/if}}
           <li class="nav-item">
             {{#if currentUser}}
-              <a class="pure-button" {{action 'logout'}}>{{t 'button.logout'}}</a>
+              <a class="link-button" {{action 'logout'}}>{{t 'button.logout'}}</a>
             {{else}}
-              <a class="pure-button" {{action 'showLogin'}}>{{t 'button.login'}}</a>
+              <a class="link-button" {{action 'showLogin'}}>{{t 'button.login'}}</a>
             {{/if}}
           </li>
         </ul>
@@ -31,3 +31,5 @@
 </div>
 
 {{outlet 'modal'}}
+
+{{alert-modal content=alertContent}}
