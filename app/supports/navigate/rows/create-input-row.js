@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import Row from '../row';
-import Alert from 'narcissus/utils/alert';
 
 export default Row.extend({
   type: 'create-input',

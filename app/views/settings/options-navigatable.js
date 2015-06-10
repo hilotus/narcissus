@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Alert from 'narcissus/utils/alert';
 import NavigatableView from 'narcissus/views/navigate/navigatable';
 
 import Section from 'narcissus/supports/navigate/section';
@@ -63,10 +62,13 @@ export default NavigatableView.extend({
         if (Ember.isEmpty(this.get('bufferedDescription'))) {
           this.set('bufferedDescription', this.get('description'));
         } else if (this.get('description') !== this.get('bufferedDescription')) {
-          var user = this.get('owner.controller.currentUser');
+          var t = this.get('owner.container').lookup('utils:t'),
+            alert = this.get('owner.container').lookup('modal:alert'),
+            user = this.get('owner.controller.currentUser');
+
           user.setVal('name', this.get('bufferedDescription'));
-          user.save().catch(function(errorJson){
-            Alert.warn(errorJson.error);
+          user.save().catch(function(reason){
+            alert(t('ajax.error.operate'), reason.error, 'error');
           });
         }
 

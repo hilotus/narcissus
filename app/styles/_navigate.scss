@@ -13,22 +13,10 @@ $row-hight: 40px;
         margin-bottom: 40px;
 
         .navigatable-title {
-          text-align: center;
           height: 44px;
           line-height: 44px;
-        }
-
-        .navigatable-toolbar {
-          position: relative;
-
-          .left-button {
-            left: 0;
-            top: -44px;
-          }
-
-          .right-button {
-            right: 0;
-            top: -44px;
+          .title {
+            font-weight: bold;
           }
         }
 
@@ -37,10 +25,9 @@ $row-hight: 40px;
             .section-title {
               height: 33px;
               line-height: 33px;
-              font-size: 14px;
               background-color: #E6E6E6;
               padding-left: 5px;
-              font-weight: bold;
+              font-size: 13px;
             }
 
             .rows {

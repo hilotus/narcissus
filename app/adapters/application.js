@@ -1,6 +1,7 @@
 import ParseAjax from 'ember-cli-coreweb/mixins/parse-ajax';
+import ENV from 'narcissus/config/environment';
 
-export default CW.Adapter.extend(ParseAjax, {
-  applicationId: '4f3ATEailRoi1A49sh4vlNppWKk8G8xf6ThymKkG',
-  restApiKey: 'm2CUMzzcTkqZLTR2v7BVbXLIg9vAzqAxWYVUvyjm'
+export default CW.AdapterParse.extend(ParseAjax, {
+  applicationId: ENV.APP.parseApplicationId,
+  restApiKey: ENV.APP.parseRestApiKey
 });

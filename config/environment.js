@@ -16,7 +16,9 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-      defaultLocale: 'en-us'
+      defaultLocale: 'en-us',
+      parseApplicationId: '4f3ATEailRoi1A49sh4vlNppWKk8G8xf6ThymKkG',
+      parseRestApiKey: 'm2CUMzzcTkqZLTR2v7BVbXLIg9vAzqAxWYVUvyjm'
     },
 
     contentSecurityPolicy: {

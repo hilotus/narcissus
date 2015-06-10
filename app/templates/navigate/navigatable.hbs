@@ -1,15 +1,19 @@
-<div class="navigatable-title">{{view.title}}</div>
-<div class="navigatable-toolbar">
-  {{#if view.hasLeftButton}}
-    <div class="ios-button regular left-button" {{action 'leftButtonAction' controller target=view}}>
-      <label class="button-label"><i class="fa fa-angle-left"></i>&nbsp;{{view.leftButtonTitle}}</label>
-    </div>
-  {{/if}}
-  {{#if view.hasRightButton}}
-    <div class="ios-button regular right-button" {{action 'rightButtonAction' controller target=view}}>
-      <label class="button-label">{{view.rightButtonTitle}}</label>
-    </div>
-  {{/if}}
+<div class="navigatable-title row">
+  <div class="pure-u-1-3 horizontal-left">
+    {{#if view.hasLeftButton}}
+      <div class="link-button small" {{action 'leftButtonAction' controller target=view}}>
+        <label class="button-label"><i class="fa fa-angle-left"></i>&nbsp;{{view.leftButtonTitle}}</label>
+      </div>
+    {{/if}}
+  </div>
+  <div class="pure-u-1-3 title horizontal-center">{{view.title}}</div>
+  <div class="pure-u-1-3 horizontal-right">
+    {{#if view.hasRightButton}}
+      <div class="link-button small" {{action 'rightButtonAction' controller target=view}}>
+        <label class="button-label">{{view.rightButtonTitle}}</label>
+      </div>
+    {{/if}}
+  </div>
 </div>
 <div class="sections">
   {{#each section in view.sectionsView}}

@@ -51,6 +51,3 @@ DEPENDENCIES
   capistrano-bundler (~> 1.1.4)
   capistrano-rvm
   compass (~> 1.0.3)
-
-BUNDLED WITH
-   1.10.2
