@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Alert from 'narcissus/utils/alert';
 
 export default Ember.ArrayController.extend({
   model: [],
@@ -46,46 +45,39 @@ export default Ember.ArrayController.extend({
     }
 
     var adapter = this.container.lookup('adapter:application'),
-      t = this.container.lookup('utils:t'),
       store = this.get('store'),
       page = this.get('page'),
       perPage = this.get('perPage'),
-      that = this;
+      self = this;
 
     // Loading
     if (isFirstLoaded) {
       this.set('isLoading', true);
     } else {
-      Alert.loading(t("posts.loading"));
+      self.spin(self.t('posts.loading'));
     }
 
     var data = {'order': '-createdAt', 'limit': perPage, 'skip': (page - 1) * perPage};
-    return adapter.find('post', data).then(
-      function(response) {
-        var posts = response.results;
-        var length = posts.get('length');
-        if (length > 0) {
-          that.set('page', page + 1);
-          that.get('model').pushObjects(store.push('post', posts));
-        }
-
-        if (length === 0) {
-          that.set('isLoadedAll', true);
-        }
-      },
-      function(errorJson) {
-        Alert.warn(errorJson.error);
+    return adapter.find('post', data).then(function(response){
+      var posts = response.results;
+      var length = posts.get('length');
+      if (length > 0) {
+        self.set('page', page + 1);
+        self.get('model').pushObjects(store.push('post', posts));
       }
-    ).then(
-      function() {
-        if (isFirstLoaded) {
-          that.set('isLoading', false);
-        } else {
-          Alert.removeLoading();
-        }
 
-        return Ember.RSVP.resolve();
+      if (length === 0) {
+        self.set('isLoadedAll', true);
       }
-    );
+    }).catch(function(reason){
+      self.am(self.t('ajax.error.operate'), reason.error || reason.message, 'warn');
+    }).finally(function() {
+      if (isFirstLoaded) {
+        self.set('isLoading', false);
+      } else {
+        self.closeSpinner();
+      }
+      return Ember.RSVP.resolve();
+    });
   }
 });

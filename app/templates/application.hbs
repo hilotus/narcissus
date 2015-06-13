@@ -8,7 +8,7 @@
 
       <ul class="nav-list">
         <li class="nav-item">{{#link-to 'index'}}{{t 'blog.home'}}{{/link-to}}</li>
-        <li class="nav-item">{{#link-to 'index'}}{{t 'blog.posts'}}{{/link-to}}</li>
+        <li class="nav-item">{{#link-to 'posts'}}{{t 'blog.posts'}}{{/link-to}}</li>
         {{#if currentUser}}
           <li class="nav-item">{{#link-to 'settings'}}{{t 'blog.admin'}}{{/link-to}}</li>
         {{/if}}
@@ -31,3 +31,5 @@
 {{outlet 'modal'}}
 
 {{alert-modal content=alertContent}}
+
+{{spin-modal isActive=isActive title=title}}

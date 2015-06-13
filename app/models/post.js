@@ -5,14 +5,18 @@ var Post = CW.Model.extend(Timestamps, {
   isMe: function() {
     var user = this.container.lookup("user:current");
     return user && user.get("id") === this.get('creator.id');
-  }.property('creator')
+  }.property('creator'),
+
+  articleUrl: function() {
+    return "http://www.hilotus.com/posts/" + this.get('id');
+  }.property('id')
 });
 
 Post.reopenClass({
   typeKey: 'post',
   schema: {
     'belongTo': {'creator': 'user', 'category': 'term'},
-    'hasMany': {'tags': 'term', 'comments': 'comment'}
+    'hasMany': {'tags': 'term'}
   }
 });
 

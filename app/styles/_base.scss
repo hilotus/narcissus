@@ -88,64 +88,7 @@
     letter-spacing: 0.1em;
   }
 
-  .content-contents {
-    margin: 20px 0 20px 0;
-  }
-}
-
-/* search */
-.search {
-  margin: 0;
-  white-space: nowrap;
-
-  .fa {
-    position: relative;
-    left: -20px;
-  }
-
-  input {
-    background: #fff;
-    background: linear-gradient(top,#eee 1%,#fff 15%);
-    margin: 1px 0;
-    padding: 7px 30px 7px 10px;
-    outline: 0;
-    border: 1px solid #aaa;
-    border-radius: 4px;
-    font-size: 1em;
-    height: 30px;
-    width: 200px;
-
-    @include transition(width .4s);
-    &:focus {
-      width: 400px;
-      outline: thin dotted \9;
-      border-color: #129FEA;
-    }
-  }
-}
-
-/* 加载条 */
-.loading {
-  position: fixed;
-  width: 150px;
-  height: 40px;
-  line-height: 40px;
-  left: 50%;
-  margin-left: -75px;
-  bottom: 100px;
-  color: #FFF;
-  font-size: 16px;
-  background-color: #000;
-  opacity: 0.5;
-  border-radius: 12px;
-  text-align: center;
-  z-index: 1099;
-
-  &.operating {
-    top: 50%;
-    margin-top: -20px;
-    bottom: inherit;
-  }
+  .content-contents { margin: 20px }
 }
 
 @media (min-width: 780px) {
@@ -167,9 +110,5 @@
     background: rgb(61, 79, 93);
     color: #fff;
     width: 25%;
-  }
-
-  .search input:focus {
-    width: 300px;
   }
 }

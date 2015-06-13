@@ -35,7 +35,7 @@ export default {
 
   destroy: {
     prompt: 'Delete',
-    body: 'Confirm?'
+    body: 'Confirm to delete?'
   },
 
   blog: {
@@ -74,7 +74,7 @@ export default {
     },
     destroy: {
       prompt: 'Delete Article',
-      body: 'Confirm?'
+      body: 'Are you sure to delete?'
     },
     destroying: 'Deleting...',
     readMore: 'Read Continue',
@@ -92,8 +92,9 @@ export default {
           invalid: 'Email is invalid.'
         }
       },
-      delete: {
-        confirm: 'Confirm?',
+      destroy: {
+        prompt: 'Delete Comment',
+        body: 'Are you sure to delete?',
         error: 'Delete comment failure.'
       }
     }

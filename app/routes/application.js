@@ -22,6 +22,15 @@ export default Ember.Route.extend({
     closeModal: function() {
       this.handleCloseModal();
     },
+
+    // spin
+    loading: function(title) {
+      this.controllerFor('application').setProperties({isLoading: true, label: title});
+    },
+
+    loaded: function() {
+      this.controllerFor('application').set('isLoading', false);
+    }
   },
 
   handleShowLogin: function() {

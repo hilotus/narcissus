@@ -20,8 +20,8 @@ export default Row.extend({
 
   doneEditing: function() {
     // update logic
-    var bufferedTitle = this.get('bufferedTitle'),
-      t = this.get('owner.container').lookup('utils:t'),
+    var appctrl = this.get('owner.container').lookup('controller:application'),
+      bufferedTitle = this.get('bufferedTitle'),
       title = this.get('title');
 
     if (Ember.isEmpty(bufferedTitle)) {
@@ -30,16 +30,16 @@ export default Row.extend({
       if (Ember.isNone(this.get('record.id'))) {
         this.set('bufferedTitle', title);
       } else {
-        Alert.operating(t("button.editting"));
-
         var record = this.get('record'),
           that = this;
 
         record.setVal(this.get('bindedName'), bufferedTitle);
-        record.save().catch(function(errorJson){
-          Alert.warn(errorJson.error);
-        }).then(function(){
-          Alert.removeLoading();
+
+        appctrl.spin(appctrl.t("button.editting"));
+        record.save().catch(function(reason){
+          appctrl.am(appctrl.t('ajax.error.operate'), reason.error, 'warn');
+        }).finally(function(){
+          appctrl.closeSpinner();
           that.set('title', bufferedTitle);
         });
       }
@@ -56,28 +56,29 @@ export default Row.extend({
   onDeletedSuccess: function(){},
 
   delete: function() {
-    if (Ember.isNone(this.get('record.id'))) {
-      return;
-    }
+    if (Ember.isNone(this.get('record.id'))) { return; }
 
-    var record = this.get('record'),
-      t = this.get('owner.container').lookup('utils:t'),
-      that = this;
+    var appctrl = this.get('owner.container').lookup('controller:application'),
+      record = this.get('record');
 
-    Alert.warn(t("destroy.prompt"),t("destroy.body"),
-      [t("button.cancel"), t("button.delete")],
-      function(i){
-        if (i === 2) { // ok to delete
-          Alert.operating(t("button.deleting"));
-          record.destroyRecord().then(function(){
-            that.onDeletedSuccess(that);
-          }).catch(function(errorJson){
-            Alert.warn(errorJson.error);
-          }).then(function(){
-            Alert.removeLoading();
-          });
-        }
+    var button = {
+      label: appctrl.t('button.delete'),
+      target: this,
+      action: function() {
+        appctrl.closeAlertModal();
+
+        var self = this;
+        appctrl.spin(appctrl.t("button.deleting"));
+
+        record.delete().then(function(){
+          self.onDeletedSuccess(self);
+        }).catch(function(reason){
+          appctrl.am(appctrl.t('ajax.error.operate'), reason.error, 'warn');
+        }).finally(function(){
+          appctrl.closeSpinner();
+        });
       }
-    );
+    };
+    appctrl.cm(appctrl.t("destroy.prompt"), appctrl.t("destroy.body"), 'warn', button);
   }
 });

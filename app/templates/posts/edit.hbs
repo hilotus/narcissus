@@ -1,33 +1,19 @@
 <div class="content-subhead">
   <div class="pure-u-1">{{headerTitle}}</div>
 </div>
-<div class="pure-form pure-form-stacked">
-  <fieldset>
-    {{input type="text" class="pure-input-1" placeholder=(t "posts.title") value=model.title}}
-    {{#if bufferedTags}}
-      {{select-picker content=bufferedTags selection=model.tags prompt=(t "blog.tag") isMultiple=true}}
-    {{/if}}
-    {{#if bufferedCategories}}
-      {{select-picker content=bufferedCategories selection=model.category prompt=(t "blog.category")}}
-    {{/if}}
-  </fieldset>
-  <fieldset>
-    <div class="pure-g">
-      <div class="pure-u-1">
-        {{markdown-editor body=model.body}}
-      </div>
-    </div>
-  </fieldset>
-  <fieldset>
-    <div class="pure-g">
-      <div class="pure-u-1">
-        <button {{action 'editPost'}} class="pure-button pure-button-primary" {{bind-attr disabled=editDisabled}}>{{editTitle}}</button>
-        {{#if showSpinner}}
-          &nbsp; <i class='fa fa-spinner fa-spin'></i>
-        {{else}}
-          <button {{action 'cancel'}} class="pure-button">{{t 'button.cancel'}}</button>
-        {{/if}}
-      </div>
-    </div>
-  </fieldset>
+<div class="content-contents row">
+  {{input type="text" class="form-group pure-u-1" placeholder=(t "posts.title") value=model.title}}
+  {{#if bufferedTags}}
+    {{select-picker customClass="form-group pure-u-1" content=bufferedTags selection=model.tags prompt=(t "blog.tag") isMultiple=true}}
+  {{/if}}
+  {{#if bufferedCategories}}
+    {{select-picker customClass="form-group pure-u-1" content=bufferedCategories selection=model.category prompt=(t "blog.category")}}
+  {{/if}}
+  <div class="pure-u-1 form-group">
+    {{markdown-editor body=model.body}}
+  </div>
+  <div class="pure-u-1 form-group">
+    {{cw-button label=editTitle rightIcon=spinnerIcon action="editPost" color="blue" isDisabled=editDisabled}}
+    {{cw-button label=(t 'button.cancel') action="cancel"}}
+  </div>
 </div>
