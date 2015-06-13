@@ -4,9 +4,9 @@
 }
 
 .sidebar {
+  padding: 0;
   background: rgb(61, 79, 93);
   color: #fff;
-  position: initial;
   display: inline-block;
   *display: inline;
   zoom: 1;
@@ -14,7 +14,6 @@
   word-spacing: normal;
   vertical-align: top;
   text-rendering: auto;
-  width: 100%;
 }
 
 .header {
@@ -77,7 +76,6 @@
   word-spacing: normal;
   vertical-align: top;
   text-rendering: auto;
-  width: 100%;
 
   .content-subhead {
     height: 40px;
@@ -91,11 +89,10 @@
   .content-contents { margin: 20px }
 }
 
-@media (min-width: 780px) {
+@media (min-width: 48em) {
   .content {
     padding: 2em 3em 0;
     margin-left: 25%;
-    width: 75%;
   }
 
   .header {
@@ -107,8 +104,5 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    background: rgb(61, 79, 93);
-    color: #fff;
-    width: 25%;
   }
 }
