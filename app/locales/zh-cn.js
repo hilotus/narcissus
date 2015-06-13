@@ -90,8 +90,9 @@ export default {
           invalid: '邮件地址不能为空。'
         }
       },
-      delete: {
-        confirm: '确定删除？',
+      destroy: {
+        prompt: '删除评论',
+        body: '确认删除吗？',
         error: '删除评论失败'
       }
     }

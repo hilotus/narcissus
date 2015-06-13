@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import BaseUtil from '../../utils/base';
+import BaseUtil from 'narcissus/utils/base';
 import NavigatableView from 'narcissus/views/navigate/navigatable';
 
 import Section from 'narcissus/supports/navigate/section';

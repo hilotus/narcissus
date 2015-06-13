@@ -1,6 +1,4 @@
-import Model from 'narcissus/supports/parse-model';
-
-var Term = Model.extend({
+var Term = CW.Model.extend({
 });
 
 Term.reopenClass({

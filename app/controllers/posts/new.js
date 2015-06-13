@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Alert from 'narcissus/utils/alert';
 
 export default Ember.Controller.extend({
   needs: ['posts/index', 'settings/terms'],
@@ -18,8 +17,7 @@ export default Ember.Controller.extend({
   }.property('creating'),
 
   createTitle: function() {
-    var t = this.container.lookup('utils:t');
-    return this.get('creating') ? t("button.creating") : t("button.create");
+    return this.get('creating') ? this.t("button.creating") : this.t("button.create");
   }.property('creating'),
 
   createDisabled: function() {
@@ -27,33 +25,39 @@ export default Ember.Controller.extend({
       this.blank('model.title') || this.blank('model.body') || this.blank("model.category");
   }.property('creating', 'currentUser', 'model.title', 'model.category', 'model.body'),
 
+  spinnerIcon: function() {
+    return this.get('showSpinner') ? 'fa-spinner fa-spin': null;
+  }.property('showSpinner'),
+
   actions: {
     createPost: function() {
       var model = this.get('model'),
         body = model.get('body'),
         store = this.store,
-        t = this.container.lookup('utils:t'),
-        that = this;
+        self = this;
 
       this.set('creating', true);
-      Alert.operating(t("button.creating"));
+      self.spin(self.t('button.creating'));
 
       var post = store.__getModelClazz('post').create();
       post.setVal('title', model.get('title'));
       post.setVal('body', body);
       post.setVal('category', model.get('category.id'));
-      post.setVal('tags', model.get('tags').getIds());
+      post.setVal('tags', model.get('tags').map(function(tag){ return tag.get('id'); }));
       post.setVal('creator', this.get("currentUser.id"));
       post.setVal('comments', []);
 
-      post.save().then(function(newRecord){
-        that.get('controllers.posts/index.model').insertAt(0, newRecord);
-        that.transitionToRoute("posts.index");
-      }, function(errorJson){
-        Alert.warn(errorJson.error);
-      }).then(function(){
-        that.set('creating', true);
-        Alert.removeLoading();
+      post.save().then(function(newRecord) {
+        var count = self.get('controllers.posts/index.model.length');
+        if (count > 0) {
+          self.get('controllers.posts/index.model').insertAt(0, newRecord);
+        }
+        self.transitionToRoute("posts.index");
+      }).catch(function(reason){
+        self.am(self.t('ajax.error.operate'), reason.error, 'warn');
+      }).finally(function(){
+        self.set('creating', true);
+        self.closeSpinner();
       });
     },
 

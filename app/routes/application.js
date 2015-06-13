@@ -22,24 +22,58 @@ export default Ember.Route.extend({
     closeModal: function() {
       this.handleCloseModal();
     },
+
+    // spin
+    loading: function(title) {
+      this.controllerFor('application').setProperties({isLoading: true, label: title});
+    },
+
+    loaded: function() {
+      this.controllerFor('application').set('isLoading', false);
+    }
   },
 
   handleShowLogin: function() {
-    Ember.Route.__showModal(this, 'modal/login');
+    this.__showModal('modal/login');
     this.controllerFor('modal/login').resetForm();
   },
 
   handleShowCreateAccount: function() {
-    Ember.Route.__showModal(this, 'modal/create-account');
+    this.__showModal('modal/create-account');
     this.controllerFor('modal/create-account').resetForm();
   },
 
   handleShowForgotPassword: function() {
-    Ember.Route.__showModal(this, 'modal/forgot-password');
+    this.__showModal('modal/forgot-password');
     this.controllerFor('modal/forgot-password').resetForm();
   },
 
   handleCloseModal: function() {
-    Ember.Route.__closeModal(this);
+    this.__closeModal();
+  },
+
+  /*
+  * Shows a modal
+  * @method showModal
+  */
+  __showModal: function(name, model) {
+    this.controllerFor('modal/modal').set('modalClass', null);
+    this.render('modal/modal', {into: 'application', outlet: 'modal'});
+    this.render(name, {into: 'modal/modal', outlet: 'modalBody'});
+    var controller = this.controllerFor(name);
+    if (controller) {
+      if (model) {
+        controller.set('model', model);
+      }
+      if(controller && controller.onShow) {
+        controller.onShow();
+      }
+      controller.set('flashMessage', null);
+    }
+  },
+
+  __closeModal: function() {
+    this.disconnectOutlet({ outlet: 'modalBody', parentView: 'modal/modal' });
+    this.disconnectOutlet({ outlet: 'modal', parentView: 'application' });
   }
 });

@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import Row from '../row';
-import Alert from 'narcissus/utils/alert';
 
 export default Row.extend({
   type: 'create-input',
@@ -22,9 +21,9 @@ export default Row.extend({
       return;
     }
 
-    var data = {},
+    var appctrl = this.get('owner.container').lookup('controller:application'),
       store = this.get('store'),
-      t = this.get('owner.container').lookup('utils:t'),
+      data = {},
       that = this;
 
     data[this.get('bindedName')] = value;
@@ -33,13 +32,13 @@ export default Row.extend({
     var record = store.__getModelClazz(this.get('bindedModel')).create();
     record.setVals(data);
 
-    Alert.operating(t("button.creating"));
+    appctrl.spin(appctrl.t("button.creating"));
     record.save().then(function(newRecord){
       that.onCreateSuccess(that, newRecord);
-    }, function(errorJson){
-      Alert.warn(errorJson.error);
-    }).then(function(){
-      Alert.removeLoading();
+    }).catch(function(reason){
+      appctrl.am(appctrl.t('ajax.error.operate'), reason.error, 'warn');
+    }).finally(function(){
+      appctrl.closeSpinner();
     });
   }
 });

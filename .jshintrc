@@ -7,8 +7,8 @@
     "Pace",
     "md5",
     "moment",
-    "marked",
-    "CodeMirror"
+    "CW",
+    "DUOSHUO"
   ],
   "browser" : true,
   "boss" : true,

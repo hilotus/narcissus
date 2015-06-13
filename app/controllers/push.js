@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Alert from 'narcissus/utils/alert';
 
 export default Ember.Controller.extend({
   registerToBaidu: function() {
@@ -8,7 +7,7 @@ export default Ember.Controller.extend({
         _this = this;
 
       pushNotification.register(
-        function(result){
+        function(result) {
           Ember.debug("Push: Registered success:" + JSON.stringify(result));
 
           var adapter = _this.get('container').lookup("adapter:application"),
@@ -23,8 +22,8 @@ export default Ember.Controller.extend({
             }
           );
         },
-        function(errorJson){
-          Alert.error("Push: Registering failed: %@".fmt(JSON.stringify(errorJson)));
+        function(reason) {
+          this.am("title", "Push: Registering failed: %@".fmt(JSON.stringify(reason)));
         },
         {
           "api_key":"5MdUpTLcx2D6zahWuaWpIlnu",

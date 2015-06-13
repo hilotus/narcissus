@@ -1,15 +1,19 @@
-<div class="navigatable-title">{{view.title}}</div>
-<div class="navigatable-toolbar">
-  {{#if view.hasLeftButton}}
-    <div class="ios-button regular left-button" {{action 'leftButtonAction' controller target=view}}>
-      <label class="button-label"><i class="fa fa-angle-left"></i>&nbsp;{{view.leftButtonTitle}}</label>
-    </div>
-  {{/if}}
-  {{#if view.hasRightButton}}
-    <div class="ios-button regular right-button" {{action 'rightButtonAction' controller target=view}}>
-      <label class="button-label">{{view.rightButtonTitle}}</label>
-    </div>
-  {{/if}}
+<div class="navigatable-title row">
+  <div class="pure-u-1-3 horizontal-left">
+    {{#if view.hasLeftButton}}
+      <div class="link-button small" {{action 'leftButtonAction' controller target=view}}>
+        <label class="button-label"><i class="fa fa-angle-left"></i>&nbsp;{{view.leftButtonTitle}}</label>
+      </div>
+    {{/if}}
+  </div>
+  <div class="pure-u-1-3 title horizontal-center">{{view.title}}</div>
+  <div class="pure-u-1-3 horizontal-right">
+    {{#if view.hasRightButton}}
+      <div class="link-button small" {{action 'rightButtonAction' controller target=view}}>
+        <label class="button-label">{{view.rightButtonTitle}}</label>
+      </div>
+    {{/if}}
+  </div>
 </div>
 <div class="sections">
   {{#each section in view.sectionsView}}
@@ -33,7 +37,7 @@
 
           {{#if row.isDescriptionUpdate}}
             {{#if row.isEditing}}
-              <div class="row input-row pure-form">
+              <div class="row input-row">
                 {{edit-input value=row.bufferedDescription target=row}}
               </div>
             {{else}}
@@ -45,21 +49,21 @@
           {{/if}}
 
           {{#if row.isCreateInput}}
-            <div class="row input-row pure-form">
+            <div class="row input-row">
               {{create-input target=row autocomplete="off" placeholder=row.placeholder}}
             </div>
           {{/if}}
 
           {{#if row.isTitleUpdate}}
             {{#if row.isEditing}}
-              <div class="row input-row pure-form">
+              <div class="row input-row">
                 {{edit-input value=row.bufferedTitle target=row}}
               </div>
             {{else}}
               {{#if row.canDelete}}
                 <div class="row select-row">
-                  <div class="select-title" {{action 'edit' target=row}}>{{row.title}}</div>
-                  <div class="select-icon" {{action 'delete' target=row}}><i class="fa fa-times"></i></div>
+                  <div class="select-title pure-u-7-8" {{action 'edit' target=row}}>{{row.title}}</div>
+                  <div class="select-icon pure-u-1-8" {{action 'delete' target=row}}><i class="fa fa-times"></i></div>
                 </div>
               {{else}}
                 <div class="row update-row" {{action 'edit' target=row}}>
@@ -80,7 +84,7 @@
           {{/if}}
 
           {{#if row.isInput}}
-            <div class="row input-row pure-form">
+            <div class="row input-row">
               {{input type="text" placeholder=row.placeholder value=row.value}}
             </div>
           {{/if}}

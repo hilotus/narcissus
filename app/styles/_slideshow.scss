@@ -67,18 +67,18 @@ $img-height: 300px;
 
 @media screen and (min-width: 330px) {
   .slideshow ul {
-    @include slideshow-ul(0.6);
+    @include slideshow-ul(0.5);
   }
   .slideshow ul img{
-    @include slideshow-ul-img(0.6);
+    @include slideshow-ul-img(0.5);
   }
 }
 @media screen and (min-width: 560px){
   .slideshow ul {
-    @include slideshow-ul(0.7);
+    @include slideshow-ul(0.75);
   }
   .slideshow ul img{
-    @include slideshow-ul-img(0.7);
+    @include slideshow-ul-img(0.75);
   }
 }
 @media screen and (min-width: 780px) {

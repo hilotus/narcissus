@@ -1,8 +1,11 @@
 import Ember from 'ember';
+import Presence from 'narcissus/mixins/presence';
 import User from 'narcissus/models/user';
-import Alert from 'narcissus/utils/alert';
 
 export var initialize = function(container, app) {
+  // Object
+  Ember.Object.reopen(Presence, {});
+
   // moment lang
   moment.locale("en-us");
 
@@ -19,7 +22,7 @@ export var initialize = function(container, app) {
     moment.locale(user.locale);
 
     // inject tags and categories for signIned users.
-    var store = container.lookup('store:parse');
+    var store = container.lookup('store:-cw');
     store.find('term', {'where': {'creator': user.get('id')}}).then(function(terms){
       var tags = terms.filter(function(term){return term.get('type') === 'tag';});
       var categories = terms.filter(function(term){return term.get('type') === 'category';});
@@ -27,11 +30,11 @@ export var initialize = function(container, app) {
     });
 
     // register to baidu
-    if (Ember.browser.isAndroid) {
-      container.lookup('controller:push').registerToBaidu();
-    }
+    // if (Ember.browser.isAndroid) {
+    //   container.lookup('controller:push').registerToBaidu();
+    // }
   }).catch(function(reason){
-    Alert.error(reason.error);
+    console.error(reason);
   }).finally(function(){
     app.advanceReadiness();
   });
@@ -39,6 +42,6 @@ export var initialize = function(container, app) {
 
 export default {
   name: 'authentication',
-  after: "injection",
+  after: 'coreweb',
   initialize: initialize
 };
