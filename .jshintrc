@@ -4,10 +4,11 @@
     "window",
     "-Promise",
     "$",
-    "Pace"
+    "Pace",
     "md5",
     "moment",
-    "CW"
+    "CW",
+    "DUOSHUO"
   ],
   "browser" : true,
   "boss" : true,
