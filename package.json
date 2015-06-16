@@ -24,7 +24,7 @@
     "ember-cli-babel": "^5.0.0",
     "ember-cli-compass-compiler": "0.0.18",
     "ember-cli-content-security-policy": "0.4.0",
-    "ember-cli-coreweb": "0.0.26",
+    "ember-cli-coreweb": "0.0.27",
     "ember-cli-dependency-checker": "^1.0.0",
     "ember-cli-htmlbars": "0.7.6",
     "ember-cli-i18n": "0.0.6",

@@ -18,10 +18,8 @@ export default NavigatableView.extend({
     var t = this.container.lookup('utils:t');
     return t('settings.title');
   }.property(),
-  actions: {
-    leftButtonAction: function(controller) {
-      controller.pop();
-    },
+  leftButtonAction: function() {
+    this.container.lookup('controller:settings/navigation').pop();
   },
 
   sections: ["termsSection"],

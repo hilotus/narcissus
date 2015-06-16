@@ -1,9 +1,9 @@
 <div class="content-subhead">
-  <div class="row">
+  <div class="pure-g">
     <div class="pure-u-1">{{headerTitle}}</div>
   </div>
 </div>
-<div class="content-contents row">
+<div class="content-contents pure-g">
   {{input type="text" class="form-group pure-u-1" placeholder=(t "posts.title") value=model.title}}
   {{#if bufferedTags}}
     {{select-picker customClass="form-group pure-u-1" content=bufferedTags selection=model.tags prompt=(t "blog.tag") isMultiple=true}}

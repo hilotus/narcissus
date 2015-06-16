@@ -67,7 +67,6 @@
 }
 
 .content {
-  padding: 2em 1em 0;
   margin-left: 0px;
   display: inline-block;
   *display: inline;
@@ -77,6 +76,7 @@
   vertical-align: top;
   text-rendering: auto;
 
+  .inner-content { padding: 2em 1em 0 }
   .content-subhead {
     height: 40px;
     line-height: 40px;
@@ -91,7 +91,7 @@
 
 @media (min-width: 48em) {
   .content {
-    padding: 2em 3em 0;
+    .inner-content { padding: 2em 3em 0 }
     margin-left: 25%;
   }
 

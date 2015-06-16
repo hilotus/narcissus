@@ -8,14 +8,11 @@ export default Ember.View.extend({
 
   hasLeftButton: false,
   leftButtonTitle: "",
+  leftButtonAction: function(){},
 
   hasRightButton: false,
   rightButtonTitle: "",
-
-  actions: {
-    leftButtonAction: function(){},
-    rightButtonAction: function(){},
-  },
+  rightButtonAction: function(){},
 
   sections: [],
 
