@@ -1,11 +1,11 @@
 <div class="modal-body">
-  <div class="form-group pure-g">
-    {{input type="text" class="pure-u-1-2" autocorrect="off" autocapitalize="off" autofocus="autofocus" value=username placeholder=(t 'login.username')}}
+  <div class="col-xs-12 form-group">
+    {{input type="text" class="col-xs-6" autocorrect="off" autocapitalize="off" autofocus="autofocus" value=username placeholder=(t 'login.username')}}
   </div>
-  <div class="form-group pure-g">
-    {{input type="password" class="pure-u-1-2" value=password placeholder=(t 'login.password')}}
+  <div class="col-xs-12 form-group">
+    {{input type="password" class="col-xs-6" value=password placeholder=(t 'login.password')}}
   </div>
-  <a {{action 'forgotPassword'}} class="pure-u-1-2 link-button forgot-password">{{t 'login.forgotPassword'}}</a>
+  <a {{action 'forgotPassword'}} class="col-xs-6 link-button forgot-password">{{t 'login.forgotPassword'}}</a>
 </div>
 <div class="modal-footer">
   <button type="button" class="button button-blue" {{bind-attr disabled="loginDisabled"}} {{action 'login'}}>{{loginButtonText}}</button>

@@ -1,52 +1,24 @@
 {{#unless complete}}
-  <div class="modal-body">
-    <div class="pure-form pure-form-aligned">
-      <fieldset style="color:#777;">
-        <div class="pure-control-group">
-          <label for="create_account_name">{{t 'createAccount.username'}}</label>
-          {{input id="create_account_name" class="pure-input-1-2" type="text" autocorrect="off" autocapitalize="off" autofocus="autofocus" value=accountName placeholder=(t "createAccount.username")}}
-          {{#if nameValidation.failed}}
-            {{#if nameValidation.reason}}
-              <div class="tip bad"><i class="fa fa-times"></i>{{nameValidation.reason}}</div>
-            {{/if}}
-          {{/if}}
-          {{#if nameValidation.ok}}
-            <div class="tip ok"><i class="fa fa-check"></i>{{nameValidation.reason}}</div>
-          {{/if}}
-        </div>
-        <div class="pure-control-group">
-          <label for="create_account_email">{{t 'createAccount.email'}}</label>
-          {{input id="create_account_email" class="pure-input-1-2" type="email" autocorrect="off" autocapitalize="off" value=accountEmail placeholder=(t "createAccount.email")}}
-          {{#if emailValidation.failed}}
-            {{#if emailValidation.reason}}
-              <div class="tip bad"><i class="fa fa-times"></i>{{emailValidation.reason}}</div>
-            {{/if}}
-          {{/if}}
-          {{#if emailValidation.ok}}
-            <div class="tip ok"><i class="fa fa-check"></i>{{emailValidation.reason}}</div>
-          {{/if}}
-        </div>
-        <div class="pure-control-group">
-          <label for="create_account_password">{{t 'createAccount.password'}}</label>
-          {{input id="create_account_password" class="pure-input-1-2" type="password" autocorrect="off" autocapitalize="off" value=accountPassword placeholder=(t "createAccount.password")}}
-          {{#if passwordValidation.failed}}
-            {{#if passwordValidation.reason}}
-              <div class="tip bad"><i class="fa fa-times"></i>{{passwordValidation.reason}}</div>
-            {{/if}}
-          {{/if}}
-          {{#if passwordValidation.ok}}
-          <div class="tip ok"><i class="fa fa-check"></i>{{passwordValidation.reason}}</div>
-          {{/if}}
-        </div>
-      </fieldset>
+  <div class="modal-body" style="color:#777;">
+    <div class="col-xs-12 form-group" style="line-height:2;">
+      {{input class="col-xs-6" type="text" autocorrect="off" autocapitalize="off" autofocus="autofocus" value=accountName placeholder=(t "createAccount.username")}}
+      {{register-validation value=nameValidation}}
+    </div>
+    <div class="col-xs-12 form-group" style="line-height:2;">
+      {{input class="col-xs-6" type="email" autocorrect="off" autocapitalize="off" value=accountEmail placeholder=(t "createAccount.email")}}
+      {{register-validation value=emailValidation}}
+    </div>
+    <div class="col-xs-12 form-group" style="line-height:2;">
+      {{input class="col-xs-6" type="password" autocorrect="off" autocapitalize="off" value=accountPassword placeholder=(t "createAccount.password")}}
+      {{register-validation value=passwordValidation}}
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="pure-button pure-button-primary" {{bind-attr disabled="submitDisabled"}} {{action 'createAccount'}}>{{createAccountText}}</button>
+    <button type="button" class="button button-blue" {{bind-attr disabled="submitDisabled"}} {{action 'createAccount'}}>{{createAccountText}}</button>
     {{#if formSubmitted}}
       &nbsp; <i class='fa fa-spinner fa-spin'></i>
     {{else}}
-      &nbsp; <a {{action 'cancel'}}>{{t 'createAccount.cancel'}}</a>
+      &nbsp; <a class="button" {{action 'cancel'}}>{{t 'createAccount.cancel'}}</a>
     {{/if}}
   </div>
 {{/unless}}

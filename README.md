@@ -51,7 +51,6 @@ Make use of the many generators for code, try `ember help generate` for more det
 * if we customer a ajax, we should use in adapters/application.js, maybe also change the store logics, another
 * files don't need to change.
 
-
 ### Add PushPlugin in cordova
 * PushPlugin: https://github.com/hilotus/PushPlugin
 * add baidu push for android instead of gcm in china.
@@ -60,19 +59,8 @@ Make use of the many generators for code, try `ember help generate` for more det
 cordova plugin add 'https://github.com/hilotus/PushPlugin.git'
 ```
 
-
-## Further Reading / Useful Links
-
-* ember: http://emberjs.com/
-* ember-cli: http://www.ember-cli.com/
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
-
-
-
 ## TODO List
 
-* 1. Search from app folder.
-* 2. Posts page add pre button and next button.
-* 3. I18n in util alert...
+## ISSUE List
+
+1. css confusion on firefox..

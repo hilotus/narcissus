@@ -1,14 +1,19 @@
 .modal > .outer > .middle > .inner {
-  .modal-body .tip {
-    max-width: 260px;
-    display: inline-block;
-    margin-left: 5px;
-    font-size: 13px;
-    &.bad {
-      color: #e45735;
-    }
-    &.ok {
-      color: #009900;
+  .modal-body {
+    .register-validation {
+      display: inline-block;
+      .prompt {
+        max-width: 260px;
+        display: inline-block;
+        margin-left: 5px;
+        font-size: 13px;
+        &.bad {
+          color: #e45735;
+        }
+        &.ok {
+          color: #009900;
+        }
+      }
     }
   }
 

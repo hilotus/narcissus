@@ -106,7 +106,7 @@ export default Ember.Controller.extend(ModalFunctionality, {
     this.checkEmailAvailability();
     // Let's check it out asynchronously
     return Ember.Object.create({
-      failed: true,
+      spinner: true,
       reason: t('createAccount.prompt.validating', 'email')
     });
   }.property('accountEmail'),

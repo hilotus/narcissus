@@ -6,6 +6,7 @@ $row-hight: 40px;
 
   .navigation-well {
     overflow: hidden;
+    width: 100%;
 
     .navigatable-channel {
       .navigatable {
@@ -31,7 +32,7 @@ $row-hight: 40px;
             }
 
             .rows {
-              .row {
+              .one-row {
                 height: $row-hight;
                 line-height: $row-hight;
                 border-bottom: 1px solid #D9D9D9;

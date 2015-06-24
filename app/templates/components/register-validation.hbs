@@ -1,0 +1,11 @@
+{{#if value.failed}}
+  {{#if value.reason}}
+    <div class="prompt bad"><i class="fa fa-times"></i> {{value.reason}}</div>
+  {{/if}}
+{{/if}}
+{{#if value.ok}}
+  <div class="prompt ok"><i class="fa fa-check"></i> {{value.reason}}</div>
+{{/if}}
+{{#if value.spinner}}
+  <div class="prompt"><i class="fa fa-spinner fa-spin"></i> {{value.reason}}</div>
+{{/if}}
