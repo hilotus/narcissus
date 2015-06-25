@@ -8,7 +8,7 @@ server {
   error_log <%= fetch(:shared_path) %>/log/nginx-error.log;
   rewrite_log on;
 
-  location ~* ^(/assets|/fonts|/favicon.ico) {
+  location ~* ^(/assets|/fonts) {
     access_log off;
     log_not_found off;
     gzip_static on;
