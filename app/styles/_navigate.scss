@@ -17,6 +17,7 @@ $row-hight: 40px;
           height: 44px;
           line-height: 44px;
           .title {
+            font-size: 16px;
             font-weight: bold;
           }
         }
@@ -28,7 +29,7 @@ $row-hight: 40px;
               line-height: 33px;
               background-color: #E6E6E6;
               padding-left: 5px;
-              font-size: 13px;
+              font-size: 14px;
             }
 
             .rows {
@@ -48,48 +49,28 @@ $row-hight: 40px;
                   margin-top: 5px;
                 }
 
-                /* switch row */
-                &.switch-row {
-                  span.switch-label, span.switch-handle {
-                    cursor: pointer;
-                  }
-                  label.switch {
-                    position: absolute;
-                    top: 10px;
-                    right: 5px;
-                  }
+                &.select-row, &.single-check-row, &.switch-row span.switch-label, &.switch-row span.switch-handle, &.update-row { cursor: pointer; }
+
+                &.select-row i.fa-times { display: none; }
+                &.select-row:hover i.fa-times { display: inline-block; }
+                &.select-row .select-icon:hover i.fa-times { opacity: .6; }
+
+                &.single-check-row { cursor: pointer }
+                &.single-check-row .icon { color: #167efb }
+
+                &.switch-row label.switch {
+                  position: absolute;
+                  top: 10px;
+                  right: 5px;
                 }
 
-                /* select row */
-                &.select-row {
-                  cursor: pointer;
-
-                  /* 针对于selectRow右边的有按钮意义的图标 */
-                  i.fa-times {
-                    display: none;
-                  }
-                  &:hover {
-                    i.fa-times {
-                      display: inline-block;
-                    }
-                  }
-
-                  .select-icon {
-                    position: absolute;
-                    height: inherit;
-                    right: 0px;
-                    top: 0px;
-                    font-size: 14px;
-                    width: 30px;
-                    text-align: center;
-
-                    /* 针对于selectRow右边的有按钮意义的图标 */
-                    &:hover {
-                      i.fa-times {
-                        opacity: .6;
-                      }
-                    }
-                  }
+                &.select-row .select-icon, &.single-check-row .icon {
+                  position: absolute;
+                  right: 0px;
+                  top: 0px;
+                  font-size: 14px;
+                  width: 30px;
+                  text-align: center
                 }
 
                 /* button row */
@@ -117,29 +98,13 @@ $row-hight: 40px;
                     cursor: inherit;
                     top: 0px;
                   }
-
-                  .left {
-                    left: 5px;
-                  }
-
+                  .left { left: 5px; }
                   .right {
                     right: 5px;
                     color: #167efb;
                   }
                 }
-                &.update-row {
-                  cursor: pointer;
-                }
 
-                &.date-row, &.time-row {
-                  input {
-                    display: inline-block;
-                    width: 25%;
-                  }
-                }
-                &.time-row input {
-                  width: 40.5%;
-                }
               }
             }
 

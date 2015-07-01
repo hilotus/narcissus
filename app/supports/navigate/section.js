@@ -10,11 +10,11 @@ export default Ember.Object.extend({
   rows: [],
 
   commonRows: function() {
-    var __this = this;
+    var self = this;
     return this.get('rows').map(function(row){
-      return __this.get(row).create({
-        'owner': __this.get('owner'),
-        'section': __this
+      return self.get(row).create({
+        'owner': self.get('owner'),
+        'section': self
       });
     });
   }.property('rows.length'),
@@ -25,9 +25,9 @@ export default Ember.Object.extend({
   contentRowTitleBindedName: 'name',
 
   contentRows: function() {
-    var __this = this;
+    var self = this;
     return this.get('content').map(function(record){
-      return __this._createContentRow(record, __this);
+      return self.__createContentRow(record, self);
     });
   }.property('content.length'),
 
@@ -43,7 +43,7 @@ export default Ember.Object.extend({
   /*
   * You can override this method to be dead against your logic specially.
   */
-  _createContentRow: function(record, section) {
+  __createContentRow: function(record, section) {
     return TitleUpdateRow.extend({
       section: section,
       owner: section.get('owner'),

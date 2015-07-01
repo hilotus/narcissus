@@ -14,6 +14,7 @@ export default {
     category: "分类",
     back: "返回",
     save: "保存",
+    saving: "保存中...",
     reply: "回复"
   },
 
@@ -103,7 +104,13 @@ export default {
     section: {
       header: {
         option: '选项',
+        language: '选择语言'
       }
+    },
+    language: {
+      title: '语言',
+      enUS: '美国英语',
+      zhCN: '简体中文'
     },
     tag: {
       title: '标签',

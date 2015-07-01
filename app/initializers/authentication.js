@@ -23,7 +23,7 @@ export var initialize = function(container, app) {
 
     // inject tags and categories for signIned users.
     var store = container.lookup('store:-cw');
-    store.find('term', {'where': {'creator': user.get('id')}}).then(function(terms){
+    store.find('term', {where: {creator: user.get('id')}}).then(function(terms){
       var tags = terms.filter(function(term){return term.get('type') === 'tag';});
       var categories = terms.filter(function(term){return term.get('type') === 'category';});
       container.lookup('controller:settings/terms').setProperties({'tags': tags, 'categories': categories});

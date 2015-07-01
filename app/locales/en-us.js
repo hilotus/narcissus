@@ -14,6 +14,7 @@ export default {
     category: "Category",
     back: "Back",
     save: "Save",
+    saving: "Saving...",
     reply: "Reply"
   },
 
@@ -105,7 +106,13 @@ export default {
     section: {
       header: {
         option: 'Options',
+        language: 'Select Language'
       }
+    },
+    language: {
+      title: 'Language',
+      enUS: 'US English',
+      zhCN: 'Simple Chinese'
     },
     tag: {
       title: 'Tag',

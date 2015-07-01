@@ -1,5 +1,6 @@
 import NavigatableView from 'narcissus/views/navigate/navigatable';
 import SettingsOptionsNavigatable from './options-navigatable';
+import SettingsLanguageNavigatable from './language-navigatable';
 import SettingsTermsNavigatable from './terms-navigatable';
 
 import Section from 'narcissus/supports/navigate/section';
@@ -21,7 +22,7 @@ export default NavigatableView.extend({
       return t('settings.section.header.option');
     }.property(),
 
-    rows: ["mine", "tag", "category"],
+    rows: ["mine", "language", "tag", "category"],
     mine: SelectRow.extend({
       title: function() {
         var t = this.get('owner.container').lookup('utils:t');
@@ -30,6 +31,17 @@ export default NavigatableView.extend({
 
       onSelect: function(controller) {
         controller.push(SettingsOptionsNavigatable);
+      }
+    }),
+
+    language: SelectRow.extend({
+      title: function() {
+        var t = this.get('owner.container').lookup('utils:t');
+        return t('settings.language.title');
+      }.property(),
+
+      onSelect: function(controller) {
+        controller.push(SettingsLanguageNavigatable);
       }
     }),
 

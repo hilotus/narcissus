@@ -17,11 +17,7 @@
 
       div.post-title-label {
         display: inline-block;
-        overflow: hidden;
-        white-space: nowrap;
-        -o-text-overflow: ellipsis;
-        -ms-text-overflow: ellipsis;
-        text-overflow: ellipsis;
+        white-space: pre-wrap;
         color: inherit;
         width: 80%;
         height: 40px;
@@ -33,27 +29,6 @@
             text-decoration: none;
             opacity: .8;
           }
-        }
-      }
-
-      .comments-count {
-        background: #eeeeee url("../../img/comment-bubble.png") no-repeat;
-        color: #666;
-        font-size: 13px;
-        font-weight: normal;
-        vertical-align: middle;
-        display: inline-block;
-        width: 43px;
-        height: 36px;
-        cursor: pointer;
-        text-align: center;
-        line-height: 36px;
-        position: relative;
-        top: -10px;
-
-        &:hover {
-          color: #FFF;
-          background-color: #1982d1;
         }
       }
     }
@@ -120,86 +95,6 @@
     margin: 10px 20px;
     border: 0
   }
-
-  .post-commnets {
-    margin: 16px 0;
-
-    .user-avatar {
-      border-radius: 50px;
-      margin: 0 auto;
-    }
-
-    .comment-header {
-      height: 40px;
-      line-height: 40px;
-      color: #a5b2b9;
-      border-bottom: 1px solid #eee;
-    }
-
-    .comment-list {
-      padding: 16px;
-      border-bottom: 1px solid #eee;
-
-      & > .comment-list-item ~ .comment-list-item {
-        margin-top: 20px;
-      }
-
-      .comment-list-item {
-        margin-top: 0px;
-
-        .comment-username {
-          text-align: center;
-          margin-top: 5px;
-          color: #0689d8;
-          word-wrap: break-word;
-          word-break: break-all;
-        }
-
-        .comment-body {
-          min-height: 80px;
-          padding: 5px;
-          border: 1px solid #eee;
-        }
-
-        textarea {
-          resize: none;
-          min-height: 80px;
-        }
-
-        .comment-time {
-          text-align: left;
-          line-height: 20px;
-          height: 20px;
-        }
-
-        .comment-operator {
-          text-align: right;
-          line-height: 25px;
-          height: 25px;
-          margin-top: 10px;
-
-          .ios-button {
-            display: inline-block;
-            position: inherit;
-          }
-        }
-      }
-    }
-
-    .comment-create {
-      padding: 16px 0 16px 0;
-      border-bottom: 1px solid #eee;
-
-      .pure-form {
-        color: #a5b2b9 !important;
-      }
-
-      textarea {
-        resize: none;
-        height: 80px;
-      }
-    }
-  }
 }
 
 .post-loading {
@@ -221,19 +116,6 @@
   }
   to {
     @include transform(rotate(359deg));
-  }
-}
-
-.comment-loading {
-  width: 100%;
-  font-size: 150%;
-  border-bottom: 1px solid #eee;
-
-  & > div {
-    height: 44px;
-    line-height: 44px;
-    width: 44px;
-    margin: 0 auto;
   }
 }
 
@@ -279,6 +161,7 @@ article {
     border-bottom: 1px solid $article-h1-color;
     color: $article-h1-color;
     @include transition(all .4s);
+    @include ellipsis();
   }
   .post-description {
     color: $article-p-color;

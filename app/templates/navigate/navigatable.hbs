@@ -1,13 +1,13 @@
 <div class="navigatable-title row">
   <div class="col-xs-4 horizontal-left">
     {{#if view.hasLeftButton}}
-      {{link-button type="small" leftIcon="fa-angle-left" label=view.leftButtonTitle action=view.leftButtonAction target=view}}
+      {{link-button type="tiny" leftIcon="fa-angle-left" label=view.leftButtonTitle action=view.leftButtonAction target=view}}
     {{/if}}
   </div>
   <div class="col-xs-4 title horizontal-center">{{view.title}}</div>
   <div class="col-xs-4 horizontal-right">
     {{#if view.hasRightButton}}
-      {{link-button type="small" label=view.rightButtonTitle action=view.rightButtonAction target=view}}
+      {{link-button type="tiny" label=view.rightButtonTitle action=view.rightButtonAction target=view}}
     {{/if}}
   </div>
 </div>
@@ -86,7 +86,14 @@
           {{/if}}
 
           {{#if row.isButton}}
-            <div class="one-row button-row {{if section.isDisabled 'disabled'}}" {{action 'submit' section target=row}}>{{row.title}}</div>
+            <div class="one-row button-row {{if section.isDisabled 'disabled'}}" {{action 'submit' target=row.section}}>{{row.title}}</div>
+          {{/if}}
+
+          {{#if row.isSingleCheck}}
+            <div class="one-row single-check-row" {{action 'onSelect' row.content.value target=row.section}}>
+              <div class="title">{{row.content.label}}</div>
+              <div class="icon">{{#if row.selected}}<i class="fa fa-check-square-o"></i>{{/if}}</div>
+            </div>
           {{/if}}
         {{/each}}
       </div>
