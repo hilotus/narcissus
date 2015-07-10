@@ -12,11 +12,11 @@
   </div>
 </div>
 <div class="sections">
-  {{#each section in view.sectionsView}}
+  {{#each view.sectionsView as |section|}}
     <div class="section">
       <div class="section-title">{{section.title}}</div>
       <div class="rows">
-        {{#each row in section.rowsView}}
+        {{#each section.rowsView as |row|}}
           {{#if row.isSelect}}
             <div class="one-row select-row" {{action 'onSelect' controller target=row}}>
               <div class="select-title">{{row.title}}</div>

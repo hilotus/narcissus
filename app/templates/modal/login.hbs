@@ -8,7 +8,7 @@
   <a {{action 'forgotPassword'}} class="col-xs-6 link-button forgot-password">{{t 'login.forgotPassword'}}</a>
 </div>
 <div class="modal-footer">
-  <button type="button" class="button button-blue" {{bind-attr disabled="loginDisabled"}} {{action 'login'}}>{{loginButtonText}}</button>
+  <button type="button" class="button button-blue" disabled={{loginDisabled}} {{action 'login'}}>{{loginButtonText}}</button>
   {{#if authenticate}}
     &nbsp; {{t 'login.authenticating'}}
   {{/if}}

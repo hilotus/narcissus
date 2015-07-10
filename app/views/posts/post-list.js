@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Scrolling from '../../mixins/scrolling';
+import Scrolling from 'narcissus/mixins/scrolling';
 
 export default Ember.CollectionView.extend(Scrolling, {
   classNames: ["list-article"],

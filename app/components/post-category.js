@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
-export default Ember.View.extend({
+export default Ember.Component.extend({
   tagName: 'a',
-  classNames: ['post-tag'],
+  classNames: ['post-category'],
   content: null,
 
   click: function() {
@@ -10,5 +10,6 @@ export default Ember.View.extend({
 
   didInsertElement: function() {
     this.$().text(this.get('content.name'));
+    this.$().css({"background-color": this.get('content.color')});
   }
 });

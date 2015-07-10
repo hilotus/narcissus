@@ -13,20 +13,20 @@
         <header class="post-header">
           <h2 class="post-title">
             <div class="post-title-label">{{model.title}}</div>
-            <img class="post-avatar" height="48" width="48" {{bind-attr src=model.creator.avatarPhoto}}>
+            <img class="post-avatar" height="48" width="48" src={{model.creator.avatarPhoto}}>
           </h2>
           <p class="post-meta">
             {{model.createdAtFormat}}
             <span class="divider"></span>
             {{t 'blog.category'}}<span class="colon"></span>
             {{#if model.category}}
-              {{view 'post/category' content=model.category}}
+              {{post-category content=model.category}}
             {{/if}}
             {{#if model.tags.length}}
               <span class="divider"></span>
               {{t 'blog.tag'}}<span class="colon"></span>
-              {{#each t in model.tags}}
-                {{view 'post/tag' content=t}}
+              {{#each model.tags as |t|}}
+                {{post-tag content=t}}
               {{/each}}
             {{/if}}
             {{#if model.isMe}}
